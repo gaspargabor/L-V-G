@@ -15,9 +15,17 @@ def route_index():
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
-def route_question():
+def route_question(question_id):
+    if request.method == 'POST':
+        if request.form.get('id') != question_id:
+            raise ValueError('The received id is not valid!')
 
-    return None
+        question = {
+            'id': question_id,
+            'title': request.form.get('title')
+        }
+            data_manager.update_user_story(question)
+            return redirect('/')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -27,7 +35,7 @@ def route_add_question():
             'title': request.form.get('title'),
             'message': request.form.get('message'),
         }
-        data_manager.add_question(question)
+        data_manager.add_q(question)
         return redirect('question/<question_id>')
     return redirect('/')
 
