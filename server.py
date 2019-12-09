@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 
-import data_handler
+import data_manager
 
 app = Flask(__name__)
 
@@ -12,7 +12,7 @@ This layer should consist of logic that is related to Flask. (with other words: 
 @app.route('/')
 @app.route('/list')
 def route_index():
-    return None
+    return render_template('list.html')
 
 
 @app.route('/question/<question_id>')
