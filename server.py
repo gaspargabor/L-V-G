@@ -10,12 +10,8 @@ This layer should consist of logic that is related to Flask. (with other words: 
 
 
 @app.route('/')
-def route_index():
-    return None
-
-
 @app.route('/list')
-def route_list():
+def route_index():
     return None
 
 
@@ -26,6 +22,11 @@ def route_question():
 
 @app.route('/add-question')
 def route_add_question():
+    return None
+
+
+@app.route('/question/<question_id>/new-answer')
+def route_edit_answer():
     return None
 
 
