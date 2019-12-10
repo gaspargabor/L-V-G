@@ -17,15 +17,15 @@ def route_index():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
-        if request.form.get('id') != question_id:
-            raise ValueError('The received id is not valid!')
-
-        question = {
-            'id': question_id,
-            'title': request.form.get('title')
-        }
-        data_manager.update_user_story(question)
         return redirect('/')
+    if request.method == 'GET':
+        data_list = data_manager.get_data_from_csv('question.csv', question_id=question_id)
+        return render_template('display_question.html',
+                               view_number=data_list[2],
+                               vote_number=data_list[3],
+                               title=data_list[4],
+                               message=data_list[5],
+                               image=data_list[6])
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
