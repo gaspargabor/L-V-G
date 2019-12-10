@@ -5,7 +5,8 @@ import data_manager
 app = Flask(__name__)
 
 """Flask stuff (server, routes, request handling, session, etc.)
-This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing from flask)"""
+This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
+from flask)"""
 
 
 @app.route('/')

@@ -2,7 +2,8 @@ import csv
 import time
 import os
 
-"""Layer between the server and the data. Functions here should be called from the server.py and these should use generic functions from the connection.py"""
+"""Layer between the server and the data. Functions here should be called from the server.py and these should use 
+generic functions from the connection.py"""
 
 
 def get_data_from_csv(filename, question_id=None):
