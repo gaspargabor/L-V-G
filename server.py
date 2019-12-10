@@ -21,13 +21,17 @@ def route_question(question_id):
     if request.method == 'POST':
         return redirect('/')
     if request.method == 'GET':
+        print(question_id)
         data_list = data_manager.get_data_from_csv('question.csv', question_id=question_id)
+        print(data_list)
+        print(type(data_list))
         return render_template('display_question.html',
-                               view_number=data_list[0]["view_number"],
-                               vote_number=data_list[0]["vote_number"],
-                               title=data_list[0]["title"],
-                               message=data_list[0]["message"],
-                               image=data_list[0]["image"])
+                               question_id=data_list['id'],
+                               view_number=data_list["view_number"],
+                               vote_number=data_list["vote_number"],
+                               title=data_list["title"],
+                               message=data_list["message"],
+                               image=data_list["image"])
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -38,14 +42,13 @@ def route_add_question():
             'message': request.form.get('message'),
             'image': request.form.get('image')
         }
-        print('call add new q')
         data_manager.add_new_question(question)
         return redirect('/')
     return render_template('addquestion.html')
 
 
-@app.route('/question/<question_id>/new-answer', methods=['POST'])
-def route_new_ansver():
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
+def route_new_answer(question_id):
     if request.method == 'POST':
         answer = {
             'id': '<question_id>',
@@ -53,7 +56,8 @@ def route_new_ansver():
             "image": request.form.get('image')
         }
         data_manager.add_new_answer(answer)
-        return redirect('/')
+        return render_template('display_question.html', question_id=question_id)
+    return render_template('addanswer.html', question_id=question_id)
 
 
 if __name__ == '__main__':

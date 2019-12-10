@@ -36,11 +36,11 @@ def add_new_question(question):
     add_new_q_or_a_to_file('question.csv', Q_HEADER, question, True)
 
 
-def add_new_answer(question):
-    question['id'] = get_new_id(filename='answer.csv')
-    question['submission_time'] = int(time.time())
+def add_new_answer(answer):
+    answer['id'] = get_new_id(filename='answer.csv')
+    answer['submission_time'] = int(time.time())
 
-    add_new_q_or_a_to_file('question.csv', A_HEADER, question, True)
+    add_new_q_or_a_to_file('answer.csv', A_HEADER, answer, True)
 
 
 def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
