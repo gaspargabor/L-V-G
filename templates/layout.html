@@ -6,5 +6,27 @@
 </head>
 <body>
     <h1><strong>WELCOME</strong></h1>
+        <p>
+    <table>
+        <tr>
+            <th>View Number</th>
+            <th>Vote Number</th>
+            <th>Title</th>
+            <th>Message</th>
+            <th>Image</th>
+
+        </tr>
+        {% for question in questions %}
+            <tr>
+                <td>{{ question['view_number'] }}</td>
+                <td>{{ question['vote_number'] }}</td>
+                <td>{{ question['title'] }}</td>
+                <td>{{ question['message'] }}</td>
+                <td>{{ question['image'] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
 </body>
 </html>
