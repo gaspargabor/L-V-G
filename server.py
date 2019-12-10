@@ -51,6 +51,8 @@ def route_new_ansver():
             "message": request.form.get('message'),
             "image": request.form.get('image')
         }
+        data_manager.add_new_answer(answer)
+        return redirect('/')
 
 
 if __name__ == '__main__':
