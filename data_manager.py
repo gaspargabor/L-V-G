@@ -1,4 +1,5 @@
 import csv
+import time
 import os
 
 """Layer between the server and the data. Functions here should be called from the server.py and these should use generic functions from the connection.py"""
@@ -30,7 +31,7 @@ def get_question(filename, question_id):
 
 def add_new_question(question):
     question['id'] = get_new_id(filename='question.csv')
-    question['submission_time'] = 'get time'
+    question['submission_time'] = int(time.time())
 
     add_new_q_or_a_to_file('question.csv', question, True)
 
@@ -48,3 +49,4 @@ def add_new_q_or_a_to_file(filename, q_or_a, append=True):
             writer.writerow(row)
         if append:
             writer.writerow(q_or_a)
+
