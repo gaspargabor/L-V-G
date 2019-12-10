@@ -35,15 +35,24 @@ def route_add_question():
         question = {
             'title': request.form.get('title'),
             'message': request.form.get('message'),
+            'image': request.form.get('image')
         }
+        print('call add new q')
         data_manager.add_new_question(question)
         return redirect('/')
     return render_template('addquestion.html')
 
 
-@app.route('/question/<question_id>/new-answer')
-def route_new_answer():
-    return None
+@app.route('/question/<question_id>/new-answer', methods=['POST'])
+def route_new_ansver():
+    if request.method == 'POST':
+        answer = {
+            'id': '<question_id>',
+            "message": request.form.get('message'),
+            "image": request.form.get('image')
+        }
+        data_manager.add_new_answer(answer)
+        return redirect('/')
 
 
 if __name__ == '__main__':
