@@ -19,15 +19,15 @@ def route_index():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
-        if request.form.get('id') != question_id:
-            raise ValueError('The received id is not valid!')
-
-        question = {
-            'id': question_id,
-            'title': request.form.get('title')
-        }
-        data_manager.update_user_story(question)
         return redirect('/')
+    if request.method == 'GET':
+        data_list = data_manager.get_data_from_csv('question.csv', question_id=question_id)
+        return render_template('display_question.html',
+                               view_number=data_list[2],
+                               vote_number=data_list[3],
+                               title=data_list[4],
+                               message=data_list[5],
+                               image=data_list[6])
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -36,6 +36,7 @@ def route_add_question():
         question = {
             'title': request.form.get('title'),
             'message': request.form.get('message'),
+            'image': request.form.get('image')
         }
         print('call add new q')
         data_manager.add_new_question(question)
@@ -43,9 +44,16 @@ def route_add_question():
     return render_template('addquestion.html')
 
 
-@app.route('/question/<question_id>/new-answer')
-def route_edit_answer():
-    return None
+@app.route('/question/<question_id>/new-answer', methods=['POST'])
+def route_new_ansver():
+    if request.method == 'POST':
+        answer = {
+            'id': '<question_id>',
+            "message": request.form.get('message'),
+            "image": request.form.get('image')
+        }
+        data_manager.add_new_answer(answer)
+        return redirect('/')
 
 
 if __name__ == '__main__':
