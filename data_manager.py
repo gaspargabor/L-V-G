@@ -14,6 +14,7 @@ def get_data_from_csv(filename, question_id=None):
             if question_id is not None and question_id == q_or_a['id']:
                 return q_or_a
             qs_or_as.append(q_or_a)
+    qs_or_as = sort_qs_or_as(qs_or_as, True, 'submission_time')
     return qs_or_as
 
 
@@ -35,6 +36,7 @@ def get_answers_for_question(filename, question_id):
     for answer in all_answers:
         if question_id == answer['question_id']:
             answers.append(answer)
+    answers = sort_qs_or_as(answers, True, 'submission_time')
     return answers
 
 
@@ -66,3 +68,7 @@ def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
         if append:
             writer.writerow(q_or_a)
 
+
+def sort_qs_or_as(list_to_sort, reverse, criteria):
+    sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=reverse)
+    return sorted_list
