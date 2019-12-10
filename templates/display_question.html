@@ -8,24 +8,26 @@
     <a href="{{ url_for("route_index") }}">Back to home page</a>
     <a href="{{ url_for("route_new_answer") }}">Add new answer</a>
     <table>
-        <tr>
-            <th>
-                {{ title }}
-            </th>
-        </tr>
-        <tr>
-            <td>{{ vote_number }}</td>
-            <td rowspan="2">{{ message }}{{ image }}</td>
-        </tr>
-        <tr>
-            <td>{{ view_number }}</td>
-        </tr>
-        <tr>
-            <td>{{ answer }}</td>
-        </tr>
-        <tr>
-            <td>{{ image }}</td>
-        </tr>
+        {% for question in question %}
+            <tr>
+                <th>
+                    {{ title }}
+                </th>
+            </tr>
+            <tr>
+                <td>{{ vote_number }}</td>
+                <td rowspan="2">{{ message }}{{ image }}</td>
+            </tr>
+            <tr>
+                <td>{{ view_number }}</td>
+            </tr>
+            <tr>
+                <td>{{ answer }}</td>
+            </tr>
+            <tr>
+                <td>{{ image }}</td>
+            </tr>
+        {% endfor %}
     </table>
 </body>
 </html>
