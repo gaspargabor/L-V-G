@@ -32,22 +32,19 @@ def add_new_question(question):
     question['id'] = get_new_id(filename='question.csv')
     question['submission_time'] = 'get time'
 
-    add_new_q_or_a_to_file('question.html', question, False)
+    add_new_q_or_a_to_file('question.csv', question, True)
 
 
 def add_new_q_or_a_to_file(filename, q_or_a, append=True):
     qs_or_as = get_data_from_csv(filename)
     fieldnames = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     with open(filename, 'w', newline='') as csv_file:
-        writer = csv.DictReader(csv_file, fieldnames=fieldnames)
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
         writer.writeheader()
-
         for row in qs_or_as:
             if not append:
                 if row['id'] == q_or_a['id']:
                     row = q_or_a
-
             writer.writerow(row)
-
         if append:
             writer.writerow(q_or_a)

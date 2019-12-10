@@ -11,7 +11,7 @@ This layer should consist of logic that is related to Flask. (with other words: 
 @app.route('/')
 @app.route('/list')
 def route_index():
-    return render_template('index.html')
+    return render_template('layout.html')
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -24,8 +24,8 @@ def route_question(question_id):
             'id': question_id,
             'title': request.form.get('title')
         }
-            data_manager.update_user_story(question)
-            return redirect('/')
+        data_manager.update_user_story(question)
+        return redirect('/')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -35,9 +35,10 @@ def route_add_question():
             'title': request.form.get('title'),
             'message': request.form.get('message'),
         }
-        data_manager.add_q(question)
-        return redirect('question/<question_id>')
-    return redirect('/')
+        print('call add new q')
+        data_manager.add_new_question(question)
+        return redirect('/')
+    return render_template('addquestion.html')
 
 
 @app.route('/question/<question_id>/new-answer')

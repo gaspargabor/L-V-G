@@ -5,8 +5,7 @@
     <title>Add Question</title>
 </head>
 <body>
-    <form action="/question/<question_id>" method="post">
-            <input type="hidden" name="id" value="{{ question['id']}}">
+    <form action="/add-question" method="post">
             <p>
                 <label for="title">Title:</label><br>
                 <input type="text" name="title" id="title">
