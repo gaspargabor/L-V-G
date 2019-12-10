@@ -21,17 +21,13 @@ def route_question(question_id):
     if request.method == 'POST':
         return redirect('/')
     if request.method == 'GET':
-        print(question_id)
-        data_list = data_manager.get_data_from_csv('question.csv', question_id=question_id)
-        print(data_list)
-        print(type(data_list))
+        question = data_manager.get_data_from_csv('question.csv', question_id=question_id)
+        answers = data_manager.get_answers_for_question('answer.csv', question_id)
         return render_template('display_question.html',
-                               question_id=data_list['id'],
-                               view_number=data_list["view_number"],
-                               vote_number=data_list["vote_number"],
-                               title=data_list["title"],
-                               message=data_list["message"],
-                               image=data_list["image"])
+                               question_id=question['id'],
+                               question=question,
+                               answers=answers
+                               )
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -55,8 +51,11 @@ def route_new_answer(question_id):
             "message": request.form.get('message'),
             "image": request.form.get('image')
         }
-        data_manager.add_new_answer(answer)
-        return render_template('display_question.html', question_id=question_id)
+        data_manager.add_new_answer(answer, question_id)
+        question = data_manager.get_data_from_csv('question.csv', question_id)
+        answers = data_manager.get_answers_for_question('answer.csv', question_id)
+        print(answers)
+        return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
     return render_template('addanswer.html', question_id=question_id)
 
 

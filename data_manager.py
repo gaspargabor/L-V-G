@@ -25,8 +25,17 @@ def get_new_id(filename):
     return str(int(all_q_or_a[-1]['id'])+1)
 
 
-def get_question(filename, question_id):
-    return get_data_from_csv(filename, question_id)
+def get_question(filename, as_question_id):
+    return get_data_from_csv(filename, as_question_id)
+
+
+def get_answers_for_question(filename, question_id):
+    answers = []
+    all_answers = get_data_from_csv(filename)
+    for answer in all_answers:
+        if question_id == answer['question_id']:
+            answers.append(answer)
+    return answers
 
 
 def add_new_question(question):
@@ -36,9 +45,10 @@ def add_new_question(question):
     add_new_q_or_a_to_file('question.csv', Q_HEADER, question, True)
 
 
-def add_new_answer(answer):
+def add_new_answer(answer, question_id):
     answer['id'] = get_new_id(filename='answer.csv')
     answer['submission_time'] = int(time.time())
+    answer['question_id'] = question_id
 
     add_new_q_or_a_to_file('answer.csv', A_HEADER, answer, True)
 

@@ -10,22 +10,22 @@
     <table>
             <tr>
                 <th>
-                    {{ title }}
+                    {{ question['title'] }}
                 </th>
             </tr>
             <tr>
-                <td>{{ vote_number }}</td>
-                <td rowspan="2">{{ message }}{{ image }}</td>
+                <td>{{ question['vote_number'] }}</td>
+                <td rowspan="2">{{ question['message'] }} {{question[image]}} </td>
             </tr>
             <tr>
-                <td>{{ view_number }}</td>
+                <td> {{question[view_number]}} </td>
             </tr>
-            {% for question in question %}
+            {% for answer in answers %}
             <tr>
-                <td>{{ answer }}</td>
+                <td>{{ answer['message'] }}</td>
             </tr>
             <tr>
-                <td>{{ image }}</td>
+                <td>{{ answer['image'] }}</td>
             </tr>
             {% endfor %}
     </table>

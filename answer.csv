@@ -1,7 +1,10 @@
 id,submission_time,vote_number,question_id,message,image
-1,1575985415,,,asdfghjkl,Put image link here
-2,1575985527,,,élkj,Put image link here
-3,1575985582,,,ertzui,Put image link here
-4,1575985704,,,cvbnm,Put image link here
-5,1575985897,,,rtzui,Put image link here
-6,1575985947,,,dgfhj,Put image link here
+1,1576000660,,1,This is the first answer for the first question,Put image link here
+2,1576000677,,1,This is the second answer for the second question,Put image link here
+3,1576000695,,1,This is the third answer for the third question,Put image link here
+4,1576000729,,2,This is the first answer for the second question,Put image link here
+5,1576000746,,2,This is the second answer for the second question,Put image link here
+6,1576000764,,2,This is the third answer for the second question,Put image link here
+7,1576000787,,3,This is the first answer for the third question,Put image link here
+8,1576000809,,3,This is the second answer for the third question,Put image link here
+9,1576000824,,3,This is the third answer for the third question,Put image link here
