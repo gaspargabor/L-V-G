@@ -22,11 +22,11 @@ def route_question(question_id):
     if request.method == 'GET':
         data_list = data_manager.get_data_from_csv('question.csv', question_id=question_id)
         return render_template('display_question.html',
-                               view_number=data_list[2],
-                               vote_number=data_list[3],
-                               title=data_list[4],
-                               message=data_list[5],
-                               image=data_list[6])
+                               view_number=data_list[0]["view_number"],
+                               vote_number=data_list[0]["vote_number"],
+                               title=data_list[0]["title"],
+                               message=data_list[0]["message"],
+                               image=data_list[0]["image"])
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
