@@ -21,13 +21,14 @@
             <tr>
                 <td>{{ view_number }}</td>
             </tr>
+            {% for question in question %}
             <tr>
                 <td>{{ answer }}</td>
             </tr>
             <tr>
                 <td>{{ image }}</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
     </table>
 </body>
 </html>

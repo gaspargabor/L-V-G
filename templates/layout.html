@@ -20,7 +20,9 @@
             <tr>
                 <td>{{ question['view_number'] }}</td>
                 <td>{{ question['vote_number'] }}</td>
-                <td>{{ question['title'] }}</td>
+                <td>
+                    <a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a>
+                </td>
                 <td>{{ question['message'] }}</td>
                 <td>{{ question['image'] }}</td>
             </tr>
