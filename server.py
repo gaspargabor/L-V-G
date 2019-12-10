@@ -12,7 +12,8 @@ from flask)"""
 @app.route('/')
 @app.route('/list')
 def route_index():
-    return render_template('layout.html')
+    questions = data_manager.get_data_from_csv('question.csv')
+    return render_template('layout.html', questions=questions)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
