@@ -6,6 +6,7 @@
 </head>
 <body>
     <a href="{{ url_for("route_index") }}">Back to home page</a>
+    <a href="{{ url_for("route_new_answer") }}">Add new answer</a>
     <table>
         <tr>
             <th>
@@ -14,13 +15,13 @@
         </tr>
         <tr>
             <td>{{ vote_number }}</td>
-            <td rowspan="2">{{ message }}</td>
+            <td rowspan="2">{{ message }}{{ image }}</td>
         </tr>
         <tr>
             <td>{{ view_number }}</td>
         </tr>
         <tr>
-            <td>{{ answers }}</td>
+            <td>{{ answer }}</td>
         </tr>
         <tr>
             <td>{{ image }}</td>

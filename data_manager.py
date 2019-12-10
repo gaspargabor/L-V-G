@@ -2,8 +2,8 @@ import csv
 import time
 import os
 
-"""Layer between the server and the data. Functions here should be called from the server.py and these should use 
-generic functions from the connection.py"""
+Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
 def get_data_from_csv(filename, question_id=None):
@@ -34,14 +34,20 @@ def add_new_question(question):
     question['id'] = get_new_id(filename='question.csv')
     question['submission_time'] = int(time.time())
 
-    add_new_q_or_a_to_file('question.csv', question, True)
+    add_new_q_or_a_to_file('question.csv', Q_HEADER, question, True)
 
 
-def add_new_q_or_a_to_file(filename, q_or_a, append=True):
+def add_new_answer(question):
+    question['id'] = get_new_id(filename='answer.csv')
+    question['submission_time'] = int(time.time())
+
+    add_new_q_or_a_to_file('question.csv', A_HEADER, question, True)
+
+
+def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
     qs_or_as = get_data_from_csv(filename)
-    fieldnames = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
     with open(filename, 'w', newline='') as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+        writer = csv.DictWriter(csv_file, fieldnames=header)
         writer.writeheader()
         for row in qs_or_as:
             if not append:

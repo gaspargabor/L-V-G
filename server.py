@@ -36,14 +36,13 @@ def route_add_question():
             'title': request.form.get('title'),
             'message': request.form.get('message'),
         }
-        print('call add new q')
         data_manager.add_new_question(question)
         return redirect('/')
     return render_template('addquestion.html')
 
 
 @app.route('/question/<question_id>/new-answer')
-def route_edit_answer():
+def route_new_answer():
     return None
 
 
