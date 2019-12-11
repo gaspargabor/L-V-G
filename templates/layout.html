@@ -6,12 +6,36 @@
 </head>
 <body>
     <h1><strong>WELCOME</strong></h1>
-    <a href="{{ url_for("route_add_question") }}">Add new question</a>
 
 <style>
     .navbar {
       overflow: hidden;
-      background-color: #333;
+      background-color: deeppink;
+    }
+
+    .navbar a {
+      float: left;
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    .dropdown {
+      float: left;
+      overflow: hidden;
+    }
+
+    .dropdown .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
     }
 
     .dropdown-content {
@@ -41,6 +65,7 @@
 </style>
 
 <div class="navbar">
+    <a href="{{ url_for("route_add_question") }}">Add new question</a>
   <div class="dropdown">
     <button class="dropbtn">Dropdown
       <i class="fa fa-caret-down"></i>
@@ -54,16 +79,6 @@
     </div>
   </div>
 </div>
-    <select>
-        
-
-        <option value="title" method="get">Title</option>
-        <option value="submission_time">Submission Time</option>
-        <option value="message">Message</option>
-        <option value="view_number">Number of Views</option>
-        <option value="vote_number">Number of Votes</option>
-
-    </select>
         <p>
     <table>
         <tr>
