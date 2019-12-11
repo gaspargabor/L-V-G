@@ -14,7 +14,7 @@ from flask)"""
 @app.route('/list')
 def route_index():
     questions = data_manager.get_data_from_csv('question.csv')
-    questions = data_manager.sort_qs_or_as(questions, True, 'submission_time')
+    sorted_questions = data_manager.sort_qs_or_as(questions, True, "submission_time")
     return render_template('layout.html', questions=questions)
 
 
