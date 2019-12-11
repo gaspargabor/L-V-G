@@ -14,7 +14,6 @@ def get_data_from_csv(filename, question_id=None):
             if question_id is not None and question_id == q_or_a['id']:
                 return q_or_a
             qs_or_as.append(q_or_a)
-    qs_or_as = sort_qs_or_as(qs_or_as, True, 'submission_time')
     return qs_or_as
 
 
@@ -26,8 +25,8 @@ def get_new_id(filename):
     return str(int(all_q_or_a[-1]['id'])+1)
 
 
-def get_question(filename, as_question_id):
-    return get_data_from_csv(filename, as_question_id)
+def get_question(filename, question_id):
+    return get_data_from_csv(filename, question_id)
 
 
 def get_answers_for_question(filename, question_id):
@@ -36,7 +35,6 @@ def get_answers_for_question(filename, question_id):
     for answer in all_answers:
         if question_id == answer['question_id']:
             answers.append(answer)
-    answers = sort_qs_or_as(answers, True, 'submission_time')
     return answers
 
 
@@ -45,6 +43,10 @@ def add_new_question(question):
     question['submission_time'] = int(time.time())
 
     add_new_q_or_a_to_file('question.csv', Q_HEADER, question, True)
+
+
+def edit_question(question):
+    add_new_q_or_a_to_file('question.csv', Q_HEADER, question, False)
 
 
 def add_new_answer(answer, question_id):

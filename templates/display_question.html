@@ -15,10 +15,10 @@
             </tr>
             <tr>
                 <td>{{ question['vote_number'] }}</td>
-                <td rowspan="2">{{ question['message'] }} {{question[image]}} </td>
+                <td rowspan="2">{{ question['message'] }} {{question['image']}} </td>
             </tr>
             <tr>
-                <td> {{question[view_number]}} </td>
+                <td> {{question['view_number']}} </td>
             </tr>
             {% for answer in answers %}
             <tr>
