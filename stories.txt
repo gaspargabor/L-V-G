@@ -1,0 +1,108 @@
+User Stories
+Business value	Title	Acceptance criteria
+1000
+List questions
+DONE
+
+1000
+Display a question
+DONE
+
+1000
+Ask a question
+DONE
+
+600
+Sort questions WIP
+
+Implement sorting for the question list.
+
+The question list can be sorted by title, submission time, message, number of views, and number of votes
+
+The order is passed as query string parameters, for example /list?order_by=title&order_direction=desc
+
+400
+Edit a question WIP
+
+Implement editing an existing question.
+
+There is a /question/<question_id>/edit page with a form
+
+The page is linked from the question's page
+
+There is a form with at least title and message fields
+
+The fields are pre-filled with existing question's data
+
+The form issues a POST request
+
+After submitting, you are redirected back to "Display a question" page and you see the changed data
+
+600
+Delete question
+
+Implement deleting a question.
+
+Deleting is implemented by the /question/<question_id>/delete endpoint
+
+There should be a deletion link on the question page
+
+Deleting redirects you back to the list of questions
+
+1000
+Post an answer
+DONE
+
+400
+Delete an answer
+
+Implement deleting an answer.
+
+Deleting is implemented by /answer/<answer_id>/delete endpoint
+
+There should be a deletion link on the question page, next to an answer
+
+Deleting redirects you back to the question detail page
+
+350
+Vote on questions
+
+Implement voting on questions.
+
+Vote numbers are displayed next to questions on the question list page
+
+There are "vote up/down" links next to questions on the question list page
+
+Voting uses /question/<question_id>/vote_up and /question/<question_id>/vote_down endpoints
+
+Voting up increases, voting down decreases the vote_number of the question by one
+
+Voting redirects you back to the question list
+
+350
+Vote on answers
+
+Implement voting on answers.
+
+Vote numbers are displayed next to answers on the question detail page
+
+There are "vote up/down" links next to answers
+
+Voting uses /answer/<answer_id>/vote_up and /answer/<answer_id>/vote_down endpoints
+
+Voting up increases, voting down decreases the vote_number of the answer by one
+
+Voting redirects you back to the question detail page
+
+500
+Add image
+
+Allow the user to upload an image for a question or answer.
+
+The forms for adding question and answer contain an "image" file field
+
+You can attach an image (.jpg, .png)
+
+The image is saved on server and displayed next to question / answer
+
+When you delete the question / answer, the file gets deleted as well
