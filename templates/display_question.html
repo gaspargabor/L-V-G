@@ -18,9 +18,7 @@
             <tr>
                 <th>
                     {{ question['title'] }}
-                    <form action="/question/{{ question_id }}" method="post">
-                        <button type="submit" id="question">Up vote</button>
-                    </form>
+                    <a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a>
                 </th>
             </tr>
             <tr>
@@ -33,6 +31,7 @@
             {% for answer in answers %}
             <tr>
                 <td>{{ answer['message'] }}</td>
+                <td><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
             </tr>
             <tr>
                 <td>{{ answer['image'] }}</td>

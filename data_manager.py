@@ -19,6 +19,15 @@ def get_data_from_csv(filename, question_id=None):
     return qs_or_as
 
 
+def get_answer(answer_id=None):
+    with open(answer_route, newline='') as data_file:
+        reader = csv.DictReader(data_file)
+        for row in reader:
+            answer = dict(row)
+            if answer_id == answer['id']:
+                return answer
+
+
 def get_new_id(filename):
     all_q_or_a = get_data_from_csv(filename)
     if len(all_q_or_a) == 0:
@@ -49,6 +58,10 @@ def add_new_question(question):
 
 def edit_question(question):
     add_new_q_or_a_to_file(question_route, Q_HEADER, question, False)
+
+
+def edit_answer(answer):
+    add_new_q_or_a_to_file(answer_route, A_HEADER, answer, False)
 
 
 def add_new_answer(answer, question_id):
