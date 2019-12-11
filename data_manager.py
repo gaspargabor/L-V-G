@@ -1,6 +1,8 @@
 import csv
 import time
-
+import os
+question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
+answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
 Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
@@ -39,22 +41,22 @@ def get_answers_for_question(filename, question_id):
 
 
 def add_new_question(question):
-    question['id'] = get_new_id(filename='question.csv')
+    question['id'] = get_new_id(filename=question_route)
     question['submission_time'] = int(time.time())
 
-    add_new_q_or_a_to_file('question.csv', Q_HEADER, question, True)
+    add_new_q_or_a_to_file(question_route, Q_HEADER, question, True)
 
 
 def edit_question(question):
-    add_new_q_or_a_to_file('question.csv', Q_HEADER, question, False)
+    add_new_q_or_a_to_file(question_route, Q_HEADER, question, False)
 
 
 def add_new_answer(answer, question_id):
-    answer['id'] = get_new_id(filename='answer.csv')
+    answer['id'] = get_new_id(filename=answer_route)
     answer['submission_time'] = int(time.time())
     answer['question_id'] = question_id
 
-    add_new_q_or_a_to_file('answer.csv', A_HEADER, answer, True)
+    add_new_q_or_a_to_file(answer_route, A_HEADER, answer, True)
 
 
 def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
