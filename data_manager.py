@@ -72,3 +72,4 @@ def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
 def sort_qs_or_as(list_to_sort, reverse, criteria):
     sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=reverse)
     return sorted_list
+
