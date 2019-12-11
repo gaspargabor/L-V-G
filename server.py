@@ -17,7 +17,7 @@ def route_index(sort_criteria=None):
     sort_criteria = request.args.get('sort_criteria')
     if sort_criteria is None:
         sort_criteria = 'submission_time'
-    questions = data_manager.get_data_from_csv('question.csv')
+    questions = data_manager.get_data_from_csv(question_route)
     if sort_criteria in ['view_number', 'vote_number']:
         questions = data_manager.sort_qs_or_as(questions, True, sort_criteria)
     else:
