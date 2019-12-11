@@ -25,6 +25,15 @@ def route_index(sort_criteria=None):
     return render_template('layout.html', questions=questions)
 
 
+@app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
+def delete_question(question_id):
+    question = data_manager.get_question(question_route, question_id)
+    if question['title'] is not None:
+        question.delete()
+    return render_template('layout.html', question_id=question['id'])
+
+
+
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
