@@ -13,13 +13,8 @@ Ask a question
 DONE
 
 600
-Sort questions WIP
-
-Implement sorting for the question list.
-
-The question list can be sorted by title, submission time, message, number of views, and number of votes
-
-The order is passed as query string parameters, for example /list?order_by=title&order_direction=desc
+Sort questions
+DONE
 
 400
 Edit a question WIP
