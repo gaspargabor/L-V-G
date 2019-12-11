@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Display Question Page</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
+<div class="navbar">
     <a href="{{ url_for("route_index") }}">Back to home page</a>
     <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
     <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
+</div>
+<p>
     <table>
             <tr>
                 <th>
