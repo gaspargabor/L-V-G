@@ -12,7 +12,6 @@ from flask)"""
 
 @app.route('/')
 @app.route('/list')
-@app.route('/list/<sort_criteria>')
 def route_index(sort_criteria='submission_time'):
     questions = data_manager.get_data_from_csv('question.csv')
     questions = data_manager.sort_qs_or_as(questions, True, sort_criteria)
