@@ -11,6 +11,9 @@
             <tr>
                 <th>
                     {{ question['title'] }}
+                    <form action="/question/{{ question_id }}" method="post">
+                        <button type="submit" id="question">Up vote</button>
+                    </form>
                 </th>
             </tr>
             <tr>
