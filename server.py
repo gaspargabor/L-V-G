@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import data_manager
 
 app = Flask(__name__)
+GET_COUNTER = 0
 
 """Flask stuff (server, routes, request handling, session, etc.)
 This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
@@ -13,6 +14,7 @@ from flask)"""
 @app.route('/list')
 def route_index():
     questions = data_manager.get_data_from_csv('question.csv')
+    questions = data_manager.sort_qs_or_as(questions, True, 'submission_time')
     return render_template('layout.html', questions=questions)
 
 
@@ -36,7 +38,8 @@ def route_add_question():
         question = {
             'title': request.form.get('title'),
             'message': request.form.get('message'),
-            'image': request.form.get('image')
+            'image': request.form.get('image'),
+            'view_number': 0
         }
         data_manager.add_new_question(question)
         return redirect('/')
@@ -57,6 +60,22 @@ def route_new_answer(question_id):
         print(answers)
         return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
     return render_template('addanswer.html', question_id=question_id)
+
+
+@app.route('/view-counter/<question_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
+def route_view_counter(question_id):
+    if request.method == 'GET':
+        global GET_COUNTER
+        GET_COUNTER += 1
+        print(question_id)
+        print(GET_COUNTER)
+        question = data_manager.get_question('question.csv', question_id)
+        question['view_number'] = str(int(question['view_number']) + 1)
+        data_manager.edit_question(question)
+        print(question)
+        question = data_manager.get_data_from_csv('question.csv', question_id)
+        answers = data_manager.get_answers_for_question('answer.csv', question_id)
+    return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
 
 
 if __name__ == '__main__':
