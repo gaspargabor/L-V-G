@@ -3,10 +3,9 @@ import os
 import data_manager
 
 app = Flask(__name__)
-
+GET_COUNTER = 0
 question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
 answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
-
 """Flask stuff (server, routes, request handling, session, etc.)
 This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
 from flask)"""
@@ -18,7 +17,7 @@ def route_index(sort_criteria=None):
     sort_criteria = request.args.get('sort_criteria')
     if sort_criteria is None:
         sort_criteria = 'submission_time'
-    questions = data_manager.get_data_from_csv('question.csv')
+    questions = data_manager.get_data_from_csv(question_route)
     if sort_criteria in ['view_number', 'vote_number']:
         questions = data_manager.sort_qs_or_as(questions, True, sort_criteria)
     else:
@@ -38,7 +37,15 @@ def delete_question(question_id):
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
-        return redirect('/')
+        question = data_manager.get_data_from_csv(question_route, question_id=question_id)
+        answers = data_manager.get_answers_for_question(answer_route, question_id)
+        question['vote_number'] = str(int(question['vote_number']) + 1)
+        data_manager.edit_question(question)
+        return render_template('display_question.html',
+                               question_id=question['id'],
+                               question=question,
+                               answers=answers
+                               )
     if request.method == 'GET':
         route_view_counter(question_id)
         question = data_manager.get_data_from_csv(question_route, question_id=question_id)
@@ -57,7 +64,8 @@ def route_add_question():
             'title': request.form.get('title'),
             'message': request.form.get('message'),
             'image': request.form.get('image'),
-            'view_number': 0
+            'view_number': 0,
+            'vote_number': 0
         }
         data_manager.add_new_question(question)
         return redirect('/')
