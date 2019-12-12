@@ -11,7 +11,7 @@
 <div class="navbar">
     <a href="{{ url_for("route_add_question") }}">Add new question</a>
   <div class="dropdown">
-    <button class="dropbtn">Dropdown</button>
+    <button class="dropbtn">Sort By</button>
     <div class="dropdown-content">
       <a href="{{ url_for("route_index", sort_criteria='submission_time')}}">submission time</a>
       <a href="{{ url_for("route_index", sort_criteria='title')}}">title</a>
