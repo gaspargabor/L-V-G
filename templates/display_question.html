@@ -10,7 +10,7 @@
     <a href="{{ url_for("route_index") }}">Back to home page</a>
     <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
     <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
-    <a href="{{ url_for("delete_question", question_id=question_id)}}">Delete question</a>
+    <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
 </div>
 <p>
 <div class="title">
@@ -27,9 +27,13 @@
     <h4>Answers:</h4>
 
             {% for answer in answers %}
-                <h5>{{ answer['message'] }}</h5>
-                <h5><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
-                <h5>{{ answer['image'] }}</h5>
+            <tr>
+                <td>{{ answer['message'] }}</td>
+                <td><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
+            </tr>
+            <tr>
+                <td>{{ answer['image'] }}</td>
+            </tr>
             {% endfor %}
 </div>
 </body>
