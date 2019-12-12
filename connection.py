@@ -1,6 +1,5 @@
 import csv
 
-
 def get_data_from_csv(filename):
     """reads all data from .csv and returns a list with dictionaries"""
     data_from_csv = []

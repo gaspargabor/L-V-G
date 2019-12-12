@@ -2,14 +2,20 @@ body {
     font-family: arial, helvetica, sans-serif;
     font-size: 14px;
     color: #8E8D8A;
-    background-color: #EAE7DC;
+    background-color: #0B0C10;
     margin: 50px;
     padding: 0;
 }
 
+th {
+    color: #45A29E;
+    font-weight: bold;
+
+}
+
 h1 {
-    color: #8E8D8A;
-    background-color: #D8C3A5;
+    color: deeppink;
+    background-color: #1F2833;
     margin-bottom: 7px;
     padding: 32px;
     text-align: center;
@@ -21,45 +27,52 @@ h1 {
 table {
     padding: 16px;
     text-align: left;
-    color: #E85A4F;
-    background-color: #D8C3A5;
+    color: #45A29E;
+    background-color: #1F2833;
     width: 100%;
     alignment: center;
     border-radius: 5px;
+
 }
 
 a {
     font-weight: bold;
-    color: #E98074;
+    color: #66FCF1;
     text-decoration: none;
 }
 
 input{
-    background-color: #D8C3A5;
+    color: #45A29E;
+    background-color: #1F2833;
     border-radius: 5px;
     border-color: #8E8D8A;
+    border-style: hidden;
+    height: 25px;
 }
 
 textarea{
-    background-color: #D8C3A5;
+    color: #45A29E;
+    background-color: #1F2833;
     border-radius: 5px;
     border-color: #8E8D8A;
+    border-style: hidden;
 }
 
 button{
-    background-color: #D8C3A5;
-    color: #E85A4F;
+    background-color: #1F2833;
+    color: #45A29E;
     font-weight: bold;
     border-radius: 5px;
     border-color: #8E8D8A;
     height: 25px;
+    border-style: hidden;
 }
 
 .title {
-    padding: 5px;
+    padding: 14px 16px;
     text-align: left;
-    color: #E85A4F;
-    background-color: #D8C3A5;
+    color: #45A29E;
+    background-color: #1F2833;
     border-radius: 5px;
 }
 
@@ -72,20 +85,28 @@ button{
     max-height: fit-content;
 }
 
+
 .message {
     width: fit-content;
 }
 
+.answers {
+    padding: 14px 16px;
+    background-color: #1F2833;
+    min-height: 50px;
+    border-radius: 5px;
+}
+
 .navbar {
       overflow: hidden;
-      background-color: #D8C3A5;
+      background-color: #1F2833;
     border-radius: 5px;
     }
 
  .navbar a {
       float: left;
       font-size: 16px;
-      color: #E98074;
+      color: #66FCF1;
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
@@ -100,7 +121,7 @@ button{
       font-size: 16px;
       border: none;
       outline: none;
-      color: #E98074;
+      color: #66FCF1;
       padding: 14px 16px;
       background-color: inherit;
       font-family: inherit;
@@ -109,7 +130,7 @@ button{
     }
 
     .navbar a:hover, .dropdown:hover .dropbtn {
-      background-color: #E85A4F;
+      background-color: #45A29E;
     }
     .dropdown-content {
       display: none;
@@ -122,7 +143,7 @@ button{
 
     .dropdown-content a {
       float: none;
-      color: #EAE7DC;
+      color: #0B0C10;
       padding: 12px 16px;
       text-decoration: none;
       display: block;
@@ -130,8 +151,8 @@ button{
     }
 
     .dropdown-content a:hover {
-        color: #8E8D8A;
-      background-color: #E85A4F;
+        color: #C5C6C7;
+      background-color: #45A29E;
     }
 
     .dropdown:hover .dropdown-content {

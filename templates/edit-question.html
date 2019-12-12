@@ -1,0 +1,6 @@
+{% extends 'addquestion.html' %}
+{% block title %}Edit Question{% endblock %}
+{% block titletwo %}Edit Question{% endblock %}
+{% block route %}"/question/{{ question_id }}/edit"{% endblock %}
+{% block comment_title %}value = "{{ question_original['title'] }}"{% endblock %}
+ {% block question_message %}<textarea name="message" id="message" cols="40" rows="4">{{ question_original['message'] }}</textarea>{% endblock %}

@@ -35,28 +35,6 @@ def save_updated_data(route, header, updated_data):
     connection.write_datas_to_csv(route, header, updated_data)
 
 
-def get_data_answ_from_csv(filename, question_id):
-    """this won't be needed"""
-    qs_or_as = []
-    with open(filename, newline='') as data_file:
-        reader = csv.DictReader(data_file)
-        for row in reader:
-            q_or_a = dict(row)
-            if question_id == q_or_a['question_id']:
-                qs_or_as.append(q_or_a)
-    return qs_or_as
-
-
-def get_answer(answer_id=None):
-    """hopefully this won't be needed either"""
-    with open(answer_route, newline='') as data_file:
-        reader = csv.DictReader(data_file)
-        for row in reader:
-            answer = dict(row)
-            if answer_id == answer['id']:
-                return answer
-
-
 def get_new_id(filename):
     """generates a new id for the new entries"""
     all_q_or_a = get_data(filename)
@@ -88,7 +66,7 @@ def add_new_question(question):
 
 
 def edit_question(question):
-    add_new_q_or_a_to_file(question_route, Q_HEADER, question, False)
+    add_new_q_or_a_to_file('sample_data/question.csv', Q_HEADER, question, False)
 
 
 def edit_answer(answer):

@@ -6,6 +6,7 @@
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
+    <h1><strong>Ask Mate</strong></h1>
 <div class="navbar">
     <a href="{{ url_for("route_index") }}">Back to home page</a>
     <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
@@ -13,6 +14,7 @@
     <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
 </div>
 <p>
+
 <div class="title">
                 <h2>{{ question['title'] }}</h2>
         <div class="belowtitle">
@@ -23,14 +25,17 @@
 
          </div>
 </div>
-<div class="message_answers">
+<p>
+<div class="answers">
+<p>
     <h4>Answers:</h4>
 
             {% for answer in answers %}
                 <h5>{{ answer['message'] }}</h5>
-                <h5><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
-
                 <h5>{{ answer['image'] }}</h5>
+                <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
+                <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
+                <h5>--------------------------------------------------------------------</h5>
             {% endfor %}
 </div>
 </body>

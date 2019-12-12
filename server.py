@@ -47,6 +47,26 @@ def route_question(question_id):
                                )
 
 
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def route_edit_question(question_id):
+    if request.method == 'GET':
+        question_original = data_manager.get_data(question_route, question_id)
+        return render_template('edit-question.html', question_id=question_id, question_original=question_original)
+    if request.method == 'POST':
+        question_original = data_manager.get_data(question_route, question_id)
+        question = {
+            'id': question_id,
+            'submission_time': question_original['submission_time'],
+            'title': request.form.get('title'),
+            'message': request.form.get('message'),
+            'image': request.form.get('image'),
+            'view_number': question_original['view_number'],
+            'vote_number': question_original['view_number']
+        }
+        data_manager.edit_question(question)
+        return redirect('/')
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
@@ -56,20 +76,6 @@ def route_add_question():
             'image': request.form.get('image'),
             'view_number': 0,
             'vote_number': 0
-        }
-        data_manager.add_new_question(question)
-        return redirect('/')
-    return render_template('addquestion.html')
-
-
-@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
-def route_edit_question():
-    if request.method == 'POST':
-        question = {
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': request.form.get('image'),
-            'view_number': 0
         }
         data_manager.add_new_question(question)
         return redirect('/')
@@ -116,7 +122,7 @@ def addvote_answer(answer_id=None, question_id=None):
     answer_id = request.args.get('answer_id')
     question_id = request.args.get('question_id')
     question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_data_answ_from_csv(answer_route, question_id)
+    answers = data_manager.get_answers_for_question(answer_route, question_id)
     for answer in answers:
         if answer['id'] == answer_id:
             answer['vote_number'] = str(int(answer['vote_number']) + 1)
