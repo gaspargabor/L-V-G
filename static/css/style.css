@@ -1,15 +1,15 @@
 body {
     font-family: arial, helvetica, sans-serif;
     font-size: 14px;
-    color: #CB2D6F;
-    background-color: #0F292F;
+    color: #8E8D8A;
+    background-color: #EAE7DC;
     margin: 50px;
     padding: 0;
 }
 
 h1 {
-    color: #CB2D6F;
-    background-color: #501F3A;
+    color: #8E8D8A;
+    background-color: #D8C3A5;
     margin-bottom: 7px;
     padding: 32px;
     text-align: center;
@@ -21,8 +21,8 @@ h1 {
 table {
     padding: 16px;
     text-align: left;
-    color: #14A098;
-    background-color: #501F3A;
+    color: #E85A4F;
+    background-color: #D8C3A5;
     width: 100%;
     alignment: center;
     border-radius: 5px;
@@ -30,36 +30,36 @@ table {
 
 a {
     font-weight: bold;
-    color: #CCCCCC;
+    color: #E98074;
     text-decoration: none;
 }
 
 input{
-    background-color: #501F3A;
+    background-color: #D8C3A5;
     border-radius: 5px;
-    border-color: #CB2D6F;
+    border-color: #8E8D8A;
 }
 
 textarea{
-    background-color: #501F3A;
+    background-color: #D8C3A5;
     border-radius: 5px;
-    border-color: #CB2D6F;
+    border-color: #8E8D8A;
 }
 
 button{
-    background-color: #501F3A;
-    color: #14A098;
+    background-color: #D8C3A5;
+    color: #E85A4F;
     font-weight: bold;
     border-radius: 5px;
-    border-color: #CB2D6F;
+    border-color: #8E8D8A;
     height: 25px;
 }
 
 .title {
     padding: 5px;
     text-align: left;
-    color: #14A098;
-    background-color: #501F3A;
+    color: #E85A4F;
+    background-color: #D8C3A5;
     border-radius: 5px;
 }
 
@@ -78,14 +78,14 @@ button{
 
 .navbar {
       overflow: hidden;
-      background-color: #501F3A;
+      background-color: #D8C3A5;
     border-radius: 5px;
     }
 
  .navbar a {
       float: left;
       font-size: 16px;
-      color: #CCCCCC;
+      color: #E98074;
       text-align: center;
       padding: 14px 16px;
       text-decoration: none;
@@ -100,7 +100,7 @@ button{
       font-size: 16px;
       border: none;
       outline: none;
-      color: #CCCCCC;
+      color: #E98074;
       padding: 14px 16px;
       background-color: inherit;
       font-family: inherit;
@@ -109,19 +109,19 @@ button{
     }
 
     .navbar a:hover, .dropdown:hover .dropbtn {
-      background-color: #14A098;
+      background-color: #E85A4F;
     }
     .dropdown-content {
       display: none;
       position: absolute;
-      background-color: #CB2D6F;
+      background-color: #8E8D8A;
       min-width: 160px;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1;
     }
     .dropdown-content a {
       float: none;
-      color: #0F292F;
+      color: #EAE7DC;
       padding: 12px 16px;
       text-decoration: none;
       display: block;
@@ -129,8 +129,8 @@ button{
     }
 
     .dropdown-content a:hover {
-        color: #CB2D6F;
-      background-color: #14A098;
+        color: #8E8D8A;
+      background-color: #E85A4F;
     }
 
     .dropdown:hover .dropdown-content {
