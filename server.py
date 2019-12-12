@@ -3,9 +3,10 @@ import os
 import data_manager
 
 app = Flask(__name__)
-GET_COUNTER = 0
 question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
 answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
+Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 """Flask stuff (server, routes, request handling, session, etc.)
 This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
 from flask)"""
@@ -18,22 +19,19 @@ def route_index(sort_criteria=None):
     if sort_criteria is None:
         sort_criteria = 'submission_time'
     questions = data_manager.get_data(question_route)
-    if sort_criteria in ['view_number', 'vote_number']:
-        questions = data_manager.sort_qs_or_as(questions, True, sort_criteria)
-    else:
-        questions = data_manager.sort_qs_or_as(questions, False, sort_criteria)
+    questions = data_manager.sort_qs_or_as(questions, sort_criteria)
     return render_template('layout.html', questions=questions)
 
 
 @app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
     question = data_manager.get_question(question_route, question_id)
-    if request.method == 'GET':
-        question_id = request.args.get('id')
-        data_manager.delete_question(question_route, question, question_id=question_id)
-        return redirect('/list')
-    return render_template('layout.html', question_id=question['id'])
-
+    print(question)
+    print(question_id)
+    updated_data = data_manager.delete_question(question_route, question_id)
+    print(updated_data)
+    data_manager.save_updated_data(question_route, Q_HEADER, updated_data)
+    return redirect('/list')
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -105,7 +103,7 @@ def route_view_counter(question_id):
 @app.route('/addvote-question')
 def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id=question_id)
+    question = data_manager.get_data(question_route, question_id)
     answers = data_manager.get_answers_for_question(answer_route, question_id)
     question['vote_number'] = str(int(question['vote_number']) + 1)
     data_manager.edit_question(question)
@@ -119,7 +117,7 @@ def addvote_question(question_id=None):
 def addvote_answer(answer_id=None, question_id=None):
     answer_id = request.args.get('answer_id')
     question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id=question_id)
+    question = data_manager.get_data(question_route, question_id)
     answers = data_manager.get_data_answ_from_csv(answer_route, question_id)
     for answer in answers:
         if answer['id'] == answer_id:

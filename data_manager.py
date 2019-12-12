@@ -31,6 +31,10 @@ def get_answers_for_question(question_id):
     return answers_for_question
 
 
+def save_updated_data(route, header, updated_data):
+    connection.write_datas_to_csv(route, header, updated_data)
+
+
 def get_data_answ_from_csv(filename, question_id):
     """this won't be needed"""
     qs_or_as = []
@@ -113,22 +117,26 @@ def add_new_q_or_a_to_file(filename, header, q_or_a, append=True):
             writer.writerow(q_or_a)
 
 
-def sort_qs_or_as(list_to_sort, reverse, criteria):
+def sort_qs_or_as(list_to_sort, criteria):
     if criteria in ['view_number', 'vote_number']:
-        sorted_list = sorted(list_to_sort, key=lambda i: int(i[criteria]), reverse=reverse)
+        sorted_list = sorted(list_to_sort, key=lambda i: int(i[criteria]), reverse=True)
+    elif criteria in ['submission_time']:
+        sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=True)
     else:
-        sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=reverse)
+        sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=False)
     return sorted_list
 
-def delete_question(filename, question, question_id):
-    questions = get_data_from_csv(filename, question_id)
+
+def delete_question(filename, question_id):
+    questions = get_data(filename)
+    print(questions)
     for question in questions:
-        print(questions)
-        print(question)
-        print(question_id)
-        print(question['id'])
-        if question_id == int(question['id']):
+        if question_id == question['id']:
             questions.remove(question)
+    print(questions)
+    return questions
 
 
-
+def delete_answers_for_question(filename, question_id):
+    answers = get_data(filename)
+    return None
