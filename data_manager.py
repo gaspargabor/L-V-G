@@ -66,7 +66,7 @@ def add_new_question(question):
 
 
 def edit_question(question):
-    add_new_q_or_a_to_file('sample_data/question.csv', Q_HEADER, question, False)
+    add_new_q_or_a_to_file(question_route, Q_HEADER, question, False)
 
 
 def edit_answer(answer):

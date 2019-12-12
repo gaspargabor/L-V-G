@@ -13,6 +13,7 @@ th {
 
 }
 
+
 h1 {
     color: deeppink;
     background-color: #1F2833;
@@ -22,6 +23,7 @@ h1 {
     font-weight: bold;
     letter-spacing: 0.5em;
     border-radius: 5px;
+    font-size: 40px;
 }
 
 table {
@@ -32,7 +34,9 @@ table {
     width: 100%;
     alignment: center;
     border-radius: 5px;
-
+    height: 10px;
+    overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 a {
@@ -48,6 +52,20 @@ input{
     border-color: #8E8D8A;
     border-style: hidden;
     height: 25px;
+}
+
+.title .belowtitle input{
+    font-weight: bold;
+    background-color: #45A29E;
+    color: #1F2833;
+}
+
+.answers input {
+    font-weight: bold;
+    background-color: #45A29E;
+    color: #1F2833;
+    height: 17px;
+    font-size: 10px;
 }
 
 textarea{
@@ -96,6 +114,7 @@ button{
     background-color: #1F2833;
     min-height: 50px;
     border-radius: 5px;
+    font-size: 15px;
 }
 
 .navbar {

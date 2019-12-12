@@ -22,17 +22,19 @@
   </div>
 </div>
         <p>
+    <div class="content">
     <table>
-        <tr>
-            <th>View Number</th>
-            <th>Vote Number</th>
-            <th>Title</th>
-            <th>Message</th>
+        <tr height="40px">
+            <th width="10%">View Number</th>
+            <th width="10%">Vote Number</th>
+            <th id="tabletitlecell" width="30%">Title</th>
+            <th width="40%">Message</th>
             <th>Image</th>
 
         </tr>
         {% for question in questions %}
-            <tr>
+            <div class="data">
+            <tr class="messsage" height="30">
                 <td>{{ question['view_number'] }}</td>
                 <td>{{ question['vote_number'] }}</td>
                 <td>
@@ -41,9 +43,10 @@
                 <td>{{ question['message'] }}</td>
                 <td>{{ question['image'] }}</td>
             </tr>
+            </div>
         {% endfor %}
     </table>
-
+</div>
 
 </body>
 </html>
