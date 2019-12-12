@@ -100,4 +100,15 @@ def sort_qs_or_as(list_to_sort, reverse, criteria):
     sorted_list = sorted(list_to_sort, key=lambda i: i[criteria], reverse=reverse)
     return sorted_list
 
+def delete_question(filename, question, question_id):
+    questions = get_data_from_csv(filename, question_id)
+    for question in questions:
+        print(questions)
+        print(question)
+        print(question_id)
+        print(question['id'])
+        if question_id == int(question['id']):
+            questions.remove(question)
+
+
 

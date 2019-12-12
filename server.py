@@ -27,10 +27,14 @@ def route_index(sort_criteria=None):
 
 @app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
+
     question = data_manager.get_question(question_route, question_id)
-    if question['title'] is not None:
-        question.delete()
+    if request.method == 'GET':
+        question_id = request.args.get('id')
+        data_manager.delete_question(question_route, question, question_id=question_id)
+        return redirect('/list')
     return render_template('layout.html', question_id=question['id'])
+
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -41,8 +45,6 @@ def route_question(question_id):
         route_view_counter(question_id)
         question = data_manager.get_data_from_csv(question_route, question_id=question_id)
         answers = data_manager.get_answers_for_question(answer_route, question_id)
-        print(answers)
-        print(question)
         return render_template('display_question.html',
                                question_id=question['id'],
                                question=question,
