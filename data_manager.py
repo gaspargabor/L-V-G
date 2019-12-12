@@ -128,6 +128,7 @@ def sort_qs_or_as(list_to_sort, criteria):
 
 
 def delete_question(filename, question_id):
+    """deletes a question based on ID"""
     questions = get_data(filename)
     for question in questions:
         if question_id == question['id']:
@@ -136,6 +137,7 @@ def delete_question(filename, question_id):
 
 
 def delete_answers_for_question(filename, question_id):
+    """deletes the answers of the deleted question based on the question ID"""
     answers = get_data(filename)
     iterations = 0
     while iterations < len(answers):
