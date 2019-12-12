@@ -129,14 +129,15 @@ def sort_qs_or_as(list_to_sort, criteria):
 
 def delete_question(filename, question_id):
     questions = get_data(filename)
-    print(questions)
     for question in questions:
         if question_id == question['id']:
             questions.remove(question)
-    print(questions)
     return questions
 
 
 def delete_answers_for_question(filename, question_id):
     answers = get_data(filename)
-    return None
+    for answer in answers:
+        if question_id == answer['question_id']:
+            answers.remove(answer)
+    return answers
