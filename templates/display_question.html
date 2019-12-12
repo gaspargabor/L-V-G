@@ -13,30 +13,24 @@
     <a href="{{ url_for("delete_question", question_id=question_id)}}">Delete question</a>
 </div>
 <p>
+<div class="title">
+                <h2>{{ question['title'] }}</h2>
+        <div class="belowtitle">
+                        <h4 style="display:inline">views: {{question['view_number']}} </h4>
+                        <h4 style="display:inline">upvotes: {{ question['vote_number'] }}</h4>
+                        <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a></h4><br>
+                        <h3 class="message">{{ question['message'] }} {{question['image']}} </h3>
 
-    <table>
-            <tr>
-                <th>
-                    {{ question['title'] }}
-                    <a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a>
-                </th>
-            </tr>
-            <tr>
-                <td>{{ question['vote_number'] }}</td>
-                <td rowspan="2">{{ question['message'] }} {{question['image']}} </td>
-            </tr>
-            <tr>
-                <td> {{question['view_number']}} </td>
-            </tr>
+         </div>
+</div>
+<div class="message_answers">
+    <h4>Answers:</h4>
+
             {% for answer in answers %}
-            <tr>
-                <td>{{ answer['message'] }}</td>
-                <td><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
-            </tr>
-            <tr>
-                <td>{{ answer['image'] }}</td>
-            </tr>
+                <h5>{{ answer['message'] }}</h5>
+                <h5><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
+                <h5>{{ answer['image'] }}</h5>
             {% endfor %}
-    </table>
+</div>
 </body>
 </html>

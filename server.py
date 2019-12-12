@@ -4,8 +4,8 @@ import data_manager
 
 app = Flask(__name__)
 GET_COUNTER = 0
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
+question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
+answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
 """Flask stuff (server, routes, request handling, session, etc.)
 This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
 from flask)"""

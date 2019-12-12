@@ -3,7 +3,7 @@ body {
     font-size: 14px;
     color: #CB2D6F;
     background-color: #0F292F;
-    margin: 20px;
+    margin: 50px;
     padding: 0;
 }
 
@@ -24,12 +24,14 @@ table {
     color: #14A098;
     background-color: #501F3A;
     width: 100%;
+    alignment: center;
     border-radius: 5px;
 }
 
 a {
     font-weight: bold;
     color: #CCCCCC;
+    text-decoration: none;
 }
 
 input{
@@ -51,6 +53,27 @@ button{
     border-radius: 5px;
     border-color: #CB2D6F;
     height: 25px;
+}
+
+.title {
+    padding: 5px;
+    text-align: left;
+    color: #14A098;
+    background-color: #501F3A;
+    border-radius: 5px;
+}
+
+.belowtitle {
+    max-width: fit-content;
+    max-height: max-content;
+}
+
+.belowtitle tr {
+    max-height: fit-content;
+}
+
+.message {
+    width: fit-content;
 }
 
 .navbar {

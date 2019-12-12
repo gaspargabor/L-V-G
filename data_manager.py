@@ -1,8 +1,8 @@
 import csv
 import time
 import os
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
+question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
+answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
 Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
