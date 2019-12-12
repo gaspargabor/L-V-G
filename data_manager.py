@@ -137,7 +137,10 @@ def delete_question(filename, question_id):
 
 def delete_answers_for_question(filename, question_id):
     answers = get_data(filename)
-    for answer in answers:
-        if question_id == answer['question_id']:
-            answers.remove(answer)
+    iterations = 0
+    while iterations < len(answers):
+        for answer in answers:
+            if question_id == answer['question_id']:
+                answers.remove(answer)
+        iterations += 1
     return answers

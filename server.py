@@ -25,12 +25,10 @@ def route_index(sort_criteria=None):
 
 @app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
-    question = data_manager.get_question(question_route, question_id)
-    print(question)
-    print(question_id)
-    updated_data = data_manager.delete_question(question_route, question_id)
-    print(updated_data)
-    data_manager.save_updated_data(question_route, Q_HEADER, updated_data)
+    updated_q_data = data_manager.delete_question(question_route, question_id)
+    data_manager.save_updated_data(question_route, Q_HEADER, updated_q_data)
+    updated_a_data = data_manager.delete_answers_for_question(answer_route, question_id)
+    data_manager.save_updated_data(answer_route, A_HEADER, updated_a_data)
     return redirect('/list')
 
 
