@@ -1,8 +1,8 @@
 import csv
 import time
 import os
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
+question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
+answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
 Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
@@ -16,6 +16,16 @@ def get_data_from_csv(filename, question_id=None):
             if question_id is not None and question_id == q_or_a['id']:
                 return q_or_a
             qs_or_as.append(q_or_a)
+    return qs_or_as
+
+def get_data_answ_from_csv(filename, question_id):
+    qs_or_as = []
+    with open(filename, newline='') as data_file:
+        reader = csv.DictReader(data_file)
+        for row in reader:
+            q_or_a = dict(row)
+            if question_id == q_or_a['question_id']:
+                qs_or_as.append(q_or_a)
     return qs_or_as
 
 
