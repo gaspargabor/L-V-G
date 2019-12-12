@@ -4,8 +4,8 @@ import data_manager
 
 app = Flask(__name__)
 GET_COUNTER = 0
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "answer.csv"))
+question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
+answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
 """Flask stuff (server, routes, request handling, session, etc.)
 This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
 from flask)"""
@@ -41,15 +41,7 @@ def delete_question(question_id):
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
-        question = data_manager.get_data_from_csv(question_route, question_id=question_id)
-        answers = data_manager.get_answers_for_question(answer_route, question_id)
-        question['vote_number'] = str(int(question['vote_number']) + 1)
-        data_manager.edit_question(question)
-        return render_template('display_question.html',
-                               question_id=question['id'],
-                               question=question,
-                               answers=answers
-                               )
+        return redirect('/')
     if request.method == 'GET':
         route_view_counter(question_id)
         question = data_manager.get_data_from_csv(question_route, question_id=question_id)
@@ -96,12 +88,12 @@ def route_new_answer(question_id):
         answer = {
             'id': '<question_id>',
             "message": request.form.get('message'),
-            "image": request.form.get('image')
+            "image": request.form.get('image'),
+            "vote_number": 0
         }
         data_manager.add_new_answer(answer, question_id)
         question = data_manager.get_data_from_csv(question_route, question_id)
         answers = data_manager.get_answers_for_question(answer_route, question_id)
-        print(answers)
         return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
     return render_template('addanswer.html', question_id=question_id)
 
@@ -110,6 +102,36 @@ def route_view_counter(question_id):
     question = data_manager.get_question(question_route, question_id)
     question['view_number'] = str(int(question['view_number']) + 1)
     data_manager.edit_question(question)
+
+
+@app.route('/addvote-question')
+def addvote_question(question_id=None):
+    question_id = request.args.get('question_id')
+    question = data_manager.get_data_from_csv(question_route, question_id=question_id)
+    print(question)
+    answers = data_manager.get_answers_for_question(answer_route, question_id)
+    question['vote_number'] = str(int(question['vote_number']) + 1)
+    data_manager.edit_question(question)
+    return render_template('display_question.html',
+                           question_id=question['id'],
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/addvote_answer')
+def addvote_answer(answer_id=None, question_id=None):
+    answer_id = request.args.get('answer_id')
+    question_id = request.args.get('question_id')
+    question = data_manager.get_data_from_csv(question_route, question_id=question_id)
+    print(question)
+    answers = data_manager.get_answer(answer_id)
+    answers['vote_number'] = str(int(answers['vote_number']) + 1)
+    print(answers)
+    data_manager.edit_answer(answers)
+    return render_template('display_question.html',
+                           question_id=question['id'],
+                           question=question,
+                           answers=answers)
 
 
 if __name__ == '__main__':
