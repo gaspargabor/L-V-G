@@ -121,10 +121,12 @@ def addvote_answer(answer_id=None, question_id=None):
     question_id = request.args.get('question_id')
     question = data_manager.get_data_from_csv(question_route, question_id=question_id)
     print(question)
-    answers = data_manager.get_data_from_csv(answer_route)
-    answers['vote_number'] = str(int(answers['vote_number']) + 1)
-    print(answers)
-    data_manager.edit_answer(answers)
+    answers = data_manager.get_data_answ_from_csv(answer_route, question_id)
+    for answer in answers:
+        if answer['id'] == answer_id:
+            answer['vote_number'] = str(int(answer['vote_number']) + 1)
+    print(answer)
+    data_manager.edit_answer(answer)
     return render_template('display_question.html',
                            question_id=question['id'],
                            question=question,
