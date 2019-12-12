@@ -27,9 +27,13 @@
     <h4>Answers:</h4>
 
             {% for answer in answers %}
-                <h5>{{ answer['message'] }}</h5>
-                <h5><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
-                <h5>{{ answer['image'] }}</h5>
+            <tr>
+                <td>{{ answer['message'] }}</td>
+                <td><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
+            </tr>
+            <tr>
+                <td>{{ answer['image'] }}</td>
+            </tr>
             {% endfor %}
 </div>
 </body>
