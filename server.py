@@ -33,7 +33,6 @@ def delete_question(question_id):
     return render_template('layout.html', question_id=question['id'])
 
 
-
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
@@ -42,6 +41,8 @@ def route_question(question_id):
         route_view_counter(question_id)
         question = data_manager.get_data_from_csv(question_route, question_id=question_id)
         answers = data_manager.get_answers_for_question(answer_route, question_id)
+        print(answers)
+        print(question)
         return render_template('display_question.html',
                                question_id=question['id'],
                                question=question,
@@ -120,7 +121,7 @@ def addvote_answer(answer_id=None, question_id=None):
     question_id = request.args.get('question_id')
     question = data_manager.get_data_from_csv(question_route, question_id=question_id)
     print(question)
-    answers = data_manager.get_answer(answer_id)
+    answers = data_manager.get_data_from_csv(answer_route)
     answers['vote_number'] = str(int(answers['vote_number']) + 1)
     print(answers)
     data_manager.edit_answer(answers)

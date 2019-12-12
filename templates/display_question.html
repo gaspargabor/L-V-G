@@ -30,8 +30,7 @@
             </tr>
             {% for answer in answers %}
             <tr>
-                <td>{{ answer['message'] }}</td>
-                <td><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
+                <td>{{ answer['message'] }}<a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></td>
             </tr>
             <tr>
                 <td>{{ answer['image'] }}</td>
