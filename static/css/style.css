@@ -58,6 +58,7 @@ textarea{
     border-style: hidden;
 }
 
+
 button{
     background-color: #1F2833;
     color: #45A29E;
@@ -140,6 +141,7 @@ button{
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       z-index: 1;
     }
+
 
     .dropdown-content a {
       float: none;
