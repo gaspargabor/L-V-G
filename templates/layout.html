@@ -13,11 +13,11 @@
   <div class="dropdown">
     <button class="dropbtn">Sort By</button>
     <div class="dropdown-content">
-      <a href="{{ url_for("route_index", sort_criteria='submission_time')}}">submission time</a>
-      <a href="{{ url_for("route_index", sort_criteria='title')}}">title</a>
-      <a href="{{ url_for("route_index", sort_criteria='message')}}">message</a>
-      <a href="{{ url_for("route_index", sort_criteria='vote_number')}}">votes</a>
-      <a href="{{ url_for("route_index", sort_criteria='view_number')}}">views</a>
+      <a href="{{ url_for("route_index", sort_criteria=submission_time)}}">submission time</a>
+      <a href="{{ url_for("route_index", sort_criteria=title)}}">title</a>
+      <a href="{{ url_for("route_index", sort_criteria=message)}}">message</a>
+      <a href="{{ url_for("route_index", sort_criteria=vote_number)}}">votes</a>
+      <a href="{{ url_for("route_index", sort_criteria=view_number)}}">views</a>
     </div>
   </div>
 </div>
