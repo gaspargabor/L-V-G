@@ -16,7 +16,7 @@ from flask)"""
 @app.route('/')
 @app.route('/list')
 def route_index(sort_criteria=None):
-    sort_criteria = request.args.get('view_number')
+    sort_criteria = request.args.get('sort_criteria')
     if sort_criteria is None:
         sort_criteria = 'submission_time'
     questions = data_manager2.sort_qs_or_as(sort_criteria)
@@ -34,7 +34,7 @@ def route_index(sort_criteria=None):
     return render_template('layout.html', questions=questions)"""
 
 
-""""@app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
+@app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
     updated_q_data = data_manager.delete_question(question_route, question_id)
     data_manager.save_updated_data(question_route, Q_HEADER, updated_q_data)
@@ -141,7 +141,7 @@ def addvote_answer(answer_id=None, question_id=None):
     return render_template('display_question.html',
                            question_id=question['id'],
                            question=question,
-                           answers=answers)"""
+                           answers=answers)
 
 
 if __name__ == '__main__':

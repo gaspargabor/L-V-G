@@ -11,20 +11,12 @@ def get_all_data(cursor):
     return all_data
 
 
-@database_common.connection_handler
-def get_all_data(cursor):
-    cursor.execute("""
-                    SELECT * FROM question; 
-                    """)
-    all_data = cursor.fetchall()
-    return all_data
-
 
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
     cursor.execute("""
                     SELECT %(select_)s FROM %(mytable)s
-                    WHERE condition=%(condition)s
+                    WHERE %(condition)s
                     ORDER BY %(orderby)s;""",
                     {'select_': select_, 'mytable':mytable, 'condition':condition, 'orderby':orderby })
 
@@ -37,7 +29,6 @@ def sort_qs_or_as(cursor, criteria):
     sorted_data = cursor.fetchall()
     return sorted_data
 
-@database_common.
 
 #only used by delete_question in server, used to be save_updated_data
 @database_common.connection_handler
