@@ -1,10 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap");
 body {
-    font-family: arial, helvetica, sans-serif;
-    font-size: 14px;
-    color: #8E8D8A;
-    background-color: #0B0C10;
-    margin: 50px;
-    padding: 0;
+  margin: 0;
+  height: 100vh;
+  background: #271F1A;
+  font-family: 'Montserrat';
+  display: grid;
+  grid-template-rows: 100% auto;
+}
+
+.background {
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  top: 0; }
+
+.header {
+  color: #E0E0E0;
 }
 
 th {
@@ -13,37 +24,42 @@ th {
 
 }
 
-
 h1 {
-    color: deeppink;
-    background-color: #1F2833;
-    margin-bottom: 7px;
-    padding: 32px;
-    text-align: center;
-    font-weight: bold;
-    letter-spacing: 0.5em;
-    border-radius: 5px;
-    font-size: 40px;
-}
+  text-transform: uppercase;
+  font-weight: lighter;
+  letter-spacing: -10px;
+  font-size: 96px;
+  position: absolute;
+  top: 280px;
+  left: 620px; }
 
-table {
-    padding: 16px;
-    text-align: left;
-    color: #45A29E;
-    background-color: #1F2833;
-    width: 100%;
-    alignment: center;
-    border-radius: 5px;
-    height: 10px;
-    overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-a {
-    font-weight: bold;
-    color: #66FCF1;
+.right-txt {
+  position: absolute;
+  left: 1000px;
+  top: 330px;
+  text-align: center; }
+  .right-txt h2 {
+    font-weight: normal;
+    font-size: 36px;
+    letter-spacing: -1px; }
+  .right-txt #btn {
+    display: block;
+    background-color: #B00000;
+    width: 200px;
+    font-weight: normal;
+    font-size: 36px;
+    letter-spacing: -1px;
+    color: #E0E0E0;
     text-decoration: none;
-}
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    box-shadow: 9px 4px 9px rgba(0, 0, 0, 0.5); }
+
+
+
 
 input{
     color: #45A29E;
@@ -54,11 +70,6 @@ input{
     height: 25px;
 }
 
-.title .belowtitle input{
-    font-weight: bold;
-    background-color: #45A29E;
-    color: #1F2833;
-}
 
 .answers input {
     font-weight: bold;
@@ -87,14 +98,6 @@ button{
     border-style: hidden;
 }
 
-.title {
-    padding: 14px 16px;
-    text-align: left;
-    color: #45A29E;
-    background-color: #1F2833;
-    border-radius: 5px;
-}
-
 .belowtitle {
     max-width: fit-content;
     max-height: max-content;
@@ -119,7 +122,7 @@ button{
 
 .navbar {
       overflow: hidden;
-      background-color: #1F2833;
+      background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     }
 
@@ -141,7 +144,7 @@ button{
       font-size: 16px;
       border: none;
       outline: none;
-      color: #66FCF1;
+      color: #E0E0E0;
       padding: 14px 16px;
       background-color: inherit;
       font-family: inherit;
@@ -179,3 +182,61 @@ button{
     .dropdown:hover .dropdown-content {
       display: block;
     }
+
+
+
+.question-page {
+  height: 100vh;
+  margin-top: 5em; }
+  .question-page .top-bar {
+    display: grid;
+    grid-template-columns: 10% auto;
+    color: #E0E0E0;
+    font-weight: normal;
+    padding: 1em;
+    margin: 0; }
+    .question-page .top-bar #title {
+      text-transform: uppercase;
+      text-align: center;
+      font-size: 50px;
+      margin: 0; }
+  .question-page .question-bubbles {
+    position: absolute;
+    color: #E0E0E0;}
+    .question-page .question-bubbles .single-bubble {
+      background-color: rgba(255, 255, 255, 0.1);
+      margin-top: 3em;
+      border-radius: 4px;
+    margin-left: 10em;
+    margin-right: 10em; }
+      .question-page .question-bubbles .single-bubble table tr .first-col {
+        width: 100px;
+        text-align: center;
+        margin: 0;
+      padding: 20px;
+      vertical-align: top}
+      .question-page .question-bubbles .single-bubble table {
+        border-spacing: 0;}
+      .question-page .question-bubbles .single-bubble td {
+        padding: 0;
+        margin: 0;
+          vertical-align: top
+        }
+      .question-page .question-bubbles .single-bubble .question-title {
+        font-weight: bold;
+      padding-top: 20px}
+
+      .question-page .question-bubbles .single-bubble .question-title a {
+          text-decoration: none;
+          color: #E0E0E0;
+      }
+
+      .question-page .question-bubbles .single-bubble .message {
+      padding-top: 1em;
+          padding-right: 2em;
+          width: 100%;
+      }
+      .question-page .question-bubbles .single-bubble .bubble-image {
+        height: 200px;
+        border-radius: 4px;
+}
