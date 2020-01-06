@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import os
 import data_manager2
+import psycopg2.extras
 
 app = Flask(__name__)
 question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
@@ -16,9 +17,12 @@ from flask)"""
 @app.route('/list')
 def route_index(sort_criteria=None):
     sort_criteria = request.args.get('sort_criteria')
+    question = data_manager2.get_all_data()
+    print(question)
     if sort_criteria is None:
-        sort_criteria = 'submission_time'
-    questions = data_manager2.get_all_data()
+        sort_criteria = question[title]
+    elif sort_criteria == 'submission_time':
+        questions = data_manager2.sort_dates(sort_criteria)
     questions = data_manager2.sort_qs_or_as(sort_criteria)
     return render_template('layout.html', questions=questions)
 
