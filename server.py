@@ -16,7 +16,7 @@ from flask)"""
 @app.route('/')
 @app.route('/list')
 def route_index(sort_criteria=None):
-    sort_criteria = request.args.get('view_number')
+    sort_criteria = request.args.get('sort_criteria')
     if sort_criteria is None:
         sort_criteria = 'submission_time'
     questions = data_manager2.sort_qs_or_as(sort_criteria)
