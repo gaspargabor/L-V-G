@@ -6,47 +6,63 @@
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
-    <h1><strong>Ask Mate</strong></h1>
+     <div class="header">
+         <img src="static/assets/brett-jordan-38OAil7Mz5I-unsplash_crop.jpg" alt="background" class="background">
+         <h1>mate</h1>
+         <div class="right-txt lax">
+             <div class="question lax">
+                <h2>You have a question?</h2>
+                <a href="#" id="btn">Ask!</a>
+             </div>
+             <div class="browse">
+                <h2>or</h2>
+                <h2 id="scroll">scroll to browse questions</h2>
+             </div>
+             </div>
+     </div>
 
-<div class="navbar">
-    <a href="{{ url_for("route_add_question") }}">Add new question</a>
-  <div class="dropdown">
-    <button class="dropbtn">Sort By</button>
-    <div class="dropdown-content">
-      <a href="{{ url_for("route_index", sort_criteria=submission_time)}}">submission time</a>
-      <a href="{{ url_for("route_index", sort_criteria=title)}}">title</a>
-      <a href="{{ url_for("route_index", sort_criteria=message)}}">message</a>
-      <a href="{{ url_for("route_index", sort_criteria=vote_number)}}">votes</a>
-      <a href="{{ url_for("route_index", sort_criteria=view_number)}}">views</a>
-    </div>
-  </div>
-</div>
-        <p>
+     <div class="question-page">
+
     <div class="content">
-    <table>
-        <tr height="40px">
-            <th width="10%">View Number</th>
-            <th width="10%">Vote Number</th>
-            <th id="tabletitlecell" width="30%">Title</th>
-            <th width="40%">Message</th>
-            <th>Image</th>
 
-        </tr>
-        {% for question in questions %}
-            <div class="data">
-            <tr class="messsage" height="30">
-                <td>{{ question['view_number'] }}</td>
-                <td>{{ question['vote_number'] }}</td>
-                <td>
-                    <a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a>
-                </td>
-                <td>{{ question['message'] }}</td>
-                <td>{{ question['image'] }}</td>
-            </tr>
+         <div class="question-page">
+         <div class="top-bar lax">
+             <h2 id="logo">AskMate</h2>
+             <h2 id="title">Questions</h2>
+         </div>
+          <div class="navbar">
+                <a href="{{ url_for("route_add_question") }}">Add new question</a>
+              <div class="dropdown">
+                <button class="dropbtn">Sort By</button>
+                <div class="dropdown-content">
+                  <a href="{{ url_for("route_index", sort_criteria='submission_time')}}">submission time</a>
+                  <a href="{{ url_for("route_index", sort_criteria='title')}}">title</a>
+                  <a href="{{ url_for("route_index", sort_criteria='message')}}">message</a>
+                  <a href="{{ url_for("route_index", sort_criteria='vote_number')}}">votes</a>
+                  <a href="{{ url_for("route_index", sort_criteria='view_number')}}">views</a>
+                </div>
+              </div>
             </div>
-        {% endfor %}
-    </table>
-</div>
+         <div class="question-bubbles">
+          {% for question in questions %}
+                     <div class="single-bubble">
+                         <table>
+                             <tr class="first-row">
+                                 <td class="first-col">{{ question['view_number'] }}</td>
+                                 <td class="question-title"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                 <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
+                             </tr>
+                             <tr>
+                                 <td class="first-col">{{ question['vote_number'] }}</td>
+                                 <td class="message">{{ question['message'] }}</td>
+                             </tr>
+                         </table>
+                     </div>
 
+          {% endfor %}
+ </div>
+</div>
+</div>
+     </div>
 </body>
 </html>
