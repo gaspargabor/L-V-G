@@ -2,27 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Add Question{% endblock %}</title>
+    <title>Add Question</title>
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
-    <h1><strong>{% block titletwo %}Add Question{% endblock %}</strong></h1>
-    <form action={% block route %}"/add-question"{% endblock %} method="post">
-            <p>
-                <label for="title">Title:</label><br>
-                <input type="text" name="title" id="title" {% block comment_title %}placeholder="Enter title here"{% endblock %}>
+    <div class="add_question"><h1>Add Question</h1>
+    <div>
+     <form action="/add-question" method="post">
+           <label id="add_title">Title:</label><br>
+                <input type="text" name="title" id="title" placeholder="Enter title here">
             </p>
             <p>
-                <label for="message">Message:</label><br>
-                {% block question_message %}<textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your question here"></textarea>{% endblock %}
+                <label id="add_message">Message:</label><br>
+                <textarea name="message" id="add_message" cols="40" rows="4" placeholder="Enter your question here"></textarea>
             </p>
             <p>
-                <label for="image">Image</label><br>
-                <input type="text" name="image" id="message" placeholder="Image link">
+                <label id="add_image">Image</label><br>
+                <input type="text" name="image" id="add_message" placeholder="Image link">
             </p>
         <p>
             <button type="submit">Submit Question</button>
         </p>
     </form>
+</div>
+</div>
 </body>
 </html>
