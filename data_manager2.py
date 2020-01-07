@@ -32,7 +32,7 @@ def sort_qs_or_as(cursor, criteria):
 
 #only used by delete_question in server, used to be save_updated_data
 @database_common.connection_handler
-def delete_data(mytable, criteria):
+def delete_data(cursor, mytable, criteria):
     cursor.execute("""
                     DELETE FROM mytable
                     WHERE criteria;""")
@@ -48,14 +48,13 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_q_or_a_to_file(mytable, column, new_value):
+def add_new_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
-                    UPDATE mytable
-                    SET column = new_value
-                    WHERE condition;
-                    """)
-    updated_data = cursor.fetchall()
-    return updated_data
+                    INSERT INTO question
+                    (submission_time, view_number, vote_number, title, message, image)
+                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
+                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+    return None
 
 
 
