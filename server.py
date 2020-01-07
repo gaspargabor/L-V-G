@@ -14,13 +14,21 @@ from flask)"""
 
 
 @app.route('/')
-@app.route('/list')
 def route_index(sort_criteria=None):
     sort_criteria = request.args.get('sort_criteria')
     if sort_criteria is None:
         sort_criteria = 'submission_time'
     questions = data_manager2.sort_qs_or_as(sort_criteria)
     return render_template('layout.html', questions=questions)
+
+
+@app.route('/list')
+def route_all_question(sort_criteria=None):
+    sort_criteria = request.args.get('sort_criteria')
+    if sort_criteria is None:
+        sort_criteria = 'submission_time'
+    questions = data_manager2.sort_qs_or_as(sort_criteria)
+    return render_template('list.html', questions=questions)
 
 
 """@app.route('/')

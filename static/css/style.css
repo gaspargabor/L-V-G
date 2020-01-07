@@ -1,12 +1,28 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,700&display=swap");
 body {
   margin: 0;
+    padding: 0;
   height: 100vh;
   background: #271F1A;
   font-family: 'Montserrat';
   display: grid;
   grid-template-rows: 100% auto;
+    color: #E0E0E0;
 }
+
+.add_question{
+    display: grid;
+    grid-template-rows: 20% auto;
+    text-align: center;
+}
+
+.add_question h1 {
+    padding-top: 2em;
+    margin: 0;
+    position: relative;
+    height: 2em;
+}
+
 
 .background {
   width: 100%;
@@ -24,7 +40,7 @@ th {
 
 }
 
-h1 {
+#main_pg {
   text-transform: uppercase;
   font-weight: lighter;
   letter-spacing: -10px;
@@ -62,14 +78,18 @@ h1 {
 
 
 input{
-    color: #45A29E;
-    background-color: #1F2833;
+    color: #E0E0E0;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     border-color: #8E8D8A;
     border-style: hidden;
     height: 25px;
+    width: 500px;
 }
 
+#add_title{
+    text-align: left;
+}
 
 .answers input {
     font-weight: bold;
@@ -80,20 +100,20 @@ input{
 }
 
 textarea{
-    color: #45A29E;
-    background-color: #1F2833;
+    color: #E0E0E0;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     border-color: #8E8D8A;
     border-style: hidden;
+    width: 500px;
 }
 
 
 button{
-    background-color: #1F2833;
-    color: #45A29E;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #E0E0E0;
     font-weight: bold;
     border-radius: 5px;
-    border-color: #8E8D8A;
     height: 25px;
     border-style: hidden;
 }
@@ -184,7 +204,6 @@ button{
     }
 
 
-
 .question-page {
   height: 100vh;
   margin-top: 5em; }
@@ -200,6 +219,7 @@ button{
       text-align: center;
       font-size: 50px;
       margin: 0; }
+
   .question-page .question-bubbles {
     position: absolute;
     color: #E0E0E0;}
@@ -240,3 +260,4 @@ button{
         height: 200px;
         border-radius: 4px;
 }
+

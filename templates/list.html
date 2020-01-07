@@ -1,14 +1,54 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ask Mate</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
 
-{% block table %}
-    <table>
-    <tr>
-            <th>votes</th>
-            <th>Title</th>
-    </tr>
-    <tr>
-            <th>views</th>
-            <th>message</th>
-    </tr>
-    </table>
-{% endblock %}
+     <div class="question-page">
+
+    <div class="content">
+
+         <div class="question-page_4_all">
+         <div class="top-bar lax">
+             <h2 id="logo">AskMate</h2>
+             <h2 id="title">All Questions</h2>
+         </div>
+          <div class="navbar">
+                <a href="{{ url_for("route_add_question") }}">Add new question</a>
+              <div class="dropdown">
+                <button class="dropbtn">Sort By</button>
+                <div class="dropdown-content">
+                  <a href="{{ url_for("route_all_question", sort_criteria='submission_time')}}">submission time</a>
+                  <a href="{{ url_for("route_all_question", sort_criteria='title')}}">title</a>
+                  <a href="{{ url_for("route_all_question", sort_criteria='message')}}">message</a>
+                  <a href="{{ url_for("route_all_question", sort_criteria='vote_number')}}">votes</a>
+                  <a href="{{ url_for("route_all_question", sort_criteria='view_number')}}">views</a>
+                </div>
+              </div>
+            </div>
+         <div class="question-bubbles">
+          {% for question in questions %}
+                     <div class="single-bubble">
+                         <table>
+                             <tr class="first-row">
+                                 <td class="first-col">{{ question['view_number'] }}</td>
+                                 <td class="question-title"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                 <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
+                             </tr>
+                             <tr>
+                                 <td class="first-col">{{ question['vote_number'] }}</td>
+                                 <td class="message">{{ question['message'] }}</td>
+                             </tr>
+                         </table>
+                     </div>
+
+          {% endfor %}
+ </div>
+</div>
+</div>
+     </div>
+</body>
+</html>
