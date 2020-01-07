@@ -85,5 +85,17 @@ def add_one_to_view_number(cursor, question_id):
                     """% ''.join(question_id),
                    {'question_id': question_id})
 
+@database_common.connection_handler
+def search(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
 
 
