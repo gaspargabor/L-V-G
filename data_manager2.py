@@ -47,6 +47,7 @@ def get_question_by_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     question=cursor.fetchall()
+    print(question)
     return question
 
 #only used by delete_question in server, used to be save_updated_data

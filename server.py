@@ -32,16 +32,6 @@ def route_all_question(sort_criteria=None):
     return render_template('list.html', questions=questions)
 
 
-"""@app.route('/')
-@app.route('/list')
-def route_index(sort_criteria=None):
-    sort_criteria = request.args.get('sort_criteria')
-    if sort_criteria is None:
-        sort_criteria = 'submission_time'
-    questions = data_manager.get_data(question_route)
-    questions = data_manager.sort_qs_or_as(questions, sort_criteria)
-    return render_template('layout.html', questions=questions)"""
-
 
 @app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
