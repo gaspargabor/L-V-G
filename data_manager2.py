@@ -38,13 +38,33 @@ def sort_qs_or_as(cursor, criteria):
     sorted_data = cursor.fetchall()
     return sorted_data
 
+@database_common.connection_handler
+def get_answers_for_question(cursor, question_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE id=%(question_id)s;
+                    """,
+                   {'question_id': question_id})
+    answers=cursor.fetchall()
+    return answers
+
+@database_common.connection_handler
+def get_question_by_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE id=%(question_id)s;
+                    """,
+                   {'question_id': question_id})
+    question=cursor.fetchall()
+    return question
 
 #only used by delete_question in server, used to be save_updated_data
 @database_common.connection_handler
-def delete_data(mytable, criteria):
+def delete_data(cursor, mytable, criteria):
     cursor.execute("""
-                    DELETE FROM mytable
-                    WHERE criteria;""")
+                    DELETE FROM %(mytable)s
+                    WHERE %(criteria)s;""",
+                   {'mytable': mytable, 'criteria': criteria})
 
 #not sure if this would work
 @database_common.connection_handler
@@ -57,15 +77,22 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_q_or_a_to_file(mytable, column, new_value):
+def add_new_question(cursor, submission_time, view_number, vote_number, title, message, image):
     cursor.execute("""
-                    UPDATE mytable
-                    SET column = new_value
-                    WHERE condition;
-                    """)
-    updated_data = cursor.fetchall()
-    return updated_data
+                    INSERT INTO question
+                    (submission_time, view_number, vote_number, title, message, image)
+                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
+                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+    return None
 
+@database_common.connection_handler
+def add_one_to_view_number(cursor, question_id):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = view_number+1
+                    WHERE id=%s;
+                    """% ''.join(question_id),
+                   {'question_id': question_id})
 
 
 

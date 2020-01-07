@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import data_manager2
 import data_manager
+from datetime import datetime
 
 app = Flask(__name__)
 question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
@@ -63,6 +64,20 @@ def route_question(question_id):
     if request.method == 'POST':
         return redirect('/')
     if request.method == 'GET':
+        # route_view_counter(question_id)
+        question = data_manager2.get_question_by_id(question_id)
+        answers = data_manager2.get_answers_for_question(question_id)
+        return render_template('display_question.html',
+                               question_id=question_id,
+                               question=question,
+                               answers=answers
+                               )
+
+""""@app.route('/question/<question_id>', methods=['GET', 'POST'])
+def route_question(question_id):
+    if request.method == 'POST':
+        return redirect('/')
+    if request.method == 'GET':
         route_view_counter(question_id)
         question = data_manager.get_data(question_route, question_id)
         answers = data_manager.get_answers_for_question(answer_route, question_id)
@@ -70,7 +85,7 @@ def route_question(question_id):
                                question_id=question['id'],
                                question=question,
                                answers=answers
-                               )
+                               )"""
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -96,14 +111,13 @@ def route_edit_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        question = {
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': request.form.get('image'),
-            'view_number': 0,
-            'vote_number': 0
-        }
-        data_manager.add_new_question(question)
+        submission_time = datetime.now(),
+        title = request.form.get('title'),
+        message = request.form.get('message'),
+        image = request.form.get('image'),
+        view_number = 0,
+        vote_number = 0
+        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
         return redirect('/')
     return render_template('addquestion.html')
 
@@ -124,10 +138,15 @@ def route_new_answer(question_id):
     return render_template('addanswer.html', question_id=question_id)
 
 
-def route_view_counter(question_id):
-    question = data_manager.get_question(question_route, question_id)
+"""def route_view_counter(question_id):
+    data_manager2.get_question_by_id(question_id)
+    data_manager2.add_one_to_view_number(question_id)"""
+
+
+"""def route_view_counter(question_id):
+    question = data_manager2.get_question_by_id(question_id)
     question['view_number'] = str(int(question['view_number']) + 1)
-    data_manager.edit_question(question)
+    data_manager2.edit_question(question)"""
 
 
 @app.route('/addvote-question')
