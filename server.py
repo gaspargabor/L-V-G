@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 import os
 import data_manager2
 import data_manager
+from datetime import datetime
 
 app = Flask(__name__)
 question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
@@ -104,14 +105,13 @@ def route_edit_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        question = {
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': request.form.get('image'),
-            'view_number': 0,
-            'vote_number': 0
-        }
-        data_manager.add_new_question(question)
+        submission_time = datetime.now(),
+        title = request.form.get('title'),
+        message = request.form.get('message'),
+        image = request.form.get('image'),
+        view_number = 0,
+        vote_number = 0
+        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
         return redirect('/')
     return render_template('addquestion.html')
 
