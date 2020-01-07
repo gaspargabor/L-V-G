@@ -15,7 +15,7 @@ def get_all_data(cursor):
 def get_5_latest(cursor):
     cursor.execute("""
                     SELECT * FROM question
-                    ORDER BY "submission_time"
+                    ORDER BY "submission_time" DESC
                     LIMIT 5;""")
     latest_5 = cursor.fetchall()
     return latest_5

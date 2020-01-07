@@ -28,6 +28,8 @@ def route_index():
     if request.method == "GET":
         questions = data_manager2.get_5_latest()
         return render_template('layout.html', questions=questions)
+    elif request.method == "POST":
+        return redirect('/list')
 
 
 @app.route('/list')
@@ -176,6 +178,34 @@ def addvote_answer(answer_id=None, question_id=None):
                            question_id=question['id'],
                            question=question,
                            answers=answers)
+
+@app.route('/add-question', methods=['GET', 'POST'])
+def route_add_question():
+    if request.method == 'POST':
+        submission_time = datetime.now(),
+        title = request.form.get('title'),
+        message = request.form.get('message'),
+        image = request.form.get('image'),
+        view_number = 0,
+        vote_number = 0
+        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
+        return redirect('/')
+    return render_template('addquestion.html')
+
+
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def addcomment_question(question_id):
+    if request.method == "GET":
+        return render_template('addcomment.html')
+    elif request.method == "POST":
+        submission_time = datetime.now(),
+        message = request.form.get("message"),
+        edited_count = 0,
+        question_id = question_id,
+        answer_id = None
+        return render_template('display_question/<question_id,',
+                               question_id=question_id,
+                               answer=answer,)
 
 
 if __name__ == '__main__':
