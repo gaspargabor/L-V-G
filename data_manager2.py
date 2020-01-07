@@ -10,6 +10,8 @@ def get_all_data(cursor):
     all_data = cursor.fetchall()
     return all_data
 
+
+
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
     cursor.execute("""
@@ -30,7 +32,7 @@ def sort_qs_or_as(cursor, criteria):
 
 #only used by delete_question in server, used to be save_updated_data
 @database_common.connection_handler
-def delete_data(cursor, mytable, criteria):
+def delete_data(mytable, criteria):
     cursor.execute("""
                     DELETE FROM mytable
                     WHERE criteria;""")
@@ -46,7 +48,7 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_q_or_a_to_file(cursor, mytable, column, new_value):
+def add_new_q_or_a_to_file(mytable, column, new_value):
     cursor.execute("""
                     UPDATE mytable
                     SET column = new_value
