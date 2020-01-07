@@ -16,14 +16,14 @@
 <p>
 
 <div class="title">
-        {% for data in question %}
-                <h2>{{ question.title }}</h2>
+
+                <h2>{{ question[0]['title'] }}</h2>
         <div class="belowtitle">
-                        <h4 style="display:inline">views: {{question['view_number']}} </h4>
-                        <h4 style="display:inline">upvotes: {{ question['vote_number'] }}</h4>
+                        <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
+                        <h4 style="display:inline">upvotes: {{ question[0]['vote_number'] }}</h4>
                         <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a></h4><br>
-                        <h3 class="message">{{ question['message'] }} {{question['image']}} </h3>
-        {% endfor%}
+                        <h3 class="message">{{ question[0]['message'] }} {{question['image']}} </h3>
+
          </div>
 </div>
 <p>
