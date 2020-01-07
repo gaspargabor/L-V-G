@@ -13,13 +13,20 @@ This layer should consist of logic that is related to Flask. (with other words: 
 from flask)"""
 
 
-@app.route('/')
-def route_index(sort_criteria=None):
-    sort_criteria = request.args.get('sort_criteria')
-    if sort_criteria is None:
-        sort_criteria = 'submission_time'
-    questions = data_manager2.sort_qs_or_as(sort_criteria)
-    return render_template('layout.html', questions=questions)
+#@app.route('/')
+#def route_index(sort_criteria=None):
+#    sort_criteria = request.args.get('sort_criteria')
+#    if sort_criteria is None:
+#        sort_criteria = 'submission_time'
+#    questions = data_manager2.sort_qs_or_as(sort_criteria)
+#    return render_template('layout.html', questions=questions)
+
+
+@app.route('/', methods=['POST', 'GET'])
+def route_index():
+    if request.method == "GET":
+        questions = data_manager2.get_5_latest()
+        return render_template('layout.html', questions=questions)
 
 
 @app.route('/list')

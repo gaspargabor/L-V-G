@@ -11,6 +11,15 @@ def get_all_data(cursor):
     return all_data
 
 
+@database_common.connection_handler
+def get_5_latest(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                    ORDER BY "submission_time"
+                    LIMIT 5;""")
+    latest_5 = cursor.fetchall()
+    return latest_5
+
 
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
