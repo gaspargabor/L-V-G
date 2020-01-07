@@ -17,17 +17,62 @@
              <h2 id="title">All Questions</h2>
          </div>
           <div class="navbar">
-                <a href="{{ url_for("route_add_question") }}">Add new question</a>
-              <div class="dropdown">
-                <button class="dropbtn">Sort By</button>
-                <div class="dropdown-content">
-                  <a href="{{ url_for("route_all_question", sort_criteria='submission_time')}}">submission time</a>
-                  <a href="{{ url_for("route_all_question", sort_criteria='title')}}">title</a>
-                  <a href="{{ url_for("route_all_question", sort_criteria='message')}}">message</a>
-                  <a href="{{ url_for("route_all_question", sort_criteria='vote_number')}}">votes</a>
-                  <a href="{{ url_for("route_all_question", sort_criteria='view_number')}}">views</a>
-                </div>
-              </div>
+                <a id="add_q_link" href="{{ url_for("route_add_question") }}">Add new question</a>
+              <div class="sorting">
+                  <table>
+                      <tr>
+                          <td rowspan="2"><h4>submission time</h4></td>
+                          <td class="btnn"><a href="#">^</a></td>
+                      </tr>
+                      <tr>
+                          <td class="btnn"><a href="#">*</a></td>
+                      </tr>
+                      </table>
+                  </div>
+              <div class="sorting">
+                <table>
+                      <tr>
+                          <td rowspan="2"><h4>title</h4></td>
+                  <td class="btnn"><a href="#">^</a></td>
+                      </tr>
+                    <tr>
+                  <td class="btnn"><a href="#">*</a></td>
+                    </tr>
+                </table>
+                  </div>
+              <div class="sorting">
+                  <table>
+                      <tr>
+                          <td rowspan="2"><h4>message</h4></td>
+                  <td class="btnn"><a href="#">^</a></td>
+                      </tr>
+                    <tr>
+                  <td class="btnn"><a href="#">*</a></td>
+                    </tr>
+                </table>
+                  </div>
+              <div class="sorting">
+                                                    <table>
+                      <tr>
+                          <td rowspan="2"><h4>votes</h4></td>
+                  <td class="btnn"><a href="#">^</a></td>
+                      </tr>
+                    <tr>
+                  <td class="btnn"><a href="#">*</a></td>
+                    </tr>
+                </table>
+                  </div>
+              <div class="sorting">
+                                                                      <table>
+                      <tr>
+                          <td rowspan="2"><h4>views</h4></td>
+                  <td class="btnn"><a href="#">^</a></td>
+                      </tr>
+                    <tr>
+                  <td class="btnn"><a href="#">*</a></td>
+                    </tr>
+                </table>
+                  </div>
             </div>
          <div class="question-bubbles">
           {% for question in questions %}

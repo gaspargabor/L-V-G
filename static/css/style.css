@@ -147,65 +147,47 @@ button{
       overflow: hidden;
       background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
     }
+
+.navbar.sorting{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar.sorting table {
+    background-color: red;
+}
+h4 {
+    margin: 0;
+    padding: 0;
+}
+
+.btnn {
+    padding: 0;
+    margin: 0;
+}
 
  .navbar a {
       float: left;
       font-size: 16px;
       color: #66FCF1;
       text-align: center;
-      padding: 14px 16px;
+     padding: 2px 5px 2px 5px;
+     vertical-align: center;
       text-decoration: none;
     }
 
-    .dropdown {
-      float: left;
-      overflow: hidden;
-    }
+ #add_q_link {
+     padding-top: 15px;
+ }
 
-    .dropdown .dropbtn {
-      font-size: 16px;
-      border: none;
-      outline: none;
-      color: #E0E0E0;
-      padding: 14px 16px;
-      background-color: inherit;
-      font-family: inherit;
-        font-weight: bold;
-      margin: 0;
-    }
-
-    .navbar a:hover, .dropdown:hover .dropbtn {
+    .navbar a:hover, .dropdown:hover {
       background-color: #45A29E;
     }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #8E8D8A;
-      min-width: 160px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
-
-
-    .dropdown-content a {
-      float: none;
-      color: #0B0C10;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      text-align: left;
-    }
-
-    .dropdown-content a:hover {
-        color: #C5C6C7;
-      background-color: #45A29E;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
 
 .question-page {
   height: 100vh;

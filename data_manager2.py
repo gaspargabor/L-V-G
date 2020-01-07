@@ -11,6 +11,15 @@ def get_all_data(cursor):
     return all_data
 
 
+@database_common.connection_handler
+def get_5_latest(cursor):
+    cursor.execute("""
+                    SELECT * FROM question
+                    ORDER BY "submission_time" DESC
+                    LIMIT 5;""")
+    latest_5 = cursor.fetchall()
+    return latest_5
+
 
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
@@ -97,5 +106,13 @@ def search(cursor, question):
     search_result = cursor.fetchall()
     return search_result
 
+
+@database_common.connection_handler
+def add_comment_for_question(cursor, submission_time, message, edited_count, question_id, answer_id):
+    cursor.execute("""
+                    INSERT INTO comment
+                    (submission_time, edited_count, question_id, answer_id, message)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(question_id)s, %(answer_id)s, %(message)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})
 
 
