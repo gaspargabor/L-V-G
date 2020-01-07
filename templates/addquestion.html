@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Question</title>
-    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
-</head>
-<body>
-    <div class="add_question"><h1>Add Question</h1>
-    <div>
-     <form action="/add-question" method="post">
-           <label id="add_title">Title:</label><br>
-                <input type="text" name="title" id="title" placeholder="Enter title here">
-            </p>
-            <p>
-                <label id="add_message">Message:</label><br>
-                <textarea name="message" id="add_message" cols="40" rows="4" placeholder="Enter your question here"></textarea>
-            </p>
-            <p>
-                <label id="add_image">Image</label><br>
-                <input type="text" name="image" id="add_message" placeholder="Image link">
-            </p>
-        <p>
-            <button type="submit">Submit Question</button>
-        </p>
-    </form>
-</div>
-</div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Question</title>
+        <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="add_qora">
+            <div class="titlerow"><h1>add question</h1></div>
+            <div class="qaform">
+                 <form action="/add-question" method="post">
+                     <div class="addtitle">
+                         <label id="add_title">Title:</label><br>
+                         <input type="text" name="title" id="title" placeholder="Enter title here">
+                     </div>
+                     <div class="addmessage">
+                         <label id="add_message">Message:</label><br>
+                         <textarea name="message" id="add_message" cols="40" rows="4" placeholder="Enter your question here"></textarea>
+                     </div>
+                     <div class="addimage">
+                         <label id="add_image">Image:</label><br>
+                         <input type="text" name="image" id="add_message" placeholder="Image link">
+                     </div>
+                     <div>
+                         <button class="addbutton" type="submit">Submit Question</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
+    </body>
 </html>

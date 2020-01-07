@@ -86,6 +86,15 @@ def add_new_question(cursor, submission_time, view_number, vote_number, title, m
     return None
 
 @database_common.connection_handler
+def add_new_answer(cursor, submission_time, vote_number, question_id, message, image):
+    cursor.execute("""
+                    INSERT INTO answer
+                    (submission_time, vote_number, question_id, message, image)
+                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s)
+                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image})
+    return None
+
+@database_common.connection_handler
 def add_one_to_view_number(cursor, question_id):
     cursor.execute("""
                     UPDATE question
