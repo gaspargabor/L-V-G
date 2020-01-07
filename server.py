@@ -180,33 +180,41 @@ def addvote_answer(answer_id=None, question_id=None):
                            question=question,
                            answers=answers)
 
-@app.route('/add-question', methods=['GET', 'POST'])
-def route_add_question():
-    if request.method == 'POST':
-        submission_time = datetime.now(),
-        title = request.form.get('title'),
-        message = request.form.get('message'),
-        image = request.form.get('image'),
-        view_number = 0,
-        vote_number = 0
-        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
-        return redirect('/')
-    return render_template('addquestion.html')
+#@app.route('/add-question', methods=['GET', 'POST'])
+#def route_add_question():
+#    if request.method == 'POST':
+#        submission_time = datetime.now(),
+#        title = request.form.get('title'),
+#        message = request.form.get('message'),
+#        image = request.form.get('image'),
+#        view_number = 0,
+#        vote_number = 0
+#        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
+#        return redirect('/')
+#    return render_template('addquestion.html')
+
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def addcomment_question(question_id):
     if request.method == "GET":
-        return render_template('addcomment.html')
-    elif request.method == "POST":
+        return render_template('addcomment.html', question_id=question_id)
+    if request.method == "POST":
+        question_id = question_id
+        print(question_id),
         submission_time = datetime.now(),
         message = request.form.get("message"),
         edited_count = 0,
-        question_id = question_id,
         answer_id = None
-        return render_template('display_question/<question_id,',
+        data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id)
+        question = data_manager2.get_question_by_id(question_id)
+        answers = data_manager2.get_answers_for_question(question_id)
+        #comment_for_question = data_manager2.get_comment_for_question(question_id)
+        return render_template('display_question.html',
                                question_id=question_id,
-                               answer=answer,)
+                               question=question,
+                               answers=answers)
+                               #comment_for_question=comment_for_question)
 
 
 if __name__ == '__main__':

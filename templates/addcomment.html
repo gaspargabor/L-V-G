@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add comment</title>
+</head>
+<body>
+    <form action="/question/{{ question_id }}/new-comment" method="post">
+        <textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your comment here"></textarea>
+        <button type="submit">Submit comment.</button>,
+    </form>
+</body>
+</html>
