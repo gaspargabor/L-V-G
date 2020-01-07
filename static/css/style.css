@@ -6,7 +6,7 @@ body {
   background: #271F1A;
   font-family: 'Montserrat';
   display: grid;
-  grid-template-rows: 100% auto;
+  grid-template-rows: 25% auto;
     color: #E0E0E0;
 }
 
@@ -46,13 +46,16 @@ th {
   letter-spacing: -10px;
   font-size: 96px;
   position: absolute;
-  top: 280px;
-  left: 620px; }
+    margin: 0;
+    padding-left: 39%;
+    padding-top: 10%;
+
+}
 
 .right-txt {
   position: absolute;
-  left: 1000px;
-  top: 330px;
+padding-top: 2%;
+    padding-left: 63%;
   text-align: center; }
   .right-txt h2 {
     font-weight: normal;
@@ -218,6 +221,8 @@ button{
       text-transform: uppercase;
       text-align: center;
       font-size: 50px;
+        padding-top: .5em;
+        padding-bottom: .5em;
       margin: 0; }
 
   .question-page .question-bubbles {
