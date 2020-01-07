@@ -58,8 +58,9 @@ def route_question(question_id):
     if request.method == 'POST':
         return redirect('/')
     if request.method == 'GET':
-        # route_view_counter(question_id)
+        route_view_counter(question_id)
         question = data_manager2.get_question_by_id(question_id)
+        print(question)
         answers = data_manager2.get_answers_for_question(question_id)
         return render_template('display_question.html',
                                question_id=question_id,
@@ -132,9 +133,9 @@ def route_new_answer(question_id):
     return render_template('addanswer.html', question_id=question_id)
 
 
-"""def route_view_counter(question_id):
+def route_view_counter(question_id):
     data_manager2.get_question_by_id(question_id)
-    data_manager2.add_one_to_view_number(question_id)"""
+    data_manager2.add_one_to_view_number(question_id)
 
 
 """def route_view_counter(question_id):
