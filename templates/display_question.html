@@ -7,23 +7,30 @@
 </head>
 <body>
     <h1><strong>Ask Mate</strong></h1>
-    <div class="navbar">
-        <a href="{{ url_for("route_index") }}">Back to home page</a>
-        <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
-        <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
-        <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
-    </div>
-    <div class="title">
-        <h2>{{ question['title'] }}</h2>
+<div class="navbar">
+    <a href="{{ url_for("route_index") }}">Back to home page</a>
+    <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
+    <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
+    <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
+</div>
+<p>
+
+<div class="title">
+
+                <h2>{{ question[0]['title'] }}</h2>
         <div class="belowtitle">
-                        <h4 style="display:inline">views: {{ question['view_number'] }} </h4>
-                        <h4 style="display:inline">upvotes: {{ question['vote_number'] }}</h4>
+                        <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
+                        <h4 style="display:inline">upvotes: {{ question[0]['vote_number'] }}</h4>
                         <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a></h4><br>
                         <h3 class="message">{{ question[0]['message'] }} {{question['image']}} </h3>
-        </div>
-    </div>
-    <div class="answers">
-        <h4>Answers:</h4>
+
+         </div>
+</div>
+<p>
+<div class="answers">
+<p>
+    <h4>Answers:</h4>
+
             {% for answer in answers %}
                 <h5>{{ answer['message'] }}</h5>
                 <h5>{{ answer['image'] }}</h5>
@@ -31,6 +38,6 @@
                 <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
                 <h5>--------------------------------------------------------------------</h5>
             {% endfor %}
-    </div>
+</div>
 </body>
 </html>
