@@ -93,6 +93,25 @@ def route_edit_answer(answer_id):
         return redirect(to_url)
 
 
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def route_edit_comment(comment_id):
+    if request.method == 'GET':
+        original_comment = data_manager2.get_comment_by_id(comment_id)
+        print(original_comment)
+        return render_template('edit_answer.html', comment_id=comment_id, original_comment=original_comment)
+    if request.method == 'POST':
+        original_comment = data_manager2.get_comment_by_id(comment_id)
+        question_id = original_comment[0]['question_id']
+        if question_id is None:
+            answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
+            question_id = answer[0][question_id]
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_comment_by_id(comment_id, submission_time, message)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
