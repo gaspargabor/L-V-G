@@ -46,15 +46,14 @@
     {% endfor %}
 </div>
 
-
-    <div>
-    {% for answer in answers %}
-        <div class="display_answers_bubble">
+    <div class="tesziteszt">
+        {% for kerdes in ultimate %}
+            <div class="display_answers_bubble">
             <table>
                 <tr>
-                    <td rowspan="2">{{ answer['vote_number'] }}</td>
+                    <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
                     <td class="vote_button">Up</td>
-                    <td rowspan="2">{{ answer['message'] }}</td>
+                    <td rowspan="2">{{ kerdes[0]['message'] }}</td>
                     <td rowspan="2">Add comment to answer</td>
                 </tr>
                 <tr>
@@ -63,24 +62,20 @@
 
             </table>
         </div>
-    {% endfor %}
-    </div>
-    {% print('henlo') %}
-    <div class="tesziteszt">
-        {% for kerdes in ultimate %}
-            <div class="display_answers_bubble">
-            <table>
-                <tr>
-                    <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                </tr>
-            </table>
-        </div>
-
+        <div class="display_comment_bubble">
             {% for komment in kerdes[1] %}
-                <br>
-            {% print(komment) %}
+                 <div class="display_comment_bubble">
+                    <table>
+                        <tr>
+                            <td>Edit comment</td>
+                            <td>Delete comment</td>
+                            <td>{{ komment['message'] }}</td>
+                        </tr>
+                    </table>
+             </div>
                 {% endfor %}
         {% endfor %}
+    </div>
     </div>
 
 
