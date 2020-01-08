@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add comment</title>
+    <title>Add Comment</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
-    <form action="/question/{{ question_id }}/new-comment" method="post">
-        <textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your comment here"></textarea>
-        <button type="submit">Submit comment.</button>,
-    </form>
+    <div class="add_qora">
+            <div class="titlerow"><h1>add comment</h1></div>
+            <div class="qaform">
+                 <form action="/answer/{{ answer_id }}/new-comment" method="post">
+                     <div class="addcomment">
+                         <label id="add_comment">Here you go: </label><br>
+                         <textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your comment here"></textarea>
+                     </div>
+                     <div>
+                         <button class="addbutton" type="submit">submit comment</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
 </body>
 </html>

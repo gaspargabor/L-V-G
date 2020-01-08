@@ -86,6 +86,15 @@ def add_new_question(cursor, submission_time, view_number, vote_number, title, m
     return None
 
 @database_common.connection_handler
+def add_new_answer(cursor, submission_time, vote_number, question_id, message, image):
+    cursor.execute("""
+                    INSERT INTO answer
+                    (submission_time, vote_number, question_id, message, image)
+                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s)
+                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image})
+    return None
+
+@database_common.connection_handler
 def add_one_to_view_number(cursor, question_id):
     cursor.execute("""
                     UPDATE question
@@ -93,6 +102,18 @@ def add_one_to_view_number(cursor, question_id):
                     WHERE id=%s;
                     """% ''.join(question_id),
                    {'question_id': question_id})
+
+@database_common.connection_handler
+def search(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
 
 
 @database_common.connection_handler
@@ -104,3 +125,10 @@ def add_comment_for_question(cursor, submission_time, message, edited_count, que
                     """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})
 
 
+@database_common.connection_handler
+def add_comment_for_answer(cursor, submission_time, message, edited_count, question_id, answer_id):
+    cursor.execute("""
+                    INSERT INTO comment
+                    (submission_time, edited_count, question_id, answer_id, message)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(question_id)s, %(answer_id)s, %(message)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})

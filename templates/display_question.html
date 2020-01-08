@@ -37,6 +37,7 @@
                 <h5>{{ answer['image'] }}</h5>
                 <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
                 <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
+                <h5 style="display:inline"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}"><input type="submit" value="Add Comment"></a></h5><br>
                 <h5>--------------------------------------------------------------------</h5>
             {% endfor %}
 </div>

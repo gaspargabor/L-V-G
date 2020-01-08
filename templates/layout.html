@@ -32,6 +32,10 @@
          </div>
           <div class="navbar">
                 <a href="{{ url_for("route_all_question") }}">Display all questions</a>
+              <form action="/search" method="get">
+                    <input type="text" name="q" id="q" required>
+                    <input type="submit" value="Search">
+              </form>
             </div>
          <div class="question-bubbles">
           {% for question in questions %}

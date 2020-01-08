@@ -14,15 +14,6 @@ This layer should consist of logic that is related to Flask. (with other words: 
 from flask)"""
 
 
-#@app.route('/')
-#def route_index(sort_criteria=None):
-#    sort_criteria = request.args.get('sort_criteria')
-#    if sort_criteria is None:
-#        sort_criteria = 'submission_time'
-#    questions = data_manager2.sort_qs_or_as(sort_criteria)
-#    return render_template('layout.html', questions=questions)
-
-
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
     if request.method == "GET":
@@ -58,27 +49,12 @@ def route_question(question_id):
     if request.method == 'GET':
         route_view_counter(question_id)
         question = data_manager2.get_question_by_id(question_id)
-        print(question)
         answers = data_manager2.get_answers_for_question(question_id)
         return render_template('display_question.html',
                                question_id=question_id,
                                question=question,
                                answers=answers
                                )
-
-""""@app.route('/question/<question_id>', methods=['GET', 'POST'])
-def route_question(question_id):
-    if request.method == 'POST':
-        return redirect('/')
-    if request.method == 'GET':
-        route_view_counter(question_id)
-        question = data_manager.get_data(question_route, question_id)
-        answers = data_manager.get_answers_for_question(answer_route, question_id)
-        return render_template('display_question.html',
-                               question_id=question['id'],
-                               question=question,
-                               answers=answers
-                               )"""
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -117,18 +93,18 @@ def route_add_question():
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(question_id):
+    if request.method == "GET":
+        return render_template('addanswer.html', question_id=question_id)
     if request.method == 'POST':
-        answer = {
-            'id': '<question_id>',
-            "message": request.form.get('message'),
-            "image": request.form.get('image'),
-            "vote_number": 0
-        }
-        data_manager.add_new_answer(answer, question_id)
-        question = data_manager.get_data(question_route, question_id)
-        answers = data_manager.get_answers_for_question(answer_route, question_id)
-        return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
-    return render_template('addanswer.html', question_id=question_id)
+        submission_time = datetime.now(),
+        question_id = int(question_id)
+        message = request.form.get('message'),
+        image = request.form.get('image'),
+        vote_number = 0
+        data_manager2.add_new_answer(submission_time, vote_number, question_id, message, image)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+        #return render_template('display_question.html', question_id=question_id, question=question, answers=answers)
 
 
 def route_view_counter(question_id):
@@ -177,7 +153,6 @@ def addcomment_question(question_id):
         return render_template('addcomment.html', question_id=question_id)
     if request.method == "POST":
         question_id = question_id
-        print(question_id),
         submission_time = datetime.now(),
         message = request.form.get("message"),
         edited_count = 0,
@@ -186,34 +161,43 @@ def addcomment_question(question_id):
         question = data_manager2.get_question_by_id(question_id)
         answers = data_manager2.get_answers_for_question(question_id)
         #comment_for_question = data_manager2.get_comment_for_question(question_id)
-        return render_template('display_question.html',
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+        """return render_template('display_question.html',
                                question_id=question_id,
                                question=question,
-                               answers=answers)
+                               
+                               answers=answers)"""
                                #comment_for_question=comment_for_question)
 
-'''
+
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
-def addcomment_question(question_id, answer_id):
+def addcomment_answer(answer_id, question_id):
     if request.method == "GET":
-        return render_template('addcomment2.html', question_id=question_id)
+        return render_template('addcomment2.html', answer_id=answer_id,question_id=question_id)
     if request.method == "POST":
-        question_id = question_id
-        print(question_id),
         submission_time = datetime.now(),
         message = request.form.get("message"),
         edited_count = 0,
-        answer_id = None
-        data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id)
-        question = data_manager2.get_question_by_id(question_id)
-        answers = data_manager2.get_answers_for_question(question_id)
-        #comment_for_question = data_manager2.get_comment_for_question(question_id)
-        return render_template('display_question.html',
+        answer_id = answer_id,
+        question_id = None
+        data_manager2.add_comment_for_answer(submission_time, message, edited_count, question_id, answer_id)
+        #question = data_manager2.get_question_by_id(question_id)
+        #answers = data_manager2.get_answers_for_question(question_id)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+'''render_template('display_question.html',
                                question_id=question_id,
                                question=question,
                                answers=answers)
-                               #comment_for_question=comment_for_question)
 '''
+
+@app.route('/search')
+def search():
+    q = request.args.get('q')
+    print(q)
+    search_result = data_manager2.search(q)
+    return render_template('search.html', q=q, search_result=search_result)
 
 
 if __name__ == '__main__':

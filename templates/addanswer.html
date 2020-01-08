@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add new answer</title>
-    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
-</head>
-<body>
-<h1><strong>Add Answer</strong></h1>
-    <form action="/question/{{ question_id }}/new-answer" method="post">
-        <p>
-            <label for="message">Answer</label><br>
-            <textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your answer here"></textarea>
-        </p>
-        <p>
-            <label for="image">Image</label><br>
-            <input type="text" name="image" id="message" placeholder="Put image link here">
-        </p>
-        <p>
-            <button type="submit">Submit Answer</button>
-        </p>
-    </form>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Add Answer</title>
+        <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="add_qora">
+            <div class="titlerow">
+                <h1>add answer</h1>
+            </div>
+            <div class="qaform">
+                 <form action="/question/{{ question_id }}/new-answer" method="post">
+                     <div class="addtitle">
+                         <label id="add_title">Title:</label><br>
+                         <input type="text" name="title" id="title" placeholder="Enter title here">
+                     </div>
+                     <div class="addmessage">
+                         <label id="add_message">Message:</label><br>
+                         <textarea name="message" id="add_message" cols="40" rows="4" placeholder="Enter your question here"></textarea>
+                     </div>
+                     <div class="addimage">
+                         <label id="add_image">Image:</label><br>
+                         <input type="text" name="image" id="add_message" placeholder="Image link">
+                     </div>
+                     <div>
+                         <button class="addbutton" type="submit">Submit answer</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
+    </body>
 </html>

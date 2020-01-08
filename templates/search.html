@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+    <h1><strong>Ask Mate</strong></h1>
+<div class="navbar">
+    <a href="{{ url_for("route_index") }}">Back to home page</a>
+</div>
+    <h2>{{ search_result }}</h2>
+</body>
+</html>
