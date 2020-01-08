@@ -66,10 +66,23 @@ padding-top: 2%;
 .belowtitle {
     max-width: fit-content;
     max-height: max-content;
+    position: absolute;
+    width: 700px;
+    height: 57px;
+    left: 250px;
+    top: 300px;
 }
 
 .belowtitle tr {
     max-height: fit-content;
+}
+
+.title {
+    position: absolute;
+
+    height: 70px;
+    left: 250px;
+    top: 250px
 }
 
 
@@ -191,6 +204,29 @@ h4 {
     text-align: center;
 }
 
+#display_header {
+    left: 0px;
+    top: 0px;
+    font-size: 25px;
+  }
+#display_navbar {
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+
+
+}
+
+#display_navbar a {
+    float: left;
+    font-size: 16px;
+    color: #66FCF1;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    vertical-align: center;
+    text-decoration: none;
 
 .add_qora h1 {
     padding-top: 2em;
@@ -236,4 +272,33 @@ h4 {
     border-style: none;
     text-transform: uppercase;
     box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
+}
+}
+
+#display_navbar a:hover {
+    background-color: #45A29E;
+    }
+.display_question_bubble {
+    display: block;
+    background: pink;
+    margin: 0;
+    padding: 0;
+}
+
+.display_answers_bubble {
+    display: block;
+    background: deeppink;
+    margin: 0;
+    padding: 0;
+}
+
+.display_comment_bubble {
+    display: block;
+    background: hotpink;
+    margin: 0;
+    padding: 0;
+}
+
+.display_all_body {
+    display: grid;
 }
