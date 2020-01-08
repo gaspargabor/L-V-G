@@ -1,17 +1,9 @@
-from flask import Flask, render_template, request, redirect, url_for
-import os
+from flask import Flask, render_template, request, redirect
 import data_manager2
 import data_manager
 from datetime import datetime
 
 app = Flask(__name__)
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
-Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-"""Flask stuff (server, routes, request handling, session, etc.)
-This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
-from flask)"""
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -30,16 +22,6 @@ def route_all_question(sort_criteria=None):
         sort_criteria = 'submission_time'
     questions = data_manager2.sort_qs_or_as(sort_criteria)
     return render_template('list.html', questions=questions)
-
-
-
-@app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
-def delete_question(question_id):
-    updated_q_data = data_manager.delete_question(question_route, question_id)
-    data_manager.save_updated_data(question_route, Q_HEADER, updated_q_data)
-    updated_a_data = data_manager.delete_answers_for_question(answer_route, question_id)
-    data_manager.save_updated_data(answer_route, A_HEADER, updated_a_data)
-    return redirect('/list')
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
