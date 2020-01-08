@@ -124,19 +124,6 @@ def route_view_counter(question_id):
     data_manager2.edit_question(question)"""
 
 
-@app.route('/addvote-question')
-def addvote_question(question_id=None):
-    question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_answers_for_question(answer_route, question_id)
-    question['vote_number'] = str(int(question['vote_number']) + 1)
-    data_manager.edit_question(question)
-    return render_template('display_question.html',
-                           question_id=question['id'],
-                           question=question,
-                           answers=answers)
-
-
 @app.route('/addvote_answer')
 def addvote_answer(answer_id=None, question_id=None):
     answer_id = request.args.get('answer_id')
@@ -175,6 +162,15 @@ def addcomment_question(question_id):
                                question=question,
                                answers=answers)"""
                                #comment_for_question=comment_for_question)
+
+
+@app.route('/comments/<comment_id>/delete')
+def route_delete_comment(comment_id):
+    data_manager2.delete_comment(comment_id)
+
+
+    to_url = '/question/' + str(question_id)
+    return redirect(to_url)
 
 @app.route('/search')
 def search():
