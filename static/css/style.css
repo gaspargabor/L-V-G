@@ -227,6 +227,7 @@ h4 {
     padding: 10px 20px 10px 20px;
     vertical-align: center;
     text-decoration: none;
+}
 
 .add_qora h1 {
     padding-top: 2em;
@@ -273,7 +274,7 @@ h4 {
     text-transform: uppercase;
     box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
 }
-}
+
 
 #display_navbar a:hover {
     background-color: #45A29E;
@@ -301,4 +302,8 @@ h4 {
 
 .display_all_body {
     display: grid;
+}
+
+.tesziteszt {
+    background-color: red;
 }

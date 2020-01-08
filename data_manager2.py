@@ -48,6 +48,29 @@ def get_answers_for_question(cursor, question_id):
     answers=cursor.fetchall()
     return answers
 
+
+@database_common.connection_handler
+def get_comments_for_question(cursor, question_id):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE comment.question_id=%(question_id)s;
+                    """,
+                   {'question_id': question_id})
+    comments_for_q = cursor.fetchall()
+    return comments_for_q
+
+
+@database_common.connection_handler
+def get_comments_for_answer(cursor, answer_id):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE comment.answer_id=%(answer_id)s;
+                    """,
+                   {'answer_id': answer_id})
+    comments_for_a = cursor.fetchall()
+    return comments_for_a
+
+
 @database_common.connection_handler
 def get_question_by_id(cursor, question_id):
     cursor.execute("""
