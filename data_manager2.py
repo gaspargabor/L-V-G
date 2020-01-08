@@ -146,9 +146,9 @@ def add_comment_for_question(cursor, submission_time, message, edited_count, que
 
 
 @database_common.connection_handler
-def add_comment_for_answer(cursor, submission_time, message, edited_count, question_id, answer_id):
+def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id):
     cursor.execute("""
                     INSERT INTO comment
-                    (submission_time, edited_count, question_id, answer_id, message)
-                    VALUES(%(submission_time)s, %(edited_count)s, %(question_id)s, %(answer_id)s, %(message)s)
-                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})
+                    (submission_time, edited_count, answer_id, message)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})

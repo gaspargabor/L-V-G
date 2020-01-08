@@ -188,16 +188,18 @@ def addcomment_question(question_id):
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
-def addcomment_answer(answer_id, question_id):
+def addcomment_answer(answer_id):
     if request.method == "GET":
-        return render_template('addcomment2.html', answer_id=answer_id,question_id=question_id)
+        return render_template('addcomment2.html', answer_id=answer_id)
     if request.method == "POST":
+        answer_id = answer_id
         submission_time = datetime.now(),
         message = request.form.get("message"),
+        answer = data_manager2.get_answer_by_id(answer_id)
+        question_id = answer[0]['question_id']
         edited_count = 0,
-        answer_id = answer_id,
-        question_id = None
-        data_manager2.add_comment_for_answer(submission_time, message, edited_count, question_id, answer_id)
+        print(answer_id)
+        data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
         #question = data_manager2.get_question_by_id(question_id)
         #answers = data_manager2.get_answers_for_question(question_id)
         to_url = '/question/' + str(question_id)
