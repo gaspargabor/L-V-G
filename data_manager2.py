@@ -172,3 +172,12 @@ def add_comment_for_answer(cursor, submission_time, message, edited_count, answe
                     (submission_time, edited_count, answer_id, message)
                     VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
                     """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
+
+
+@database_common.connection_handler
+def update_question_by_id(cursor, question_id, vote_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = %(vote_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'vote_number': vote_number, 'question_id': question_id})

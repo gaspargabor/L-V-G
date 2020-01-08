@@ -156,12 +156,33 @@ def route_view_counter(question_id):
 @app.route('/addvote-question')
 def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_answers_for_question(answer_route, question_id)
-    question['vote_number'] = str(int(question['vote_number']) + 1)
-    data_manager.edit_question(question)
+    question = data_manager2.get_question_by_id(question_id)
+    print(question_id)
+    print(question)
+    print(question[0]['vote_number'])
+    vote_number = question[0]['vote_number'] + 1
+    data_manager2.update_question_by_id(question_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
-                           question_id=question['id'],
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/downvote-question')
+def downvote_question(question_id=None):
+    question_id = request.args.get('question_id')
+    question = data_manager2.get_question_by_id(question_id)
+    print(question_id)
+    print(question)
+    print(question[0]['vote_number'])
+    vote_number = question[0]['vote_number'] - 1
+    data_manager2.update_question_by_id(question_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
                            question=question,
                            answers=answers)
 

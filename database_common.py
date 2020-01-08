@@ -11,10 +11,6 @@ def get_connection_string():
     password = os.environ.get('PSQL_PASSWORD')
     host = os.environ.get('PSQL_HOST')
     database_name = os.environ.get('PSQL_DB_NAME')
-    user_name = "gaboz"
-    password = "carmen"
-    host = "localhost"
-    database_name = "datas"
 
     env_variables_defined = user_name and password and host and database_name
 
