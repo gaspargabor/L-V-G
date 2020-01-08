@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect
 import data_manager2
 import data_manager
 from datetime import datetime
+import util
 
 app = Flask(__name__)
 
@@ -32,10 +33,17 @@ def route_question(question_id):
         route_view_counter(question_id)
         question = data_manager2.get_question_by_id(question_id)
         answers = data_manager2.get_answers_for_question(question_id)
+        """ for answer in answers:
+            comments_for_a = data_manager2.get_comments_for_answer(answer_id)"""
+        answer_id = question[0]['id']
+        ultimate = util.trystuff(question_id, answer_id)
+        comments_for_q = data_manager2.get_comments_for_question(question_id)
         return render_template('display_question.html',
                                question_id=question_id,
                                question=question,
-                               answers=answers
+                               answers=answers,
+                               comments_for_q=comments_for_q,
+                               ultimate=ultimate
                                )
 
 

@@ -40,7 +40,11 @@
         </table>
     </div>
 
-
+<div class="display_comment_bubble">
+    {% for comment_for_q in comments_for_q%}
+        <h4>{{ comment_for_q['message'] }}</h4>
+    {% endfor %}
+</div>
 
 
     <div>
@@ -60,9 +64,26 @@
             </table>
         </div>
     {% endfor %}
-
-
     </div>
+    {% print('henlo') %}
+    <div class="tesziteszt">
+        {% for kerdes in ultimate %}
+            <div class="display_answers_bubble">
+            <table>
+                <tr>
+                    <td rowspan="2">{{ kerdes[0]['message'] }}</td>
+                </tr>
+            </table>
+        </div>
+
+            {% for komment in kerdes[1] %}
+                <br>
+            {% print(komment) %}
+                {% endfor %}
+        {% endfor %}
+    </div>
+
+
     </div>
     </div>
 </body>
