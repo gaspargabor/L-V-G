@@ -124,10 +124,23 @@ button{
 .belowtitle {
     max-width: fit-content;
     max-height: max-content;
+    position: absolute;
+    width: 700px;
+    height: 57px;
+    left: 250px;
+    top: 300px;
 }
 
 .belowtitle tr {
     max-height: fit-content;
+}
+
+.title {
+    position: absolute;
+
+    height: 70px;
+    left: 250px;
+    top: 250px
 }
 
 
@@ -179,6 +192,7 @@ h4 {
      padding: 2px 5px 2px 5px;
      vertical-align: center;
       text-decoration: none;
+
     }
 
  #add_q_link {
@@ -248,3 +262,32 @@ h4 {
         border-radius: 4px;
 }
 
+#display_header {
+    left: 0px;
+    top: 0px;
+    font-size: 25px;
+  }
+#display_navbar {
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+
+
+}
+
+#display_navbar a {
+    float: left;
+    font-size: 16px;
+    color: #66FCF1;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    vertical-align: center;
+    text-decoration: none;
+
+}
+
+#display_navbar a:hover {
+    background-color: #45A29E;
+    }
