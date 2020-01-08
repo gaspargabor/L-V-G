@@ -34,6 +34,7 @@
 
             {% for answer in answers %}
                 <h5>{{ answer['message'] }}</h5>
+                <a href="{{ url_for('route_edit_answer', answer_id=answer['id']) }}">Edit Answer</a>
                 <h5>{{ answer['image'] }}</h5>
                 <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
                 <h5 style="display: inline">{{ answer['vote_number'] }}</h5>

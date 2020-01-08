@@ -77,6 +77,22 @@ def route_edit_question(question_id):
         return redirect('/')
 
 
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def route_edit_answer(answer_id):
+    if request.method == 'GET':
+        original_answer = data_manager2.get_answer_by_id(answer_id)
+        print(original_answer)
+        return render_template('edit_answer.html', answer_id=answer_id, original_answer=original_answer)
+    if request.method == 'POST':
+        original_answer = data_manager2.get_answer_by_id(answer_id)
+        question_id = original_answer[0]['question_id']
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_answer_by_id(answer_id, submission_time, message)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
