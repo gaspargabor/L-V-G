@@ -4,82 +4,43 @@
     <meta charset="UTF-8">
     <title>Display Question Page</title>
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
-
 </head>
 <body>
-    <div class="display_all_body">
-    <div id="display_header">
-        <div><h1>Ask Mate</h1></div>
-        <div id="display_navbar">
-            <a href="{{ url_for("route_index") }}">Back to home page</a>
-            <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
-            <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
-            <a href="#" method="get">Delete question</a>
-        </div>
-    </div>
-    <div class="display_body">
-    <div class="display_question_bubble">
-        <table>
-            <tr>
-                <td colspan="3">{{ question[0]['title'] }}</td>
-            </tr>
-            <tr>
-                <td colspan="2">views: {{question[0]['view_number']}} </td>
-                <td rowspan="3">{{ question[0]['message'] }} {{question['image']}} </td>
-            </tr>
-            <tr>
-                <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
-            </tr>
-            <tr>
-                <td class="vote_button">down</td>
-            </tr>
-            <tr>
-                <td colspan="3">Add comment to question</td>
-            </tr>
-        </table>
-    </div>
-
-<div class="display_comment_bubble">
-    {% for comment_for_q in comments_for_q%}
-        <h4>{{ comment_for_q['message'] }}</h4>
-    {% endfor %}
+    <h1><strong>Ask Mate</strong></h1>
+<div class="navbar">
+    <a href="{{ url_for("route_index") }}">Back to home page</a>
+    <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
+    <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
+    <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
 </div>
+<p>
 
-    <div class="tesziteszt">
-        {% for kerdes in ultimate %}
-            <div class="display_answers_bubble">
-            <table>
-                <tr>
-                    <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                    <td class="vote_button">Up</td>
-                    <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                    <td rowspan="2">Add comment to answer</td>
-                </tr>
-                <tr>
-                    <td class="vote_button">Down</td>
-                </tr>
+<div class="title">
 
-            </table>
-        </div>
-        <div class="display_comment_bubble">
-            {% for komment in kerdes[1] %}
-                 <div class="display_comment_bubble">
-                    <table>
-                        <tr>
-                            <td>Edit comment</td>
-                            <td>Delete comment</td>
-                            <td>{{ komment['message'] }}</td>
-                        </tr>
-                    </table>
-             </div>
-                {% endfor %}
-        {% endfor %}
-    </div>
-    </div>
+                <h2>{{ question[0]['title'] }}</h2>
+        <div class="belowtitle">
+                        <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
+                        <h4 style="display:inline">upvotes: {{ question[0]['vote_number'] }}</h4>
+                        <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a></h4><br>
+                        <h4 style="display:inline"><a href="{{ url_for('addcomment_question', question_id=question_id) }}"><input type="submit" value="Add Comment"></a></h4><br>
+                        <h3 class="message">{{ question[0]['message'] }} {{question['image']}} </h3>
 
+         </div>
+</div>
+<p>
+<div class="answers">
+<p>
+    <h4>Answers:</h4>
 
-    </div>
-    </div>
+            {% for answer in answers %}
+                <h5>{{ answer['message'] }}</h5>
+                <a href="{{ url_for('route_edit_answer', answer_id=answer['id']) }}">Edit Answer</a>
+                <h5>{{ answer['image'] }}</h5>
+                <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
+                <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
+                <h5 style="display:inline"><a href="{{ url_for('addcomment_answer', answer_id=answer['id']) }}"><input type="submit" value="Add Comment"></a></h5><br>
+                <h5>--------------------------------------------------------------------</h5>
+            {% endfor %}
+</div>
 </body>
 </html>
