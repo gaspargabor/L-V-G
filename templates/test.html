@@ -18,15 +18,24 @@
 <div class="title">
 
                 <h2>{{ question[0]['title'] }}</h2>
+    </div>
+    <div id="views">
+    <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
+    </div>
+    <div id="votes">
+        <h4 style="display:inline">votes: {{ question[0]['vote_number'] }}</h4>
+    </div>
+    <div id="upvote">
+         <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></h4><br>
+    </div>
         <div class="belowtitle">
-                        <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
-                        <h4 style="display:inline">upvotes: {{ question[0]['vote_number'] }}</h4>
-                        <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Upvote Question"></a></h4><br>
+
+
                         <h4 style="display:inline"><a href="{{ url_for('addcomment_question', question_id=question_id) }}"><input type="submit" value="Add Comment"></a></h4><br>
                         <h3 class="message">{{ question[0]['message'] }} {{question['image']}} </h3>
 
          </div>
-</div>
+
 <p>
 <div class="answers">
 <p>
@@ -34,11 +43,9 @@
 
             {% for answer in answers %}
                 <h5>{{ answer['message'] }}</h5>
-                <a href="{{ url_for('route_edit_answer', answer_id=answer['id']) }}">Edit Answer</a>
                 <h5>{{ answer['image'] }}</h5>
                 <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
                 <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
-                <h5 style="display:inline"><a href="{{ url_for('addcomment_answer', answer_id=answer['id']) }}"><input type="submit" value="Add Comment"></a></h5><br>
                 <h5>--------------------------------------------------------------------</h5>
             {% endfor %}
 </div>

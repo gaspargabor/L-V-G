@@ -70,31 +70,12 @@ def get_answer_by_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def get_comment_by_id(cursor, comment_id):
-    cursor.execute("""
-                    SELECT * FROM comment
-                    WHERE id=%(comment_id)s;
-                    """, {'comment_id': comment_id})
-    answer = cursor.fetchall()
-    return answer
-
-
-@database_common.connection_handler
 def update_answer_by_id(cursor, answer_id, submission_time, message):
     cursor.execute("""
                     UPDATE answer
                     SET submission_time = %(submission_time)s, message = %(message)s
                     WHERE id = %(answer_id)s;
                     """, { 'submission_time': submission_time, 'message': message , 'answer_id': answer_id})
-
-
-@database_common.connection_handler
-def update_comment_by_id(cursor, comment_id, submission_time, message):
-    cursor.execute("""
-                    UPDATE comment
-                    SET submission_time = %(submission_time)s, message = %(message)s
-                    WHERE id = %(comment_id)s;
-                    """, { 'submission_time': submission_time, 'message': message , 'comment_id': comment_id})
 
 
 #only used by delete_question in server, used to be save_updated_data
@@ -104,7 +85,6 @@ def delete_data(cursor, mytable, criteria):
                     DELETE FROM %(mytable)s
                     WHERE %(criteria)s;""",
                    {'mytable': mytable, 'criteria': criteria})
-
 
 #not sure if this would work
 @database_common.connection_handler
@@ -166,18 +146,23 @@ def add_comment_for_question(cursor, submission_time, message, edited_count, que
 
 
 @database_common.connection_handler
-def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id):
-    cursor.execute("""
-                    INSERT INTO comment
-                    (submission_time, edited_count, answer_id, message)
-                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
-                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
-
-
-@database_common.connection_handler
 def update_question_by_id(cursor, question_id, vote_number):
     cursor.execute("""
                     UPDATE question
                     SET vote_number = %(vote_number)s
                     WHERE id = %(question_id)s;
                     """, {'vote_number': vote_number, 'question_id': question_id})
+
+@database_common.connection_handler
+def update_answer_by_id2(cursor, answer_id, vote_number):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = %(vote_number)s
+                    WHERE id = %(answer_id)s;
+                    """, {'vote_number': vote_number, 'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def delete_answer_by_question_id(cursor, question_id):
+    cursor.execute("""
+                """)

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+        {%  for answer_comment in answer_comments %}
+             <div class="display_comment_bubble">
+                    <table>
+                        <tr>
+                            <td>Edit comment</td>
+                            <td>Delete comment</td>
+                            <td>Answer comment</td>
+                        </tr>
+                    </table>
+             </div>
+        {% endfor %}
+        </div>
+
+
+<div>
+    {% for comment in comments %}
+        <div class="display_comment_bubble">
+
+            <table>
+                <tr>
+                    <td>edit comment</td>
+                    <td>delete comment</td>
+                    <td>question comment</td>
+                </tr>
+
+            </table>
+        </div>
+    {% endfor %}
+    </div>
+</body>
+</html>

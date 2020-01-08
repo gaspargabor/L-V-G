@@ -189,16 +189,38 @@ def downvote_question(question_id=None):
 
 @app.route('/addvote_answer')
 def addvote_answer(answer_id=None, question_id=None):
-    answer_id = request.args.get('answer_id')
     question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_answers_for_question(answer_route, question_id)
-    for answer in answers:
-        if answer['id'] == answer_id:
-            answer['vote_number'] = str(int(answer['vote_number']) + 1)
-    data_manager.edit_answer(answer)
+    answer_id = request.args.get('answer_id')
+    answerss = data_manager2.get_answer_by_id(answer_id)
+    question_id = answerss[0]['question_id']
+    print(answerss)
+    vote_number = answerss[0]['vote_number'] + 1
+    print(vote_number)
+    print(answer_id)
+    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
-                           question_id=question['id'],
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/downvote_answer')
+def downvote_answer(answer_id=None, question_id=None):
+    question_id = request.args.get('question_id')
+    answer_id = request.args.get('answer_id')
+    answerss = data_manager2.get_answer_by_id(answer_id)
+    question_id = answerss[0]['question_id']
+    print(answerss)
+    vote_number = answerss[0]['vote_number'] - 1
+    print(vote_number)
+    print(answer_id)
+    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
                            question=question,
                            answers=answers)
 
@@ -256,6 +278,12 @@ def search():
     print(q)
     search_result = data_manager2.search(q)
     return render_template('search.html', q=q, search_result=search_result)
+
+
+@app.route('/delete-question')
+def delete_question(question_id=None):
+    question_id = request.args.get('question_id')
+    answers = data_manager2.get_answers_for_question(question_id)
 
 
 if __name__ == '__main__':
