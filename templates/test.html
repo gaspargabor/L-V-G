@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Question Page</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+    <h1><strong>Ask Mate</strong></h1>
+<div class="navbar">
+    <a href="{{ url_for("route_index") }}">Back to home page</a>
+    <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
+    <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
+    <a href="{{ url_for("delete_question", question_id=question_id)}}" method="get">Delete question</a>
+</div>
+<p>
+
+<div class="title">
+
+                <h2>{{ question[0]['title'] }}</h2>
+    </div>
+    <div id="views">
+    <h4 style="display:inline">views: {{question[0]['view_number']}} </h4>
+    </div>
+    <div id="votes">
+        <h4 style="display:inline">votes: {{ question[0]['vote_number'] }}</h4>
+    </div>
+    <div id="upvote">
+         <h4 style="display:inline"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></h4><br>
+    </div>
+        <div class="belowtitle">
+
+
+                        <h4 style="display:inline"><a href="{{ url_for('addcomment_question', question_id=question_id) }}"><input type="submit" value="Add Comment"></a></h4><br>
+                        <h3 class="message">{{ question[0]['message'] }} {{question['image']}} </h3>
+
+         </div>
+
+<p>
+<div class="answers">
+<p>
+    <h4>Answers:</h4>
+
+            {% for answer in answers %}
+                <h5>{{ answer['message'] }}</h5>
+                <h5>{{ answer['image'] }}</h5>
+                <h5 style="display: inline"><a href="{{ url_for('addvote_answer', answer_id=answer['id'], question_id=question['id']) }}"><input type="submit" value="Upvote Answer"></a></h5>
+                <h5 style="display: inline">{{ answer['vote_number'] }}</h5>
+                <h5>--------------------------------------------------------------------</h5>
+            {% endfor %}
+</div>
+</body>
+</html>

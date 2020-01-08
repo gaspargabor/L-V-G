@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Answer</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+        <div class="add_qora">
+            <div class="titlerow">
+                <h1>edit answer</h1>
+            </div>
+            <div class="qaform">
+                 <form action="/answer/{{ answer_id }}/edit" method="post">
+                     <div>
+                         <label id="add_message">Message:</label><br>
+                         <textarea name="message" id="add_message" cols="40" rows="4">{{ original_answer[0]['message'] }}</textarea>
+                     </div>
+                     <div>
+                         <button class="addbutton" type="submit">Update answer</button>
+                     </div>
+                 </form>
+            </div>
+        </div>
+</body>
+</html>

@@ -42,7 +42,7 @@ def sort_qs_or_as(cursor, criteria):
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE id=%(question_id)s;
+                    WHERE answer.question_id=%(question_id)s;
                     """,
                    {'question_id': question_id})
     answers=cursor.fetchall()
@@ -57,6 +57,26 @@ def get_question_by_id(cursor, question_id):
                    {'question_id': question_id})
     question = cursor.fetchall()
     return question
+
+
+@database_common.connection_handler
+def get_answer_by_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE id=%(answer_id)s;
+                    """, {'answer_id': answer_id})
+    answer = cursor.fetchall()
+    return answer
+
+
+@database_common.connection_handler
+def update_answer_by_id(cursor, answer_id, submission_time, message):
+    cursor.execute("""
+                    UPDATE answer
+                    SET submission_time = %(submission_time)s, message = %(message)s
+                    WHERE id = %(answer_id)s;
+                    """, { 'submission_time': submission_time, 'message': message , 'answer_id': answer_id})
+
 
 #only used by delete_question in server, used to be save_updated_data
 @database_common.connection_handler
@@ -83,6 +103,15 @@ def add_new_question(cursor, submission_time, view_number, vote_number, title, m
                     (submission_time, view_number, vote_number, title, message, image)
                     VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
                     """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+    return None
+
+@database_common.connection_handler
+def add_new_answer(cursor, submission_time, vote_number, question_id, message, image):
+    cursor.execute("""
+                    INSERT INTO answer
+                    (submission_time, vote_number, question_id, message, image)
+                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s)
+                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image})
     return None
 
 @database_common.connection_handler
