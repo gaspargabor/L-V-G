@@ -13,7 +13,7 @@
         <div id="display_navbar">
             <a href="{{ url_for("route_index") }}">Back to home page</a>
             <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
-            <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
+            <a href="#">Edit question</a>
             <a href="#" method="get">Delete question</a>
         </div>
     </div>
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
+                <td class="vote_button"><a href="#"><input type="submit" value="^"></a></td>
             </tr>
             <tr>
                 <td class="vote_button">down</td>
@@ -54,6 +54,7 @@
                     <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
                     <td class="vote_button">Up</td>
                     <td rowspan="2">{{ kerdes[0]['message'] }}</td>
+                    <td rowspan="2"><a href="{{ url_for('route_edit_answer', answer_id=answer_id) }}" >Edit answer</a></td>
                     <td rowspan="2">Add comment to answer</td>
                 </tr>
                 <tr>
@@ -67,8 +68,8 @@
                  <div class="display_comment_bubble">
                     <table>
                         <tr>
-                            <td>Edit comment</td>
-                            <td>Delete comment</td>
+                            <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
+                            <td><a href="#">Delete comment</a></td>
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>

@@ -160,6 +160,25 @@ def search(cursor, question):
 
 
 @database_common.connection_handler
+def get_comment_by_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT * FROM comment
+                    WHERE id=%(comment_id)s;
+                    """, {'comment_id': comment_id})
+    answer = cursor.fetchall()
+    return answer
+
+
+@database_common.connection_handler
+def update_comment_by_id(cursor, comment_id, submission_time, message):
+    cursor.execute("""
+                    UPDATE comment
+                    SET submission_time = %(submission_time)s, message = %(message)s
+                    WHERE id = %(comment_id)s;
+                    """, {'submission_time': submission_time, 'message': message , 'comment_id': comment_id})
+
+
+@database_common.connection_handler
 def add_comment_for_question(cursor, submission_time, message, edited_count, question_id, answer_id):
     cursor.execute("""
                     INSERT INTO comment

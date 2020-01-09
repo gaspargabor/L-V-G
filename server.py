@@ -42,12 +42,13 @@ def route_question(question_id):
                                question_id=question_id,
                                question=question,
                                answers=answers,
+                               answer_id=answer_id,
                                comments_for_q=comments_for_q,
                                ultimate=ultimate
                                )
 
 
-@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+"""@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     if request.method == 'GET':
         question_original = data_manager.get_data(question_route, question_id)
@@ -64,7 +65,7 @@ def route_edit_question(question_id):
             'vote_number': question_original['view_number']
         }
         data_manager.edit_question(question)
-        return redirect('/')
+        return redirect('/')"""
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -79,6 +80,25 @@ def route_edit_answer(answer_id):
         submission_time = datetime.now(),
         message = request.form.get('message'),
         data_manager2.update_answer_by_id(answer_id, submission_time, message)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+
+
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def route_edit_comment(comment_id):
+    if request.method == 'GET':
+        original_comment = data_manager2.get_comment_by_id(comment_id)
+        print(original_comment)
+        return render_template('edit_comment.html', comment_id=comment_id, original_comment=original_comment)
+    if request.method == 'POST':
+        original_comment = data_manager2.get_comment_by_id(comment_id)
+        question_id = original_comment[0]['question_id']
+        if question_id is None:
+            answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
+            question_id = answer[0]['question_id']
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_comment_by_id(comment_id, submission_time, message)
         to_url = '/question/' + str(question_id)
         return redirect(to_url)
 
@@ -122,35 +142,6 @@ def route_view_counter(question_id):
     question = data_manager2.get_question_by_id(question_id)
     question['view_number'] = str(int(question['view_number']) + 1)
     data_manager2.edit_question(question)"""
-
-
-@app.route('/addvote-question')
-def addvote_question(question_id=None):
-    question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_answers_for_question(answer_route, question_id)
-    question['vote_number'] = str(int(question['vote_number']) + 1)
-    data_manager.edit_question(question)
-    return render_template('display_question.html',
-                           question_id=question['id'],
-                           question=question,
-                           answers=answers)
-
-
-@app.route('/addvote_answer')
-def addvote_answer(answer_id=None, question_id=None):
-    answer_id = request.args.get('answer_id')
-    question_id = request.args.get('question_id')
-    question = data_manager.get_data(question_route, question_id)
-    answers = data_manager.get_answers_for_question(answer_route, question_id)
-    for answer in answers:
-        if answer['id'] == answer_id:
-            answer['vote_number'] = str(int(answer['vote_number']) + 1)
-    data_manager.edit_answer(answer)
-    return render_template('display_question.html',
-                           question_id=question['id'],
-                           question=question,
-                           answers=answers)
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
