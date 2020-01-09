@@ -39,6 +39,18 @@ def sort_qs_or_as(cursor, criteria):
     sorted_data = cursor.fetchall()
     return sorted_data
 
+
+@database_common.connection_handler
+def sort_as_by_q_id(cursor, question_id ,criteria):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE question_id=%(question_id)s
+                    ORDER BY %s;""" % (criteria),
+                   {'question_id': question_id})
+    sorted_answers = cursor.fetchall()
+    return sorted_answers
+
+
 @database_common.connection_handler
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
@@ -169,6 +181,18 @@ def search_question(cursor, question):
     return search_result
 
 @database_common.connection_handler
+def search_question_and_title(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s AND message ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
+@database_common.connection_handler
 def search_question_message(cursor, question):
     search_phrase = "%" + question + "%"
     cursor.execute("""
@@ -178,7 +202,6 @@ def search_question_message(cursor, question):
                    {'search_phrase': search_phrase}
                    )
     search_result = cursor.fetchall()
-    print(search_result)
     return search_result
 
 

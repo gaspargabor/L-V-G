@@ -105,7 +105,8 @@ padding-top: 2%;
     }
 
 .listpg{
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    font-weight: bold;
 }
 
 .mainpg {
@@ -114,6 +115,7 @@ padding-top: 2%;
 
 #mainbtn{
     padding: 15px;
+    font-weight: bold;
 }
 
 .navbar.sorting{
@@ -174,8 +176,7 @@ h4 {
   height: 100vh;
   margin-top: 5em; }
   .question-page .top-bar {
-    display: grid;
-    grid-template-columns: 10% auto;
+
     color: #E0E0E0;
     font-weight: normal;
     padding: 1em;
@@ -244,7 +245,7 @@ h4 {
     border-radius: 5px;
     display: grid;
     grid-template-columns: auto auto auto auto;
-
+    font-weight: bold;
 
 }
 
@@ -306,7 +307,7 @@ h4 {
 
 
 #display_navbar a:hover {
-    background-color: rgba(176, 0, 0, 0.4);
+    background-color: #B00000;
     }
 .display_question_bubble {
     display: block;
@@ -396,7 +397,7 @@ h4 {
 
 #question_title_size {
     font-size: 25px;
-    color: #B00000;
+    color: orange;
     font-weight: bold;
     padding-left: 2em;
     padding-top: .5em;
@@ -434,7 +435,7 @@ h4 {
 
 }
 .display_question_button a:hover {
-    background-color: rgba(176, 0, 0, 0.3);
+    background-color: #B00000;
     display: grid;
     text-align: center;
     border-radius: 5px;
@@ -452,7 +453,6 @@ h4 {
     grid-template-columns: auto;
     height: 40px;
 
-
 }
 
 #display_navbar2 a {
@@ -463,10 +463,11 @@ h4 {
     padding: 10px 20px 10px 20px;
     vertical-align: center;
     text-decoration: none;
+    width: 20em;
 }
 
 #display_navbar2 a:hover {
-    background-color: rgba(176, 0, 0, 0.3);
+    background-color: #B00000;
     }
 
 a {
@@ -516,6 +517,10 @@ a {
     margin: 2px;
 }
 
+.disp_btn:hover {
+    background-color: #B00000;
+}
+
 .table-btn {
         width: 4em;
 }
@@ -531,4 +536,13 @@ a {
 
 .answ_votes{
     width: 2em;
+}
+
+.logomate{
+    padding-left: 1em;
+}
+
+.searchtitle {
+    color: orange;
+    font-weight: bold;
 }

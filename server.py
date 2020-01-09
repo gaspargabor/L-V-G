@@ -56,7 +56,6 @@ def route_question(question_id):
 def route_edit_question(question_id):
     if request.method == 'GET':
         original_question = data_manager2.get_question_by_id(question_id)
-        print(original_question)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
     if request.method == 'POST':
         original_question = data_manager2.get_answer_by_id(question_id)
@@ -162,7 +161,6 @@ def downvote_question(question_id=None):
 
 @app.route('/addvote_answer/<answer_id>')
 def addvote_answer(answer_id):
-    print(answer_id)
     answerss = data_manager2.get_answer_by_id(answer_id)
     question_id = answerss[0]['question_id']
     vote_number = answerss[0]['vote_number'] + 1
@@ -224,13 +222,14 @@ def addcomment_answer(answer_id):
 def search():
     q = request.args.get('q')
     search_result = data_manager2.search_question(q)
+    search_result_title_n_message = data_manager2.search_question_and_title(q)
     search_result_answer = data_manager2.search_answer(q)
     search_result_message = data_manager2.search_question_message(q)
     empty_list = []
     question = data_manager2.get_all_data()
     question_id = request.args.get('question_id')
-
-    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question)
+    util.make_searching_great_again(q)
+    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question, search_result_title_n_message=search_result_title_n_message)
 
 
 
@@ -257,8 +256,15 @@ def delete_answer(answer_id):
 @app.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
     comment_id=comment_id
+    comment = data_manager2.get_comment_by_id(comment_id)
+    if comment[0]['question_id'] is not None:
+        question_id = comment[0]['question_id']
+    else:
+        answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
+        question_id = answer[0]['question_id']
     data_manager2.delete_comment_by_comment_id(comment_id)
-    return redirect('/list')
+    to_url = '/question/' + str(question_id)
+    return redirect(to_url)
 
 
 if __name__ == '__main__':
