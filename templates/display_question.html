@@ -14,14 +14,14 @@
             <a href="{{ url_for("route_index") }}">Back to home page</a>
             <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
             <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
-            <a href="#" method="get">Delete question</a>
+            <a href="{{ url_for("delete_question", question_id=question_id) }}" method="get">Delete question</a>
         </div>
     </div>
     <div class="display_body">
     <div class="display_question_bubble">
         <table>
             <tr>
-                <td colspan="3">{{ question[0]['title'] }}</td>
+                <td colspan="3" id="question_title_size"><strong>{{ question[0]['title'] }}</strong></td>
             </tr>
             <tr>
                 <td colspan="2">views: {{question[0]['view_number']}} </td>
@@ -29,16 +29,16 @@
             </tr>
             <tr>
                 <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="#"><input type="submit" value="^"></a></td>
+                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
             </tr>
             <tr>
                 <td class="vote_button">down</td>
             </tr>
-            <tr>
-                <td colspan="3">Add comment to question</td>
-            </tr>
+
+
         </table>
     </div>
+    <div class="display_question_button"><a href="#">Add comment to question</a></div>
 
 <div class="display_comment_bubble">
     {% for comment_for_q in comments_for_q%}
@@ -46,26 +46,25 @@
     {% endfor %}
 </div>
 
-    <div class="tesziteszt">
+    <div>
         {% for kerdes in ultimate %}
             <div class="display_answers_bubble">
-            <table>
-                <tr>
-                    <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                    <td class="vote_button">Up</td>
-                    <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                    <td rowspan="2"><a href="{{ url_for('route_edit_answer', answer_id=answer_id) }}" >Edit answer</a></td>
-                    <td rowspan="2">Add comment to answer</td>
-                </tr>
-                <tr>
-                    <td class="vote_button">Down</td>
-                </tr>
+                <table>
+                    <tr>
+                        <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
+                        <td class="vote_button">Up</td>
+                        <td rowspan="2">{{ kerdes[0]['message'] }}</td>
+                        <td rowspan="2"><a href="#">Add comment to answer</a></td>
+                    </tr>
+                    <tr>
+                        <td class="vote_button">Down</td>
+                    </tr>
 
-            </table>
-        </div>
-        <div class="display_comment_bubble">
+                </table>
+            </div>
+        <div>
             {% for komment in kerdes[1] %}
-                 <div class="display_comment_bubble">
+                 <div class="display_answer_comment_bubble">
                     <table>
                         <tr>
                             <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>

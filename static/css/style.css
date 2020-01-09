@@ -281,28 +281,128 @@ h4 {
     }
 .display_question_bubble {
     display: block;
-    background: pink;
-    margin: 0;
-    padding: 0;
+    background: #19a3a6;
+    margin-top: 1em;
+    border-radius: 8px;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    padding: 10px;
+
+}
+
+.display_question_bubble td {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 20px;
 }
 
 .display_answers_bubble {
     display: block;
-    background: deeppink;
-    margin: 0;
+    background: #556869;
     padding: 0;
+    border-radius: 8px;
+    margin-left: 1em;
+    margin-right: 4em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 5px;
+}
+.display_answers_bubble td {
+    font-size: 18px;
 }
 
 .display_comment_bubble {
     display: block;
-    background: hotpink;
-    margin: 0;
-    padding: 0;
+    background: #45A29E;
+    border-radius: 8px;
+    margin-left: 3em;
+    margin-right: 7em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+
+
+}
+
+.display_comment_bubble td {
+    font-size: 15px;
 }
 
 .display_all_body {
     display: grid;
 }
+
+.display_answer_comment_bubble {
+    display: block;
+    background: #45A29E;
+    border-radius: 8px;
+    margin-left: 3em;
+    margin-right: 7em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    padding: 5px;
+}
+.display_answer_comment_bubble td {
+    font-size: 15px;
+}
+
+#question_title_size {
+    font-size: 25px;
+}
+
+.display_question_button {
+    display: block;
+    background: #1c3436;
+    margin-top: 1em;
+    border-radius: 8px;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    padding: 10px;
+    width: 300px;
+    text-align: center;
+
+
+}
+.display_question_button a:hover {
+    background-color: #45A29E;
+
+    display: grid;
+    text-align: center;
+
+    border-radius: 5px;
+    vertical-align: center;
+    text-decoration: none;
+
+
+}
+
+#display_navbar2 {
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: auto;
+    height: 40px;
+
+
+}
+
+#display_navbar2 a {
+    float: left;
+    font-size: 16px;
+    color: #66FCF1;
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    vertical-align: center;
+    text-decoration: none;
+}
+
+#display_navbar2 a:hover {
+    background-color: #45A29E;
+    }
+
+
 
 .tesziteszt {
     background-color: red;

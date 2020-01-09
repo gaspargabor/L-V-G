@@ -216,4 +216,30 @@ def update_answer_votenum_by_id(cursor, answer_id, vote_number):
 @database_common.connection_handler
 def delete_answer_by_question_id(cursor, question_id):
     cursor.execute("""
-                """)
+                    DELETE FROM answer
+                    WHERE question_id = %(question_id)s
+                    """, {'question_id': question_id})
+
+
+@database_common.connection_handler
+def delete_question(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM question
+                    WHERE id = %(question_id)s
+                    """, {'question_id': question_id})
+
+
+@database_common.connection_handler
+def delete_comment_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE question_id = %(question_id)s
+                    """, {'question_id': question_id})
+
+
+@database_common.connection_handler
+def delete_question_tag_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    DELETE FROM question_tag
+                    WHERE question_id = %(question_id)s
+                    """, {'question_id': question_id})
