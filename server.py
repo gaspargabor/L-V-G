@@ -33,7 +33,7 @@ def route_all_question(sort_criteria=None):
     return render_template('list.html', questions=questions)
 
 
-
+'''
 @app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
 def delete_question(question_id):
     updated_q_data = data_manager.delete_question(question_route, question_id)
@@ -41,6 +41,7 @@ def delete_question(question_id):
     updated_a_data = data_manager.delete_answers_for_question(answer_route, question_id)
     data_manager.save_updated_data(answer_route, A_HEADER, updated_a_data)
     return redirect('/list')
+'''
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
@@ -291,7 +292,11 @@ def search():
 @app.route('/delete-question')
 def delete_question(question_id=None):
     question_id = request.args.get('question_id')
-    answers = data_manager2.get_answers_for_question(question_id)
+    data_manager2.delete_question_tag_by_question_id(question_id)
+    data_manager2.delete_comment_by_question_id(question_id)
+    data_manager2.delete_answer_by_question_id(question_id)
+    data_manager2.delete_question(question_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':
