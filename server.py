@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
+import os
 import data_manager2
 import data_manager
 from datetime import datetime
@@ -48,7 +49,7 @@ def route_question(question_id):
                                )
 
 
-"""@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     if request.method == 'GET':
         question_original = data_manager.get_data(question_route, question_id)
@@ -65,7 +66,7 @@ def route_edit_question(question_id):
             'vote_number': question_original['view_number']
         }
         data_manager.edit_question(question)
-        return redirect('/')"""
+        return redirect('/')
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -263,21 +264,22 @@ def addcomment_answer(answer_id):
                                answers=answers)
 '''
 
-
-@app.route('/comments/<comment_id>/delete')
-def route_delete_comment(comment_id):
-    data_manager2.delete_comment(comment_id)
-
-
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
-
 @app.route('/search')
 def search():
     q = request.args.get('q')
     print(q)
     search_result = data_manager2.search(q)
     return render_template('search.html', q=q, search_result=search_result)
+
+
+@app.route('/delete-question')
+def delete_question(question_id=None):
+    question_id = request.args.get('question_id')
+    data_manager2.delete_question_tag_by_question_id(question_id)
+    data_manager2.delete_comment_by_question_id(question_id)
+    data_manager2.delete_answer_by_question_id(question_id)
+    data_manager2.delete_question(question_id)
+    return redirect('/')
 
 
 if __name__ == '__main__':
