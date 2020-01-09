@@ -6,13 +6,6 @@ from datetime import datetime
 import util
 
 app = Flask(__name__)
-question_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/question.csv"))
-answer_route = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__), "sample_data/answer.csv"))
-Q_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-A_HEADER = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-"""Flask stuff (server, routes, request handling, session, etc.)
-This layer should consist of logic that is related to Flask. (with other words: this should be the only file importing 
-from flask)"""
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -33,17 +26,6 @@ def route_all_question(sort_criteria=None):
     return render_template('list.html', questions=questions)
 
 
-'''
-@app.route('/question/<question_id>/delete', methods=['DELETE', 'POST', 'GET'])
-def delete_question(question_id):
-    updated_q_data = data_manager.delete_question(question_route, question_id)
-    data_manager.save_updated_data(question_route, Q_HEADER, updated_q_data)
-    updated_a_data = data_manager.delete_answers_for_question(answer_route, question_id)
-    data_manager.save_updated_data(answer_route, A_HEADER, updated_a_data)
-    return redirect('/list')
-'''
-
-
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def route_question(question_id):
     if request.method == 'POST':
@@ -61,6 +43,7 @@ def route_question(question_id):
                                question_id=question_id,
                                question=question,
                                answers=answers,
+                               answer_id=answer_id,
                                comments_for_q=comments_for_q,
                                ultimate=ultimate
                                )
@@ -107,13 +90,13 @@ def route_edit_comment(comment_id):
     if request.method == 'GET':
         original_comment = data_manager2.get_comment_by_id(comment_id)
         print(original_comment)
-        return render_template('edit_answer.html', comment_id=comment_id, original_comment=original_comment)
+        return render_template('edit_comment.html', comment_id=comment_id, original_comment=original_comment)
     if request.method == 'POST':
         original_comment = data_manager2.get_comment_by_id(comment_id)
         question_id = original_comment[0]['question_id']
         if question_id is None:
             answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
-            question_id = answer[0][question_id]
+            question_id = answer[0]['question_id']
         submission_time = datetime.now(),
         message = request.form.get('message'),
         data_manager2.update_comment_by_id(comment_id, submission_time, message)
