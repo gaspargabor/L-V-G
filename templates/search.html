@@ -34,6 +34,9 @@
             <div>
             <table>
                 <tr>
+                    <td><strong><a href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></strong></td>
+                </tr>
+                <tr>
             <td class="display_answers_bubble">{{ question['message'] }}</td>
                 </tr>
             </table>
@@ -47,7 +50,7 @@
             <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
+                    <td><strong><a href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></strong></td>
                 </tr>
                 <tr>
             <td>{{ question['message'] }}</td>
@@ -65,7 +68,7 @@
             <div class="display_question_bubble">
             <table>
                 <tr>
-            <td><strong>{{ search_result[0]['title'] }}</strong></td>
+            <td><strong><a href="{{ url_for("route_question", question_id=search_result[0]['id']) }}"> {{ search_result[0]['title'] }}</a></strong></td>
                 </tr>
                 <tr>
             <td>{{ search_result[0]['message'] }}</td>
