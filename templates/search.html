@@ -15,8 +15,9 @@
     <p>Search results for: {{ q }}</p>
 
     {% for question in search_result %}
+
         {% if search_result !=empty_list and search_result_message==empty_list %}
-            <p>Search result found in question title:</p>
+
             <div class="display_question_bubble">
             <table>
                 <tr>
@@ -32,7 +33,7 @@
 
     {% for question in search_result_answer %}
         {% if search_result_answer !=empty_list %}
-            <p>Search result found in answer:</p>
+
             <div>
             <table>
                 <tr>
@@ -48,7 +49,7 @@
 
     {% for question in search_result_message %}
         {% if search_result_message !=empty_list and search_result==empty_list %}
-            <p>Search result found in question message:</p>
+
             <div class="display_question_bubble">
             <table>
                 <tr>
