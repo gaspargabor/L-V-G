@@ -187,3 +187,24 @@ def add_comment_for_question(cursor, submission_time, message, edited_count, que
                     """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})
 
 
+@database_common.connection_handler
+def update_question_by_id(cursor, question_id, vote_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET vote_number = %(vote_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'vote_number': vote_number, 'question_id': question_id})
+
+@database_common.connection_handler
+def update_answer_by_id2(cursor, answer_id, vote_number):
+    cursor.execute("""
+                    UPDATE answer
+                    SET vote_number = %(vote_number)s
+                    WHERE id = %(answer_id)s;
+                    """, {'vote_number': vote_number, 'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def delete_answer_by_question_id(cursor, question_id):
+    cursor.execute("""
+                """)

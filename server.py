@@ -144,13 +144,84 @@ def route_view_counter(question_id):
     data_manager2.edit_question(question)"""
 
 
+@app.route('/addvote-question')
+def addvote_question(question_id=None):
+    question_id = request.args.get('question_id')
+    question = data_manager2.get_question_by_id(question_id)
+    print(question_id)
+    print(question)
+    print(question[0]['vote_number'])
+    vote_number = question[0]['vote_number'] + 1
+    data_manager2.update_question_by_id(question_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/downvote-question')
+def downvote_question(question_id=None):
+    question_id = request.args.get('question_id')
+    question = data_manager2.get_question_by_id(question_id)
+    print(question_id)
+    print(question)
+    print(question[0]['vote_number'])
+    vote_number = question[0]['vote_number'] - 1
+    data_manager2.update_question_by_id(question_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/addvote_answer')
+def addvote_answer(answer_id=None, question_id=None):
+    question_id = request.args.get('question_id')
+    answer_id = request.args.get('answer_id')
+    answerss = data_manager2.get_answer_by_id(answer_id)
+    question_id = answerss[0]['question_id']
+    print(answerss)
+    vote_number = answerss[0]['vote_number'] + 1
+    print(vote_number)
+    print(answer_id)
+    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
+@app.route('/downvote_answer')
+def downvote_answer(answer_id=None, question_id=None):
+    question_id = request.args.get('question_id')
+    answer_id = request.args.get('answer_id')
+    answerss = data_manager2.get_answer_by_id(answer_id)
+    question_id = answerss[0]['question_id']
+    print(answerss)
+    vote_number = answerss[0]['vote_number'] - 1
+    print(vote_number)
+    print(answer_id)
+    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    question = data_manager2.get_question_by_id(question_id)
+    answers = data_manager2.get_answers_for_question(question_id)
+    return render_template('display_question.html',
+                           question_id=question_id,
+                           question=question,
+                           answers=answers)
+
+
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def addcomment_question(question_id):
     if request.method == "GET":
         return render_template('addcomment.html', question_id=question_id)
     if request.method == "POST":
         question_id = question_id
-        print(question_id),
         submission_time = datetime.now(),
         message = request.form.get("message"),
         edited_count = 0,
@@ -164,8 +235,42 @@ def addcomment_question(question_id):
         """return render_template('display_question.html',
                                question_id=question_id,
                                question=question,
+                               
                                answers=answers)"""
                                #comment_for_question=comment_for_question)
+
+
+@app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
+def addcomment_answer(answer_id):
+    if request.method == "GET":
+        return render_template('addcomment2.html', answer_id=answer_id)
+    if request.method == "POST":
+        answer_id = answer_id
+        submission_time = datetime.now(),
+        message = request.form.get("message"),
+        answer = data_manager2.get_answer_by_id(answer_id)
+        question_id = answer[0]['question_id']
+        edited_count = 0,
+        print(answer_id)
+        data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
+        #question = data_manager2.get_question_by_id(question_id)
+        #answers = data_manager2.get_answers_for_question(question_id)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+'''render_template('display_question.html',
+                               question_id=question_id,
+                               question=question,
+                               answers=answers)
+'''
+
+
+@app.route('/comments/<comment_id>/delete')
+def route_delete_comment(comment_id):
+    data_manager2.delete_comment(comment_id)
+
+
+    to_url = '/question/' + str(question_id)
+    return redirect(to_url)
 
 @app.route('/search')
 def search():
