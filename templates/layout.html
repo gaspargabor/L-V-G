@@ -12,7 +12,7 @@
          <div class="right-txt lax">
              <div class="question lax">
                 <h2>You have a question?</h2>
-                <a href="#" id="btn">Ask!</a>
+                <a href="{{ url_for("route_add_question") }}" id="btn">Ask!</a>
              </div>
              <div class="browse">
                 <h2>or</h2>
@@ -31,10 +31,10 @@
              <h2 id="title">recent questions</h2>
          </div>
           <div class="navbar">
-                <a href="{{ url_for("route_all_question") }}">Display all questions</a>
+                <a class="hoverbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
               <form action="/search" method="get">
-                    <input type="text" name="q" id="q" required>
-                    <input type="submit" value="Search">
+                    <input class="srch searchbar" type="text" name="q" id="q" required>
+                    <input class="srch searchbtn" type="submit" value="Search">
               </form>
             </div>
          <div class="question-bubbles">

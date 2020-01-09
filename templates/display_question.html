@@ -29,10 +29,10 @@
             </tr>
             <tr>
                 <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
+                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Up"></a></td>
             </tr>
             <tr>
-                <td class="vote_button">down</td>
+                <td class="vote_button"><a href="{{ url_for('downvote_question', question_id=question_id) }}"><input type="submit" value="Down"></a></td>
             </tr>
 
 
@@ -40,11 +40,20 @@
     </div>
     <div class="display_question_button"><a href="{{ url_for('addcomment_question', question_id=question_id) }}">Add comment to question</a></div>
 
-<div class="display_comment_bubble">
+
     {% for comment_for_q in comments_for_q%}
-        <h4>{{ comment_for_q['message'] }}</h4>
+        <div class="display_comment_bubble">
+
+            <table>
+                <tr>
+                    <td><a href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id']) }}">Edit comment</a></td>
+                    <td><a href="{{ url_for('delete_comment', comment_id=comment_for_q['id']) }}">Delete comment</a></td>
+                    <td>{{ comment_for_q['message'] }}</td>
+                </tr>
+            </table>
+        </div>
     {% endfor %}
-</div>
+
 
     <div>
         {% for kerdes in ultimate %}
@@ -52,20 +61,21 @@
                 <table>
                     <tr>
                         <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                        <td class="vote_button">Up</td>
+                        <td class="vote_button"><a href="{{ url_for('addvote_answer', answer_id=answer_id) }}"><input type="submit" value="Up"></a></td>
                         <td rowspan="2">{{ kerdes[0]['message'] }}</td>
                         <td rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}">Add comment to answer</a></td>
                         <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete answer</a></td>
                     </tr>
                     <tr>
-                        <td class="vote_button">Down</td>
+                        <td class="vote_button"><a href="{{ url_for('downvote_answer', answer_id=answer_id) }}"><input type="submit" value="Down"></a></td>
                     </tr>
 
                 </table>
             </div>
         <div>
+
             {% for komment in kerdes[1] %}
-                 <div class="display_answer_comment_bubble">
+                <div class="display_answer_comment_bubble">
                     <table>
                         <tr>
                             <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
@@ -73,8 +83,9 @@
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>
-             </div>
+                </div>
                 {% endfor %}
+
         {% endfor %}
     </div>
     </div>

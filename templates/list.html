@@ -6,94 +6,91 @@
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
+    <div class="question-page">
+        <div class="content">
+            <div class="question-page_4_all">
+                <div class="top-bar lax">
+                    <h2 id="logo">AskMate</h2>
+                    <h2 id="title">All Questions</h2>
+                </div>
+                <div class="navbar">
+                    <a id="add_q_link" class="hoverbtn" href="{{ url_for("route_add_question") }}">Add new question</a>
+                <div class="sorting">
+                    <table>
+                        <tr>
+                            <td rowspan="2"><h4>submission time</h4></td>
+                            <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='submission_time', ascordesc='ASC') }}"  class="icon icon-down"><img src="static/assets/Polygon 1.png"></a></td>
+                        </tr>
+                        <tr>
+                            <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='submission_time', ascordesc='DESC') }}"  class="icon icon-down"><img src="static/assets/Polygon 2.png"></a></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="sorting">
+                      <table>
+                          <tr>
+                              <td rowspan="2"><h4>title</h4></td>
+                              <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='title', ascordesc='ASC') }}"  class="icon icon-down"><img src="static/assets/Polygon 1.png"></a></td>
+                          </tr>
+                        <tr>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='title', ascordesc='DESC') }}"  class="icon icon-down"><img src="static/assets/Polygon 2.png"></a></td>
+                        </tr>
+                    </table>
+                      </div>
+                  <div class="sorting">
+                      <table>
+                          <tr>
+                              <td rowspan="2"><h4>message</h4></td>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='message', ascordesc='ASC') }}"  class="icon icon-down"><img src="static/assets/Polygon 1.png"></a></td>
+                          </tr>
+                        <tr>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='message', ascordesc='DESC') }}"  class="icon icon-down"><img src="static/assets/Polygon 2.png"></a></td>
+                        </tr>
+                    </table>
+                      </div>
+                  <div class="sorting">
+                                                        <table>
+                          <tr>
+                              <td rowspan="2"><h4>votes</h4></td>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='vote_number', ascordesc='ASC') }}"  class="icon icon-down"><img src="static/assets/Polygon 1.png"></a></td>
+                          </tr>
+                        <tr>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='vote_number', ascordesc='DESC') }}"  class="icon icon-down"><img src="static/assets/Polygon 2.png"></a></td>
+                        </tr>
+                    </table>
+                      </div>
+                  <div class="sorting">
+                                                                          <table>
+                          <tr>
+                              <td rowspan="2"><h4>views</h4></td>
+                      <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='view_number', ascordesc='ASC') }}"  class="icon icon-down"><img src="static/assets/Polygon 1.png"></a></td>
+                          </tr>
+                        <tr>
+                            <td class="btnn"><a href="{{ url_for("route_all_question", sort_criteria='view_number', ascordesc='DESC') }}"  class="icon icon-down"><img src="static/assets/Polygon 2.png"></a></td>
+                        </tr>
+                    </table>
+                      </div>
+              </div>
+             <div class="question-bubbles">
+              {% for question in questions %}
+                         <div class="single-bubble">
+                             <table>
+                                 <tr class="first-row">
+                                     <td class="first-col">{{ question['view_number'] }}</td>
+                                     <td class="question-title"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                     <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
+                                 </tr>
+                                 <tr>
+                                     <td class="first-col">{{ question['vote_number'] }}</td>
+                                     <td class="message">{{ question['message'] }}</td>
+                                 </tr>
+                             </table>
+                         </div>
 
-     <div class="question-page">
-
-    <div class="content">
-
-         <div class="question-page_4_all">
-         <div class="top-bar lax">
-             <h2 id="logo">AskMate</h2>
-             <h2 id="title">All Questions</h2>
-         </div>
-          <div class="navbar">
-                <a id="add_q_link" href="{{ url_for("route_add_question") }}">Add new question</a>
-              <div class="sorting">
-                  <table>
-                      <tr>
-                          <td rowspan="2"><h4>submission time</h4></td>
-                          <td class="btnn"><a href="#">^</a></td>
-                      </tr>
-                      <tr>
-                          <td class="btnn"><a href="#">*</a></td>
-                      </tr>
-                      </table>
-                  </div>
-              <div class="sorting">
-                <table>
-                      <tr>
-                          <td rowspan="2"><h4>title</h4></td>
-                  <td class="btnn"><a href="#">^</a></td>
-                      </tr>
-                    <tr>
-                  <td class="btnn"><a href="#">*</a></td>
-                    </tr>
-                </table>
-                  </div>
-              <div class="sorting">
-                  <table>
-                      <tr>
-                          <td rowspan="2"><h4>message</h4></td>
-                  <td class="btnn"><a href="#">^</a></td>
-                      </tr>
-                    <tr>
-                  <td class="btnn"><a href="#">*</a></td>
-                    </tr>
-                </table>
-                  </div>
-              <div class="sorting">
-                                                    <table>
-                      <tr>
-                          <td rowspan="2"><h4>votes</h4></td>
-                  <td class="btnn"><a href="#">^</a></td>
-                      </tr>
-                    <tr>
-                  <td class="btnn"><a href="#">*</a></td>
-                    </tr>
-                </table>
-                  </div>
-              <div class="sorting">
-                                                                      <table>
-                      <tr>
-                          <td rowspan="2"><h4>views</h4></td>
-                  <td class="btnn"><a href="#">^</a></td>
-                      </tr>
-                    <tr>
-                  <td class="btnn"><a href="#">*</a></td>
-                    </tr>
-                </table>
-                  </div>
-            </div>
-         <div class="question-bubbles">
-          {% for question in questions %}
-                     <div class="single-bubble">
-                         <table>
-                             <tr class="first-row">
-                                 <td class="first-col">{{ question['view_number'] }}</td>
-                                 <td class="question-title"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
-                                 <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
-                             </tr>
-                             <tr>
-                                 <td class="first-col">{{ question['vote_number'] }}</td>
-                                 <td class="message">{{ question['message'] }}</td>
-                             </tr>
-                         </table>
-                     </div>
-
-          {% endfor %}
- </div>
-</div>
-</div>
+              {% endfor %}
      </div>
+    </div>
+    </div>
+    </div>
 </body>
 </html>

@@ -21,6 +21,7 @@ def get_5_latest(cursor):
     return latest_5
 
 
+
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
     cursor.execute("""
@@ -34,7 +35,7 @@ def get_some_data(cursor, select_, mytable, condition, orderby):
 def sort_qs_or_as(cursor, criteria):
     cursor.execute("""
                     SELECT * FROM question
-                    ORDER BY %s;"""% ''.join(criteria))
+                    ORDER BY %s;""" % (criteria))
     sorted_data = cursor.fetchall()
     return sorted_data
 
@@ -156,11 +157,37 @@ def add_one_to_view_number(cursor, question_id):
                    {'question_id': question_id})
 
 @database_common.connection_handler
-def search(cursor, question):
+def search_question(cursor, question):
     search_phrase = "%" + question + "%"
     cursor.execute("""
                     SELECT * FROM question
                     WHERE title ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
+@database_common.connection_handler
+def search_question_message(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE message ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    print(search_result)
+    return search_result
+
+
+@database_common.connection_handler
+def search_answer(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE message ILIKE %(search_phrase)s;
                     """,
                    {'search_phrase': search_phrase}
                    )
@@ -179,12 +206,12 @@ def get_comment_by_id(cursor, comment_id):
 
 
 @database_common.connection_handler
-def update_comment_by_id(cursor, comment_id, submission_time, message):
+def update_comment_by_id(cursor, comment_id, submission_time, message, edited_count):
     cursor.execute("""
                     UPDATE comment
-                    SET submission_time = %(submission_time)s, message = %(message)s
+                    SET submission_time = %(submission_time)s, message = %(message)s, edited_count = %(edited_count)s
                     WHERE id = %(comment_id)s;
-                    """, {'submission_time': submission_time, 'message': message , 'comment_id': comment_id})
+                    """, {'submission_time': submission_time, 'message': message , 'comment_id': comment_id, 'edited_count': edited_count})
 
 
 @database_common.connection_handler
@@ -276,3 +303,21 @@ def add_comment_for_answer(cursor, submission_time, message, edited_count, answe
                     (submission_time, edited_count, answer_id, message)
                     VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
                     """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
+
+
+@database_common.connection_handler
+def update_question_viewnumber_by_id(cursor, question_id, view_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = %(view_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'view_number': view_number, 'question_id': question_id})
+
+
+@database_common.connection_handler
+def update_question_asd_by_id(cursor, question_id, view_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = %(view_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'view_number': view_number, 'question_id': question_id})
