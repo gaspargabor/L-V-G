@@ -12,7 +12,7 @@
          <div class="right-txt lax">
              <div class="question lax">
                 <h2>You have a question?</h2>
-                <a href="{{ url_for("route_add_question") }}" id="btn">Ask!</a>
+                <a href="{{ url_for("route_add_question") }}" class="icon-down" id="btn">Ask!</a>
              </div>
              <div class="browse">
                 <h2>or</h2>
@@ -30,12 +30,16 @@
              <h2 id="logo">AskMate</h2>
              <h2 id="title">recent questions</h2>
          </div>
-          <div class="navbar">
-                <a class="hoverbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
-              <form action="/search" method="get">
+          <div class="navbar mainpg">
+              <div class="to-all-q">
+                <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
+                  </div>
+              <div>
+                    <form action="/search" method="get">
                     <input class="srch searchbar" type="text" name="q" id="q" required>
                     <input class="srch searchbtn" type="submit" value="Search">
-              </form>
+                    </form>
+                  </div>
             </div>
          <div class="question-bubbles">
           {% for question in questions %}
@@ -43,7 +47,7 @@
                          <table>
                              <tr class="first-row">
                                  <td class="first-col">{{ question['view_number'] }}</td>
-                                 <td class="question-title"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                 <td class="question-title icon-down"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
                                  <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
                              </tr>
                              <tr>

@@ -21,24 +21,24 @@
     <div class="display_question_bubble">
         <table>
             <tr>
-                <td colspan="3" id="question_title_size"><strong>{{ question[0]['title'] }}</strong></td>
+                <td colspan="3" id="question_title_size">{{ question[0]['title'] }}</td>
             </tr>
             <tr>
-                <td colspan="2">views: {{question[0]['view_number']}} </td>
+                <td colspan="2" class="disp_first_col">views: {{question[0]['view_number']}} </td>
                 <td rowspan="3">{{ question[0]['message'] }} {{question['image']}} </td>
             </tr>
             <tr>
-                <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
+                <td rowspan="2" class="disp_vote_cell">votes: {{ question[0]['vote_number'] }}</td>
+                <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
             </tr>
             <tr>
-                <td class="vote_button">down</td>
+                <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
             </tr>
 
 
         </table>
     </div>
-    <div class="display_question_button"><a href="{{ url_for('addcomment_question', question_id=question_id) }}">Add comment to question</a></div>
+    <div class="display_question_button"><a class="disp_btn" href="{{ url_for('addcomment_question', question_id=question_id) }}">Add comment to question</a></div>
 
 
     {% for comment_for_q in comments_for_q%}
@@ -46,9 +46,9 @@
 
             <table>
                 <tr>
-                    <td>Edit comment</td>
-                    <td>Delete comment</td>
-                    <td>{{ comment_for_q['message'] }}</td>
+                    <td class="message-box">{{ comment_for_q['message'] }}</td>
+                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id']) }}">Edit</a></td>
+                    <td class="table-btn" ><a class="disp_btn" href="#">Delete</a></td>
                 </tr>
             </table>
         </div>
@@ -60,14 +60,14 @@
             <div class="display_answers_bubble">
                 <table>
                     <tr>
-                        <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                        <td class="vote_button">Up</td>
-                        <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                        <td rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}">Add comment to answer</a></td>
-                        <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete eanswer</a></td>
+                        <td class="answ_votes" rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
+                        <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
+                        <td class="message-box" rowspan="2">{{ kerdes[0]['message'] }}</td>
+                        <td class="table-btn" rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}" class="disp_btn">comment</a></td>
+                        <td class="table-btn" rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}" class="disp_btn">Delete</a></td>
                     </tr>
                     <tr>
-                        <td class="vote_button">Down</td>
+                        <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
                     </tr>
 
                 </table>
@@ -76,13 +76,13 @@
 
             {% for komment in kerdes[1] %}
                 <div class="display_answer_comment_bubble">
-                    <table>
-                        <tr>
-                            <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
-                            <td><a href="#">Delete comment</a></td>
-                            <td>{{ komment['message'] }}</td>
-                        </tr>
-                    </table>
+                <table>
+                <tr>
+                    <td class="message-box" >{{ komment['message'] }}</td>
+                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit</a></td>
+                    <td class="table-btn" ><a class="disp_btn" href="#">Delete</a></td>
+                </tr>
+            </table>
                 </div>
                 {% endfor %}
 
