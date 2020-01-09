@@ -68,6 +68,22 @@ def route_edit_question(question_id):
         return redirect('/')"""
 
 
+@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
+def route_edit_question(question_id):
+    if request.method == 'GET':
+        original_question = data_manager2.get_question_by_id(question_id)
+        print(original_question)
+        return render_template('edit-question.html', question_id=question_id, original_question=original_question)
+    if request.method == 'POST':
+        original_question = data_manager2.get_answer_by_id(question_id)
+        question_id = original_question[0]['id']
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_question_by_id(question_id, submission_time, message)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
+
+
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def route_edit_answer(answer_id):
     if request.method == 'GET':
@@ -152,7 +168,7 @@ def addvote_question(question_id=None):
     print(question)
     print(question[0]['vote_number'])
     vote_number = question[0]['vote_number'] + 1
-    data_manager2.update_question_by_id(question_id, vote_number)
+    data_manager2.update_question_votenum_by_id(question_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -169,7 +185,7 @@ def downvote_question(question_id=None):
     print(question)
     print(question[0]['vote_number'])
     vote_number = question[0]['vote_number'] - 1
-    data_manager2.update_question_by_id(question_id, vote_number)
+    data_manager2.update_question_votenum_by_id(question_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -188,7 +204,7 @@ def addvote_answer(answer_id=None, question_id=None):
     vote_number = answerss[0]['vote_number'] + 1
     print(vote_number)
     print(answer_id)
-    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -207,7 +223,7 @@ def downvote_answer(answer_id=None, question_id=None):
     vote_number = answerss[0]['vote_number'] - 1
     print(vote_number)
     print(answer_id)
-    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',

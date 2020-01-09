@@ -83,6 +83,15 @@ def get_question_by_id(cursor, question_id):
 
 
 @database_common.connection_handler
+def update_question_by_id(cursor, question_id, submission_time, message):
+    cursor.execute("""
+                    UPDATE question
+                    SET submission_time = %(submission_time)s, message = %(message)s
+                    WHERE id = %(question_id)s;
+                    """, { 'submission_time': submission_time, 'message': message , 'question_id': question_id})
+
+
+@database_common.connection_handler
 def get_answer_by_id(cursor, answer_id):
     cursor.execute("""
                     SELECT * FROM answer
@@ -188,7 +197,7 @@ def add_comment_for_question(cursor, submission_time, message, edited_count, que
 
 
 @database_common.connection_handler
-def update_question_by_id(cursor, question_id, vote_number):
+def update_question_votenum_by_id(cursor, question_id, vote_number):
     cursor.execute("""
                     UPDATE question
                     SET vote_number = %(vote_number)s
@@ -196,7 +205,7 @@ def update_question_by_id(cursor, question_id, vote_number):
                     """, {'vote_number': vote_number, 'question_id': question_id})
 
 @database_common.connection_handler
-def update_answer_by_id2(cursor, answer_id, vote_number):
+def update_answer_votenum_by_id(cursor, answer_id, vote_number):
     cursor.execute("""
                     UPDATE answer
                     SET vote_number = %(vote_number)s

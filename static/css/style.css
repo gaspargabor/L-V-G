@@ -307,3 +307,7 @@ h4 {
 .tesziteszt {
     background-color: red;
 }
+
+#add_message {
+    min-height: 16em;
+}
