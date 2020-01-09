@@ -135,12 +135,6 @@ def route_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
 
 
-"""def route_view_counter(question_id):
-    question = data_manager2.get_question_by_id(question_id)
-    question['view_number'] = str(int(question['view_number']) + 1)
-    data_manager2.edit_question(question)"""
-
-
 @app.route('/addvote-question')
 def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
@@ -275,7 +269,23 @@ def delete_question(question_id=None):
     data_manager2.delete_comment_by_question_id(question_id)
     data_manager2.delete_answer_by_question_id(question_id)
     data_manager2.delete_question(question_id)
-    return redirect('/')
+    return redirect('/list')
+
+@app.route('/delete_answer')
+def delete_answer(answer_id):
+    answer_id = answer_id
+    print(answer_id)
+    data_manager2.delete_comment_by_answer_id(answer_id)
+    data_manager2.delete_answer_by_answer_id(answer_id)
+    return redirect('/list')
+
+
+@app.route('delete-comment')
+def delete_comment(comment_id):
+    comment_id=comment_id
+    print(comment_id)
+    data_manager2.delete_comment_by_comment_id(comment_id)
+    return redirect('/list')
 
 
 if __name__ == '__main__':
