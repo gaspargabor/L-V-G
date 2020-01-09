@@ -42,7 +42,6 @@ def route_question(question_id):
             answer_id = answers[0]['id']
         ultimate = util.trystuff(question_id, answer_id)
         comments_for_q = data_manager2.get_comments_for_question(question_id)
-        print(comments_for_q)
         return render_template('display_question.html',
                                question_id=question_id,
                                question=question,
@@ -257,8 +256,6 @@ def delete_answer(answer_id):
 
 @app.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
-    answers = data_manager2.get_answer_by_id(answer_id)
-    question_id = answers[0]['question_id']
     comment_id=comment_id
     data_manager2.delete_comment_by_comment_id(comment_id)
     return redirect('/list')
