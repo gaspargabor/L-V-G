@@ -12,17 +12,13 @@
             </div>
             <div class="qaform">
                  <form action="/question/{{ question_id }}/new-answer" method="post">
-                     <div class="addtitle">
-                         <label id="add_title">Title:</label><br>
-                         <input type="text" name="title" id="title" placeholder="Enter title here">
-                     </div>
                      <div class="addmessage">
                          <label id="add_message">Message:</label><br>
-                         <textarea name="message" id="add_message" cols="40" rows="4" placeholder="Enter your question here"></textarea>
+                         <textarea name="message" id="add_message" placeholder="Enter your answer here"></textarea>
                      </div>
                      <div class="addimage">
                          <label id="add_image">Image:</label><br>
-                         <input type="text" name="image" id="add_message" placeholder="Image link">
+                         <input type="text" name="image" placeholder="Image link">
                      </div>
                      <div>
                          <button class="addbutton" type="submit">Submit answer</button>

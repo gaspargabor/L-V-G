@@ -52,26 +52,6 @@ def route_question(question_id):
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     if request.method == 'GET':
-        question_original = data_manager.get_data(question_route, question_id)
-        return render_template('edit-question.html', question_id=question_id, question_original=question_original)
-    if request.method == 'POST':
-        question_original = data_manager.get_data(question_route, question_id)
-        question = {
-            'id': question_id,
-            'submission_time': question_original['submission_time'],
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': request.form.get('image'),
-            'view_number': question_original['view_number'],
-            'vote_number': question_original['view_number']
-        }
-        data_manager.edit_question(question)
-        return redirect('/')
-
-
-@app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
-def route_edit_question(question_id):
-    if request.method == 'GET':
         original_question = data_manager2.get_question_by_id(question_id)
         print(original_question)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
