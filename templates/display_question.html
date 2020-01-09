@@ -69,7 +69,7 @@
                     <table>
                         <tr>
                             <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
-                            <td><a href="#">Delete comment</a></td>
+                            <td><a href="{{ url_for('delete_comment', comment_id=komment['id']) }}">Delete comment</a></td>
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>

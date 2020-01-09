@@ -267,3 +267,12 @@ def delete_comment_by_comment_id(cursor, comment_id):
                     DELETE FROM comment
                     WHERE id = %(comment_id)s
                     """, {'comment_id': comment_id})
+
+
+@database_common.connection_handler
+def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id):
+    cursor.execute("""
+                    INSERT INTO comment
+                    (submission_time, edited_count, answer_id, message)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
