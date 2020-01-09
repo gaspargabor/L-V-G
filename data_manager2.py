@@ -294,3 +294,30 @@ def delete_comment_by_comment_id(cursor, comment_id):
                     DELETE FROM comment
                     WHERE id = %(comment_id)s
                     """, {'comment_id': comment_id})
+
+
+@database_common.connection_handler
+def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id):
+    cursor.execute("""
+                    INSERT INTO comment
+                    (submission_time, edited_count, answer_id, message)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
+
+
+@database_common.connection_handler
+def update_question_viewnumber_by_id(cursor, question_id, view_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = %(view_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'view_number': view_number, 'question_id': question_id})
+
+
+@database_common.connection_handler
+def update_question_asd_by_id(cursor, question_id, view_number):
+    cursor.execute("""
+                    UPDATE question
+                    SET view_number = %(view_number)s
+                    WHERE id = %(question_id)s;
+                    """, {'view_number': view_number, 'question_id': question_id})
