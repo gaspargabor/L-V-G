@@ -34,7 +34,7 @@ def get_some_data(cursor, select_, mytable, condition, orderby):
 def sort_qs_or_as(cursor, criteria):
     cursor.execute("""
                     SELECT * FROM question
-                    ORDER BY %s;"""% ''.join(criteria))
+                    ORDER BY %s;""" % (criteria))
     sorted_data = cursor.fetchall()
     return sorted_data
 
