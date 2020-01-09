@@ -2,19 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <title>Display Question Page</title>
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 
@@ -53,11 +40,20 @@
     </div>
     <div class="display_question_button"><a href="#">Add comment to question</a></div>
 
-<div class="display_comment_bubble">
+
     {% for comment_for_q in comments_for_q%}
-        <h4>{{ comment_for_q['message'] }}</h4>
+        <div class="display_comment_bubble">
+
+            <table>
+                <tr>
+                    <td>Edit comment</td>
+                    <td>Delete comment</td>
+                    <td>{{ comment_for_q['message'] }}</td>
+                </tr>
+            </table>
+        </div>
     {% endfor %}
-</div>
+
 
     <div>
         {% for kerdes in ultimate %}
@@ -76,8 +72,9 @@
                 </table>
             </div>
         <div>
+
             {% for komment in kerdes[1] %}
-                 <div class="display_answer_comment_bubble">
+                <div class="display_answer_comment_bubble">
                     <table>
                         <tr>
                             <td>Edit comment</td>
@@ -85,8 +82,9 @@
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>
-             </div>
+                </div>
                 {% endfor %}
+
         {% endfor %}
     </div>
     </div>

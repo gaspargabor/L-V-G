@@ -21,6 +21,7 @@ def get_5_latest(cursor):
     return latest_5
 
 
+
 @database_common.connection_handler
 def get_some_data(cursor, select_, mytable, condition, orderby):
     cursor.execute("""
@@ -147,11 +148,37 @@ def add_one_to_view_number(cursor, question_id):
                    {'question_id': question_id})
 
 @database_common.connection_handler
-def search(cursor, question):
+def search_question(cursor, question):
     search_phrase = "%" + question + "%"
     cursor.execute("""
                     SELECT * FROM question
                     WHERE title ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
+@database_common.connection_handler
+def search_question_message(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE message ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    print(search_result)
+    return search_result
+
+
+@database_common.connection_handler
+def search_answer(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE message ILIKE %(search_phrase)s;
                     """,
                    {'search_phrase': search_phrase}
                    )

@@ -408,3 +408,9 @@ h4 {
     background-color: red;
 }
 
+a {
+    text-decoration: none;
+    color: #66FCF1;
+    text-align: center;
+
+}
