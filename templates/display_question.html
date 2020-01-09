@@ -29,10 +29,10 @@
             </tr>
             <tr>
                 <td rowspan="2">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="^"></a></td>
+                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}"><input type="submit" value="Up"></a></td>
             </tr>
             <tr>
-                <td class="vote_button">down</td>
+                <td class="vote_button"><a href="{{ url_for('downvote_question', question_id=question_id) }}"><input type="submit" value="Down"></a></td>
             </tr>
 
 
@@ -46,8 +46,8 @@
 
             <table>
                 <tr>
-                    <td>Edit comment</td>
-                    <td>Delete comment</td>
+                    <td><a href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id']) }}">Edit comment</a></td>
+                    <td><a href="{{ url_for('delete_comment', comment_id=comment_for_q['id']) }}">Delete comment</a></td>
                     <td>{{ comment_for_q['message'] }}</td>
                 </tr>
             </table>
@@ -61,13 +61,13 @@
                 <table>
                     <tr>
                         <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                        <td class="vote_button">Up</td>
+                        <td class="vote_button"><a href="{{ url_for('addvote_answer', answer_id=answer_id) }}"><input type="submit" value="Up"></a></td>
                         <td rowspan="2">{{ kerdes[0]['message'] }}</td>
                         <td rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}">Add comment to answer</a></td>
-                        <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete eanswer</a></td>
+                        <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete answer</a></td>
                     </tr>
                     <tr>
-                        <td class="vote_button">Down</td>
+                        <td class="vote_button"><a href="{{ url_for('downvote_answer', answer_id=answer_id) }}"><input type="submit" value="Down"></a></td>
                     </tr>
 
                 </table>
@@ -79,7 +79,7 @@
                     <table>
                         <tr>
                             <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
-                            <td><a href="#">Delete comment</a></td>
+                            <td><a href="{{ url_for('delete_comment', comment_id=komment['id']) }}">Delete comment</a></td>
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>
