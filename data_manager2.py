@@ -234,3 +234,27 @@ def delete_question_tag_by_question_id(cursor, question_id):
                     DELETE FROM question_tag
                     WHERE question_id = %(question_id)s
                     """, {'question_id': question_id})
+
+
+@database_common.connection_handler
+def delete_answer_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM answer
+                    WHERE id = %(answer_id)s
+                    """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def delete_comment_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE answer_id = %(answer_id)s
+                    """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def delete_comment_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE id = %(comment_id)s
+                    """, {'comment_id': comment_id})
