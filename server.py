@@ -36,10 +36,10 @@ def route_question(question_id):
         route_view_counter(question_id)
         question = data_manager2.get_question_by_id(question_id)
         answers = data_manager2.get_answers_for_question(question_id)
-        if answers == []:
-            answer_id = None
-        else:
+        if len(answers) != 0:
             answer_id = answers[0]['id']
+        else:
+            answer_id = None
         ultimate = util.trystuff(question_id, answer_id)
         comments_for_q = data_manager2.get_comments_for_question(question_id)
         return render_template('display_question.html',
@@ -56,7 +56,6 @@ def route_question(question_id):
 def route_edit_question(question_id):
     if request.method == 'GET':
         original_question = data_manager2.get_question_by_id(question_id)
-        print(original_question)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
     if request.method == 'POST':
         original_question = data_manager2.get_answer_by_id(question_id)
@@ -162,7 +161,6 @@ def downvote_question(question_id=None):
 
 @app.route('/addvote_answer/<answer_id>')
 def addvote_answer(answer_id):
-    print(answer_id)
     answerss = data_manager2.get_answer_by_id(answer_id)
     question_id = answerss[0]['question_id']
     vote_number = answerss[0]['vote_number'] + 1
@@ -258,8 +256,15 @@ def delete_answer(answer_id):
 @app.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
     comment_id=comment_id
+    comment = data_manager2.get_comment_by_id(comment_id)
+    if comment[0]['question_id'] is not None:
+        question_id = comment[0]['question_id']
+    else:
+        answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
+        question_id = answer[0]['question_id']
     data_manager2.delete_comment_by_comment_id(comment_id)
-    return redirect('/list')
+    to_url = '/question/' + str(question_id)
+    return redirect(to_url)
 
 
 if __name__ == '__main__':

@@ -184,6 +184,18 @@ def search_question(cursor, question):
     return search_result
 
 @database_common.connection_handler
+def search_question_and_title(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s AND message ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
+@database_common.connection_handler
 def search_question_message(cursor, question):
     search_phrase = "%" + question + "%"
     cursor.execute("""
