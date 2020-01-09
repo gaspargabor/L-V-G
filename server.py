@@ -58,7 +58,7 @@ def route_edit_question(question_id):
         original_question = data_manager2.get_question_by_id(question_id)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
     if request.method == 'POST':
-        original_question = data_manager2.get_answer_by_id(question_id)
+        original_question = data_manager2.get_question_by_id(question_id)
         question_id = original_question[0]['id']
         submission_time = datetime.now(),
         message = request.form.get('message'),

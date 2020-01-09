@@ -41,12 +41,10 @@ def sort_qs_or_as(cursor, criteria):
 
 
 @database_common.connection_handler
-def sort_as_by_q_id(cursor, question_id ,criteria):
+def sort_as_by_q_id(cursor, criteria):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id=%(question_id)s
-                    ORDER BY %s;""" % (criteria),
-                   {'question_id': question_id})
+                    WHERE question_id=%s;""" % (criteria))
     sorted_answers = cursor.fetchall()
     return sorted_answers
 
