@@ -414,3 +414,6 @@ a {
     text-align: center;
 
 }
+#add_message {
+    min-height: 16em;
+}

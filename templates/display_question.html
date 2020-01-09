@@ -13,7 +13,7 @@
         <div id="display_navbar">
             <a href="{{ url_for("route_index") }}">Back to home page</a>
             <a href="{{ url_for("route_new_answer", question_id=question_id) }}">Add new answer</a>
-            <a href="#">Edit question</a>
+            <a href="{{ url_for("route_edit_question", question_id=question_id) }}">Edit question</a>
             <a href="{{ url_for("delete_question", question_id=question_id) }}" method="get">Delete question</a>
         </div>
     </div>
@@ -38,7 +38,7 @@
 
         </table>
     </div>
-    <div class="display_question_button"><a href="#">Add comment to question</a></div>
+    <div class="display_question_button"><a href="{{ url_for('addcomment_question', question_id=question_id) }}">Add comment to question</a></div>
 
 
     {% for comment_for_q in comments_for_q%}
@@ -63,7 +63,8 @@
                         <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
                         <td class="vote_button">Up</td>
                         <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                        <td rowspan="2"><a href="#">Add comment to answer</a></td>
+                        <td rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}">Add comment to answer</a></td>
+                        <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete answer</a></td>
                     </tr>
                     <tr>
                         <td class="vote_button">Down</td>
@@ -77,8 +78,8 @@
                 <div class="display_answer_comment_bubble">
                     <table>
                         <tr>
-                            <td>Edit comment</td>
-                            <td>Delete comment</td>
+                            <td><a href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit comment</a></td>
+                            <td><a href="#">Delete comment</a></td>
                             <td>{{ komment['message'] }}</td>
                         </tr>
                     </table>

@@ -52,21 +52,17 @@ def route_question(question_id):
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     if request.method == 'GET':
-        question_original = data_manager.get_data(question_route, question_id)
-        return render_template('edit-question.html', question_id=question_id, question_original=question_original)
+        original_question = data_manager2.get_question_by_id(question_id)
+        print(original_question)
+        return render_template('edit-question.html', question_id=question_id, original_question=original_question)
     if request.method == 'POST':
-        question_original = data_manager.get_data(question_route, question_id)
-        question = {
-            'id': question_id,
-            'submission_time': question_original['submission_time'],
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': request.form.get('image'),
-            'view_number': question_original['view_number'],
-            'vote_number': question_original['view_number']
-        }
-        data_manager.edit_question(question)
-        return redirect('/')
+        original_question = data_manager2.get_answer_by_id(question_id)
+        question_id = original_question[0]['id']
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_question_by_id(question_id, submission_time, message)
+        to_url = '/question/' + str(question_id)
+        return redirect(to_url)
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -139,12 +135,6 @@ def route_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
 
 
-"""def route_view_counter(question_id):
-    question = data_manager2.get_question_by_id(question_id)
-    question['view_number'] = str(int(question['view_number']) + 1)
-    data_manager2.edit_question(question)"""
-
-
 @app.route('/addvote-question')
 def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
@@ -153,7 +143,7 @@ def addvote_question(question_id=None):
     print(question)
     print(question[0]['vote_number'])
     vote_number = question[0]['vote_number'] + 1
-    data_manager2.update_question_by_id(question_id, vote_number)
+    data_manager2.update_question_votenum_by_id(question_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -170,7 +160,7 @@ def downvote_question(question_id=None):
     print(question)
     print(question[0]['vote_number'])
     vote_number = question[0]['vote_number'] - 1
-    data_manager2.update_question_by_id(question_id, vote_number)
+    data_manager2.update_question_votenum_by_id(question_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -189,7 +179,7 @@ def addvote_answer(answer_id=None, question_id=None):
     vote_number = answerss[0]['vote_number'] + 1
     print(vote_number)
     print(answer_id)
-    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
 
@@ -209,7 +199,7 @@ def downvote_answer(answer_id=None, question_id=None):
     vote_number = answerss[0]['vote_number'] - 1
     print(vote_number)
     print(answer_id)
-    data_manager2.update_answer_by_id2(answer_id, vote_number)
+    data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     question = data_manager2.get_question_by_id(question_id)
     answers = data_manager2.get_answers_for_question(question_id)
     return render_template('display_question.html',
@@ -286,7 +276,23 @@ def delete_question(question_id=None):
     data_manager2.delete_comment_by_question_id(question_id)
     data_manager2.delete_answer_by_question_id(question_id)
     data_manager2.delete_question(question_id)
-    return redirect('/')
+    return redirect('/list')
+
+@app.route('/delete_answer/<answer_id>')
+def delete_answer(answer_id):
+    answer_id = answer_id
+    print(answer_id)
+    data_manager2.delete_comment_by_answer_id(answer_id)
+    data_manager2.delete_answer_by_answer_id(answer_id)
+    return redirect('/list')
+
+
+@app.route('/delete-comment')
+def delete_comment(comment_id):
+    comment_id=comment_id
+    print(comment_id)
+    data_manager2.delete_comment_by_comment_id(comment_id)
+    return redirect('/list')
 
 
 if __name__ == '__main__':
