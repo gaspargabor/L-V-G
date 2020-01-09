@@ -29,10 +29,10 @@
             </tr>
             <tr>
                 <td rowspan="2" class="disp_vote_cell">votes: {{ question[0]['vote_number'] }}</td>
-                <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
+                <td class="vote_button"><a href="{{ url_for('addvote_question', question_id=question_id) }}" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
             </tr>
             <tr>
-                <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
+                <td class="vote_button"><a href="{{ url_for('downvote_question', question_id=question_id) }}" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
             </tr>
 
 
@@ -48,7 +48,7 @@
                 <tr>
                     <td class="message-box">{{ comment_for_q['message'] }}</td>
                     <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id']) }}">Edit</a></td>
-                    <td class="table-btn" ><a class="disp_btn" href="#">Delete</a></td>
+                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('delete_comment', comment_id=comment_for_q['id']) }}">Delete</a></td>
                 </tr>
             </table>
         </div>
@@ -61,13 +61,13 @@
                 <table>
                     <tr>
                         <td class="answ_votes" rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
-                        <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
+                        <td class="vote_button"><a href="{{ url_for('addvote_answer', answer_id=answer_id) }}" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
                         <td class="message-box" rowspan="2">{{ kerdes[0]['message'] }}</td>
                         <td class="table-btn" rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}" class="disp_btn">comment</a></td>
                         <td class="table-btn" rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}" class="disp_btn">Delete</a></td>
                     </tr>
                     <tr>
-                        <td class="vote_button"><a href="#" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
+                        <td class="vote_button"><a href="{{ url_for('downvote_answer', answer_id=answer_id) }}" class="icon icon-down"><img src="/static/assets/Polygon_2.png"></a></td>
                     </tr>
 
                 </table>
@@ -80,7 +80,7 @@
                 <tr>
                     <td class="message-box" >{{ komment['message'] }}</td>
                     <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit</a></td>
-                    <td class="table-btn" ><a class="disp_btn" href="#">Delete</a></td>
+                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('delete_comment', comment_id=komment['id']) }}">Delete</a></td>
                 </tr>
             </table>
                 </div>
