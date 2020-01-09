@@ -8,7 +8,7 @@ body {
   display: grid;
   grid-template-rows: 25% auto;
     color: #E0E0E0;
-}
+    }
 
 .background {
   width: 100%;

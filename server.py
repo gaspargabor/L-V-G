@@ -271,7 +271,7 @@ def delete_question(question_id=None):
     data_manager2.delete_question(question_id)
     return redirect('/list')
 
-@app.route('/delete_answer')
+@app.route('/delete_answer/<answer_id>')
 def delete_answer(answer_id):
     answer_id = answer_id
     print(answer_id)
@@ -280,7 +280,7 @@ def delete_answer(answer_id):
     return redirect('/list')
 
 
-@app.route('delete-comment')
+@app.route('/delete-comment')
 def delete_comment(comment_id):
     comment_id=comment_id
     print(comment_id)

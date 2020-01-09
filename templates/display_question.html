@@ -38,7 +38,7 @@
 
         </table>
     </div>
-    <div class="display_question_button"><a href="#">Add comment to question</a></div>
+    <div class="display_question_button"><a href="{{ url_for('addcomment_question', question_id=question_id) }}">Add comment to question</a></div>
 
 <div class="display_comment_bubble">
     {% for comment_for_q in comments_for_q%}
@@ -54,7 +54,8 @@
                         <td rowspan="2">{{ kerdes[0]['vote_number'] }}</td>
                         <td class="vote_button">Up</td>
                         <td rowspan="2">{{ kerdes[0]['message'] }}</td>
-                        <td rowspan="2"><a href="#">Add comment to answer</a></td>
+                        <td rowspan="2"><a href="{{ url_for('addcomment_answer', answer_id=answer_id) }}">Add comment to answer</a></td>
+                        <td rowspan="2"><a href="{{ url_for('delete_answer', answer_id=answer_id) }}">Delete answer</a></td>
                     </tr>
                     <tr>
                         <td class="vote_button">Down</td>
