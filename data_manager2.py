@@ -41,10 +41,12 @@ def sort_qs_or_as(cursor, criteria):
 
 
 @database_common.connection_handler
-def sort_as_by_q_id(cursor, criteria):
+def sort_as_by_q_id(cursor, question_id,criteria):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE question_id=%s;""" % (criteria))
+                    WHERE question_id=%(question_id)s
+                    ORDER BY %s;""" % criteria,
+                   {'question_id': question_id})
     sorted_answers = cursor.fetchall()
     return sorted_answers
 
@@ -165,6 +167,21 @@ def add_one_to_view_number(cursor, question_id):
                     WHERE id=%s;
                     """% ''.join(question_id),
                    {'question_id': question_id})
+
+
+
+@database_common.connection_handler
+def search_question_title(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s and message ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
 
 @database_common.connection_handler
 def search_question(cursor, question):
