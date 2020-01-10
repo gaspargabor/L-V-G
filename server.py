@@ -228,7 +228,6 @@ def search():
     empty_list = []
     question = data_manager2.get_all_data()
     question_id = request.args.get('question_id')
-    util.make_searching_great_again(q)
     return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question, search_result_title_n_message=search_result_title_n_message)
 
 

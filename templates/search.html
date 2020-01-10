@@ -12,11 +12,10 @@
 <div id="display_navbar2">
     <a href="{{ url_for("route_index") }}">Back to home page</a>
 </div>
-    <p>Search results for: {{ q }}</p>
+    <h1>Search results for: {{ q }}</h1>
 
     {% for question in search_result %}
         {% if search_result !=empty_list and search_result_message==empty_list %}
-            <p>Search result found in question title:</p>
             <div class="display_question_bubble">
             <table>
                 <tr>
@@ -32,7 +31,6 @@
 
     {% for question in search_result_answer %}
         {% if search_result_answer !=empty_list %}
-            <p>Search result found in answer:</p>
             <div>
             <table>
                 <tr>
@@ -48,7 +46,7 @@
 
     {% for question in search_result_message %}
         {% if search_result_message !=empty_list and search_result==empty_list %}
-            <p>Search result found in question message:</p>
+
             <div class="display_question_bubble">
             <table>
                 <tr>
@@ -65,7 +63,6 @@
         {% for question in search_result_title_n_message %}
         {% if search_result_message!=empty_list and search_result!=empty_list %}
             <div class="single-bubble">
-            <p>Search result found in title and message:</p>
             </div>
             <div class="display_question_bubble">
             <table>
