@@ -222,13 +222,14 @@ def addcomment_answer(answer_id):
 def search():
     q = request.args.get('q')
     search_result = data_manager2.search_question(q)
-    search_result_title_n_message = data_manager2.search_question_and_title(q)
     search_result_answer = data_manager2.search_answer(q)
     search_result_message = data_manager2.search_question_message(q)
+    search_result_title_message = data_manager2.search_question_message(q)
     empty_list = []
     question = data_manager2.get_all_data()
     question_id = request.args.get('question_id')
-    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question, search_result_title_n_message=search_result_title_n_message)
+
+    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question, search_result_title_message=search_result_title_message)
 
 
 
