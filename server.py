@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for
 import data_manager2
 from datetime import datetime
 import util
@@ -28,28 +28,24 @@ def route_all_question(sort_criteria=None, ascordesc=None):
     return render_template('list.html', questions=questions)
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
+@app.route('/question/<question_id>')
 def route_question(question_id):
-    if request.method == 'POST':
-        return redirect('/')
-    if request.method == 'GET':
-        route_view_counter(question_id)
-        question = data_manager2.get_question_by_id(question_id)
-        answers = data_manager2.get_answers_for_question(question_id)
-        if len(answers) != 0:
-            answer_id = answers[0]['id']
-        else:
-            answer_id = None
-        ultimate = util.trystuff(question_id, answer_id)
-        comments_for_q = data_manager2.get_comments_for_question(question_id)
-        return render_template('display_question.html',
-                               question_id=question_id,
-                               question=question,
-                               answers=answers,
-                               answer_id=answer_id,
-                               comments_for_q=comments_for_q,
-                               ultimate=ultimate
-                               )
+    route_view_counter(question_id)
+    question = data_manager2.get_question_by_id(question_id)
+    print(question)
+    answers = data_manager2.get_answers_for_question(question_id)
+    answer_id = None
+    if len(answers) != 0:
+        answer_id = answers[0]['id']
+
+    ultimate = util.trystuff(question_id, answer_id)
+    comments_for_q = data_manager2.get_comments_for_question(question_id)
+    return render_template('display_question.html',
+                           question=question,
+
+                           comments_for_q=comments_for_q,
+                           ultimate=ultimate
+                           )
 
 
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
@@ -57,14 +53,16 @@ def route_edit_question(question_id):
     if request.method == 'GET':
         original_question = data_manager2.get_question_by_id(question_id)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
-    if request.method == 'POST':
-        original_question = data_manager2.get_answer_by_id(question_id)
-        question_id = original_question[0]['id']
-        submission_time = datetime.now(),
-        message = request.form.get('message'),
-        data_manager2.update_question_by_id(question_id, submission_time, message)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+
+    original_question = data_manager2.get_answer_by_id(question_id)
+    question_id = original_question['id']
+    submission_time = datetime.now(),
+    message = request.form.get('message'),
+    data_manager2.update_question_by_id(question_id, submission_time, message)
+    to_url = '/question/' + str(question_id)
+    return redirect(to_url)
+
+
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
@@ -104,12 +102,9 @@ def route_edit_comment(comment_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        submission_time = datetime.now(),
         title = request.form.get('title'),
         message = request.form.get('message'),
         image = request.form.get('image'),
-        view_number = 0,
-        vote_number = 0
         data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
         return redirect('/')
     return render_template('addquestion.html')
@@ -143,8 +138,7 @@ def addvote_question(question_id=None):
     view_number = question[0]['view_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
     data_manager2.update_question_viewnumber_by_id(question_id, view_number)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/downvote-question')
@@ -229,7 +223,9 @@ def search():
     question = data_manager2.get_all_data()
     question_id = request.args.get('question_id')
 
-    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer, search_result_message=search_result_message, empty_list=empty_list, question_id=question_id, question=question, search_result_title_message=search_result_title_message)
+    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer,
+                           search_result_message=search_result_message, empty_list=empty_list, question_id=question_id,
+                           question=question, search_result_title_message=search_result_title_message)
 
 
 

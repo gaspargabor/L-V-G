@@ -12,12 +12,9 @@
 <div id="display_navbar2">
     <a href="{{ url_for("route_index") }}">Back to home page</a>
 </div>
-    <p>Search results for: {{ q }}</p>
-
+    <h1>Search results for: {{ q }}</h1>
     {% for question in search_result %}
-
         {% if search_result !=empty_list and search_result_message==empty_list %}
-
             <div class="display_question_bubble">
             <table>
                 <tr>
@@ -30,10 +27,8 @@
             </div>
         {% endif %}
     {% endfor %}
-
     {% for question in search_result_answer %}
         {% if search_result_answer !=empty_list %}
-
             <div>
             <table>
                 <tr>
@@ -46,10 +41,8 @@
             </div>
         {% endif %}
     {% endfor %}
-
     {% for question in search_result_message %}
         {% if search_result_message !=empty_list and search_result==empty_list %}
-
             <div class="display_question_bubble">
             <table>
                 <tr>
@@ -62,19 +55,20 @@
             </div>
         {% endif %}
     {% endfor %}
-
-        {% for question in search_result_title_n_message %}
+        {% for question in search_result_title_message %}
         {% if search_result_message!=empty_list and search_result!=empty_list %}
             <div class="single-bubble">
+            <div>
             <p>Search result found in title and message:</p>
+            </div>
             </div>
             <div class="display_question_bubble">
             <table>
                 <tr>
-            <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=search_result[0]['id']) }}"> {{ search_result[0]['title'] }}</a></td>
+            <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
                 </tr>
                 <tr>
-            <td>{{ search_result[0]['message'] }}</td>
+            <td>{{ question['message'] }}</td>
                 </tr>
             </table>
             </div>

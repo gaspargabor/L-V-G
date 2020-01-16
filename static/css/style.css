@@ -546,3 +546,7 @@ a {
     color: orange;
     font-weight: bold;
 }
+
+.paragraph_height p{
+    height: 3em;
+}

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import database_common
 
 
@@ -98,7 +100,7 @@ def get_answer_by_id(cursor, answer_id):
                     SELECT * FROM answer
                     WHERE id=%(answer_id)s;
                     """, {'answer_id': answer_id})
-    answer = cursor.fetchall()
+    answer = cursor.fetchone()
     return answer
 
 
@@ -130,7 +132,10 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def add_new_question(cursor, title, message, image):
+    submission_time = datetime.now()
+    view_number = 0
+    vote_number = 0
     cursor.execute("""
                     INSERT INTO question
                     (submission_time, view_number, vote_number, title, message, image)
@@ -173,12 +178,11 @@ def search_question_title(cursor, question):
 
 @database_common.connection_handler
 def search_question(cursor, question):
-    search_phrase = "%" + question + "%"
     cursor.execute("""
                     SELECT * FROM question
                     WHERE title ILIKE %(search_phrase)s;
                     """,
-                   {'search_phrase': search_phrase}
+                   {'search_phrase': ("%" + question + "%")}
                    )
     search_result = cursor.fetchall()
     return search_result
