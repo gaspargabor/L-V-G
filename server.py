@@ -135,8 +135,9 @@ def downvote_question(question_id=None):
 @app.route('/addvote_answer/<answer_id>')
 def addvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
-    question_id = answerss[0]['question_id']
-    vote_number = answerss[0]['vote_number'] + 1
+    print(answerss)
+    question_id = answerss['question_id']
+    vote_number = answerss['vote_number'] + 1
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     return redirect(url_for("route_question", question_id=question_id))
 
@@ -144,8 +145,8 @@ def addvote_answer(answer_id):
 @app.route('/downvote_answer/<answer_id>')
 def downvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
-    question_id = answerss[0]['question_id']
-    vote_number = answerss[0]['vote_number'] - 1
+    question_id = answerss['question_id']
+    vote_number = answerss['vote_number'] - 1
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     return redirect(url_for("route_question", question_id=question_id))
 
@@ -216,7 +217,7 @@ def delete_question(question_id=None):
 def delete_answer(answer_id):
     answer_id = answer_id
     answers = data_manager2.get_answer_by_id(answer_id)
-    question_id = answers[0]['question_id']
+    question_id = answers['question_id']
     data_manager2.delete_comment_by_answer_id(answer_id)
     data_manager2.delete_answer_by_answer_id(answer_id)
     return redirect(url_for("route_question", question_id=question_id))
@@ -230,7 +231,7 @@ def delete_comment(comment_id):
         question_id = comment[0]['question_id']
     else:
         answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
-        question_id = answer[0]['question_id']
+        question_id = answer['question_id']
     data_manager2.delete_comment_by_comment_id(comment_id)
     return redirect(url_for("route_question", question_id=question_id))
 
