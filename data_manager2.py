@@ -392,3 +392,22 @@ def search_question_message_and_not_title(cursor, question):
                    )
     search_result = cursor.fetchall()
     return search_result
+
+
+@database_common.connection_handler
+def get_ansver_id_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT id FROM answer
+                    WHERE answer.question_id = %(question_id)s
+                    """,
+                   {'question_id': question_id})
+    ids = cursor.fetchall()
+    return ids
+
+
+@database_common.connection_handler
+def delete_comment_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    DELETE FROM comment
+                    WHERE answer_id = %(answer_id)s
+                    """, {'answer_id': answer_id})

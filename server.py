@@ -207,6 +207,9 @@ def search():
 @app.route('/delete-question')
 def delete_question(question_id=None):
     question_id = request.args.get('question_id')
+    answer_ids = data_manager2.get_ansver_id_by_question_id(question_id)
+    for element in answer_ids:
+        data_manager2.delete_comment_by_answer_id(element['id'])
     data_manager2.delete_question_tag_by_question_id(question_id)
     data_manager2.delete_comment_by_question_id(question_id)
     data_manager2.delete_answer_by_question_id(question_id)
