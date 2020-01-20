@@ -102,7 +102,7 @@ def route_add_question():
         title = request.form.get('title'),
         message = request.form.get('message'),
         image = request.form.get('image'),
-        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
+        data_manager2.add_new_question(title, message, image)
         return redirect('/')
     return render_template('addquestion.html')
 

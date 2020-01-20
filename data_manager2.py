@@ -366,7 +366,7 @@ def update_question_asd_by_id(cursor, question_id, view_number):
                     """, {'view_number': view_number, 'question_id': question_id})
 
 
-    #TESTING STUFF
+    #TESTING STUFFgfxfycgjhbnjlkgvcty
 
 
 @database_common.connection_handler
