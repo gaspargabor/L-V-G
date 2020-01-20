@@ -36,12 +36,11 @@ def route_question(question_id):
     answer_id = None
     if len(answers) != 0:
         answer_id = answers[0]['id']
-
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
     return render_template('display_question.html',
                            question=question,
-
+                           question_id=question_id,
                            comments_for_q=comments_for_q,
                            ultimate=ultimate
                            )
@@ -52,15 +51,11 @@ def route_edit_question(question_id):
     if request.method == 'GET':
         original_question = data_manager2.get_question_by_id(question_id)
         return render_template('edit-question.html', question_id=question_id, original_question=original_question)
-
-    original_question = data_manager2.get_answer_by_id(question_id)
-    question_id = original_question['id']
-    submission_time = datetime.now(),
-    message = request.form.get('message'),
-    data_manager2.update_question_by_id(question_id, submission_time, message)
-    return redirect(url_for("route_question", question_id=question_id))
-
-
+    else:
+        submission_time = datetime.now(),
+        message = request.form.get('message'),
+        data_manager2.update_question_by_id(question_id, submission_time, message)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
