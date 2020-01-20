@@ -17,7 +17,7 @@
                     <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=t_and_m['id']) }}"> {{ t_and_m['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=t_and_m['id']) }}"> {{ t_and_m['title'] }}</a></td>
                 </tr>
                 <tr>
             <td>{{ t_and_m['message'] }}</td>
@@ -29,7 +29,7 @@
                     <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=t_only['id']) }}"> {{ t_only['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=t_only['id']) }}"> {{ t_only['title'] }}</a></td>
                 </tr>
                 <tr>
             <td>{{ t_only['message'] }}</td>
@@ -41,7 +41,7 @@
                     <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=m_only['id']) }}"> {{ m_only['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=m_only['id']) }}"> {{ m_only['title'] }}</a></td>
                 </tr>
                 <tr>
             <td>{{ m_only['message'] }}</td>
@@ -66,7 +66,7 @@
             <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
                 </tr>
                 <tr>
             <td>{{ question['message'] }}</td>
@@ -80,7 +80,7 @@
             <div>
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
                 </tr>
                 <tr>
             <td class="display_answers_bubble">{{ question['message'] }}</td>
@@ -94,7 +94,7 @@
             <div class="display_question_bubble">
             <table>
                 <tr>
-                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("add_view_counter", question_id=question['id']) }}"> {{ question['title'] }}</a></td>
                 </tr>
                 <tr>
             <td>{{ question['message'] }}</td>
