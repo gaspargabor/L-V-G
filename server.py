@@ -59,8 +59,7 @@ def route_edit_question(question_id):
     submission_time = datetime.now(),
     message = request.form.get('message'),
     data_manager2.update_question_by_id(question_id, submission_time, message)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 
@@ -76,8 +75,7 @@ def route_edit_answer(answer_id):
         submission_time = datetime.now(),
         message = request.form.get('message'),
         data_manager2.update_answer_by_id(answer_id, submission_time, message)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
@@ -95,8 +93,7 @@ def route_edit_comment(comment_id):
         message = request.form.get('message'),
         edited_count = original_comment[0]['edited_count'] + 1
         data_manager2.update_comment_by_id(comment_id, submission_time, message, edited_count)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -121,8 +118,7 @@ def route_new_answer(question_id):
         image = request.form.get('image'),
         vote_number = 0
         data_manager2.add_new_answer(submission_time, vote_number, question_id, message, image)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 def route_view_counter(question_id):
@@ -149,8 +145,7 @@ def downvote_question(question_id=None):
     view_number = question[0]['view_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
     data_manager2.update_question_viewnumber_by_id(question_id, view_number)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/addvote_answer/<answer_id>')
@@ -162,8 +157,7 @@ def addvote_answer(answer_id):
     view_number = question[0]['view_number'] - 1
     data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/downvote_answer/<answer_id>')
@@ -175,8 +169,7 @@ def downvote_answer(answer_id):
     view_number = question[0]['view_number'] - 1
     data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
@@ -192,8 +185,7 @@ def addcomment_question(question_id):
         data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id)
         question = data_manager2.get_question_by_id(question_id)
         answers = data_manager2.get_answers_for_question(question_id)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
@@ -208,8 +200,7 @@ def addcomment_answer(answer_id):
         question_id = answer[0]['question_id']
         edited_count = 0,
         data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
-        to_url = '/question/' + str(question_id)
-        return redirect(to_url)
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/search')
@@ -222,10 +213,13 @@ def search():
     empty_list = []
     question = data_manager2.get_all_data()
     question_id = request.args.get('question_id')
-
+    some_search = util.make_searching_great_again(q)
+    only_title = data_manager2.search_question_title_and_not_message(q)
+    only_message = data_manager2.search_question_message_and_not_title(q)
     return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer,
                            search_result_message=search_result_message, empty_list=empty_list, question_id=question_id,
-                           question=question, search_result_title_message=search_result_title_message)
+                           question=question, search_result_title_message=search_result_title_message,
+                           some_search=some_search, only_message=only_message, only_title=only_title)
 
 
 
@@ -245,8 +239,7 @@ def delete_answer(answer_id):
     question_id = answers[0]['question_id']
     data_manager2.delete_comment_by_answer_id(answer_id)
     data_manager2.delete_answer_by_answer_id(answer_id)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/delete-comment/<comment_id>')
@@ -259,8 +252,7 @@ def delete_comment(comment_id):
         answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
         question_id = answer[0]['question_id']
     data_manager2.delete_comment_by_comment_id(comment_id)
-    to_url = '/question/' + str(question_id)
-    return redirect(to_url)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 if __name__ == '__main__':
