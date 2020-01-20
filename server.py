@@ -30,7 +30,6 @@ def route_all_question(sort_criteria=None, ascordesc=None):
 
 @app.route('/question/<question_id>')
 def route_question(question_id):
-    route_view_counter(question_id)
     question = data_manager2.get_question_by_id(question_id)
     print(question)
     answers = data_manager2.get_answers_for_question(question_id)
@@ -102,7 +101,7 @@ def route_add_question():
         title = request.form.get('title'),
         message = request.form.get('message'),
         image = request.form.get('image'),
-        data_manager2.add_new_question(submission_time, view_number, vote_number, title, message, image)
+        data_manager2.add_new_question(title, message, image)
         return redirect('/')
     return render_template('addquestion.html')
 
@@ -119,11 +118,6 @@ def route_new_answer(question_id):
         vote_number = 0
         data_manager2.add_new_answer(submission_time, vote_number, question_id, message, image)
         return redirect(url_for("route_question", question_id=question_id))
-
-
-def route_view_counter(question_id):
-    data_manager2.get_question_by_id(question_id)
-    data_manager2.add_one_to_view_number(question_id)
 
 
 @app.route('/addvote-question')
@@ -252,6 +246,13 @@ def delete_comment(comment_id):
         answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
         question_id = answer[0]['question_id']
     data_manager2.delete_comment_by_comment_id(comment_id)
+    return redirect(url_for("route_question", question_id=question_id))
+
+
+@app.route('/add-view-counter/<question_id>')
+def add_view_counter(question_id):
+    data_manager2.get_question_by_id(question_id)
+    data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
 

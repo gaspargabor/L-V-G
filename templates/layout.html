@@ -46,7 +46,7 @@
                          <table>
                              <tr class="first-row">
                                  <td class="first-col">{{ question['view_number'] }}</td>
-                                 <td class="question-title icon-down"><a href="{{ url_for("route_question", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                 <td class="question-title icon-down"><a href="{{ url_for("add_view_counter", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
                                  <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
                              </tr>
                              <tr>
