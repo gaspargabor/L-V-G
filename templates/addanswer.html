@@ -22,7 +22,7 @@
                      </div>
                      <div class="buttons">
                          <div class="leftbtn"><button class="addbutton" type="submit">Submit answer</button></div>
-                        <div class="rightbtn"><a class="addbutton cancelbtn" href="#">Cancel</a></div>
+                        <div class="rightbtn"><a class="addbutton cancelbtn" href="{{ url_for('route_question', question_id=question_id) }}">Cancel</a></div>
                      </div>
                  </form>
             </div>

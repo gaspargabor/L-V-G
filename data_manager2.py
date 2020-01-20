@@ -41,6 +41,18 @@ def sort_qs_or_as(cursor, criteria):
     sorted_data = cursor.fetchall()
     return sorted_data
 
+
+@database_common.connection_handler
+def sort_as_by_q_id(cursor, question_id,criteria):
+    cursor.execute("""
+                    SELECT * FROM answer
+                    WHERE question_id=%(question_id)s
+                    ORDER BY %s;""" % criteria,
+                   {'question_id': question_id})
+    sorted_answers = cursor.fetchall()
+    return sorted_answers
+
+
 @database_common.connection_handler
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
@@ -209,7 +221,6 @@ def search_question_message(cursor, question):
                    {'search_phrase': search_phrase}
                    )
     search_result = cursor.fetchall()
-
     return search_result
 
 
@@ -237,12 +248,12 @@ def get_comment_by_id(cursor, comment_id):
 
 
 @database_common.connection_handler
-def update_comment_by_id(cursor, comment_id, submission_time, message):
+def update_comment_by_id(cursor, comment_id, submission_time, message, edited_count):
     cursor.execute("""
                     UPDATE comment
-                    SET submission_time = %(submission_time)s, message = %(message)s
+                    SET submission_time = %(submission_time)s, message = %(message)s, edited_count = %(edited_count)s
                     WHERE id = %(comment_id)s;
-                    """, {'submission_time': submission_time, 'message': message , 'comment_id': comment_id})
+                    """, {'submission_time': submission_time, 'message': message , 'comment_id': comment_id, 'edited_count': edited_count})
 
 
 @database_common.connection_handler
