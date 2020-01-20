@@ -81,7 +81,7 @@ def route_edit_comment(comment_id):
         question_id = original_comment[0]['question_id']
         if question_id is None:
             answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
-            question_id = answer[0]['question_id']
+            question_id = answer['question_id']
         submission_time = datetime.now(),
         message = request.form.get('message'),
         edited_count = original_comment[0]['edited_count'] + 1
