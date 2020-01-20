@@ -13,6 +13,53 @@
     <a href="{{ url_for("route_index") }}">Back to home page</a>
 </div>
     <h1>Search results for: {{ q }}</h1>
+                {% for t_and_m in some_search %}
+                    <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=t_and_m['id']) }}"> {{ t_and_m['title'] }}</a></td>
+                </tr>
+                <tr>
+            <td>{{ t_and_m['message'] }}</td>
+                </tr>
+            </table>
+            </div>
+                {% endfor %}
+{% for t_only in only_title %}
+                    <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=t_only['id']) }}"> {{ t_only['title'] }}</a></td>
+                </tr>
+                <tr>
+            <td>{{ t_only['message'] }}</td>
+                </tr>
+            </table>
+            </div>
+                {% endfor %}
+{% for m_only in only_message %}
+                    <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=m_only['id']) }}"> {{ m_only['title'] }}</a></td>
+                </tr>
+                <tr>
+            <td>{{ m_only['message'] }}</td>
+                </tr>
+            </table>
+            </div>
+                {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
 
     {% for question in search_result %}
 

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import database_common
 
 
@@ -55,7 +57,8 @@ def sort_as_by_q_id(cursor, question_id,criteria):
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
                     SELECT * FROM answer
-                    WHERE answer.question_id=%(question_id)s;
+                    WHERE answer.question_id=%(question_id)s
+                    ORDER BY vote_number DESC;
                     """,
                    {'question_id': question_id})
     answers=cursor.fetchall()
@@ -142,7 +145,10 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_question(cursor, submission_time, view_number, vote_number, title, message, image):
+def add_new_question(cursor, title, message, image):
+    view_number = 0
+    vote_number = 0
+    submission_time = datetime.now()
     cursor.execute("""
                     INSERT INTO question
                     (submission_time, view_number, vote_number, title, message, image)
@@ -359,3 +365,31 @@ def update_question_asd_by_id(cursor, question_id, view_number):
                     SET view_number = %(view_number)s
                     WHERE id = %(question_id)s;
                     """, {'view_number': view_number, 'question_id': question_id})
+
+
+    #TESTING STUFF
+
+
+@database_common.connection_handler
+def search_question_title_and_not_message(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE title ILIKE %(search_phrase)s AND message NOT ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
+
+@database_common.connection_handler
+def search_question_message_and_not_title(cursor, question):
+    search_phrase = "%" + question + "%"
+    cursor.execute("""
+                    SELECT * FROM question
+                    WHERE message ILIKE %(search_phrase)s AND title NOT ILIKE %(search_phrase)s;
+                    """,
+                   {'search_phrase': search_phrase}
+                   )
+    search_result = cursor.fetchall()
+    return search_result
