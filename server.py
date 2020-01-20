@@ -31,7 +31,6 @@ def route_all_question(sort_criteria=None, ascordesc=None):
 @app.route('/question/<question_id>')
 def route_question(question_id):
     question = data_manager2.get_question_by_id(question_id)
-    print(question)
     answers = data_manager2.get_answers_for_question(question_id)
     answer_id = None
     if len(answers) != 0:
@@ -120,9 +119,7 @@ def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
     question = data_manager2.get_question_by_id(question_id)
     vote_number = question[0]['vote_number'] + 1
-    view_number = question[0]['view_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
-    data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     return redirect(url_for("route_question", question_id=question_id))
 
 
@@ -131,9 +128,7 @@ def downvote_question(question_id=None):
     question_id = request.args.get('question_id')
     question = data_manager2.get_question_by_id(question_id)
     vote_number = question[0]['vote_number'] - 1
-    view_number = question[0]['view_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
-    data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     return redirect(url_for("route_question", question_id=question_id))
 
 
@@ -142,9 +137,6 @@ def addvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
     question_id = answerss[0]['question_id']
     vote_number = answerss[0]['vote_number'] + 1
-    question = data_manager2.get_question_by_id(question_id)
-    view_number = question[0]['view_number'] - 1
-    data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     return redirect(url_for("route_question", question_id=question_id))
 
@@ -154,9 +146,6 @@ def downvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
     question_id = answerss[0]['question_id']
     vote_number = answerss[0]['vote_number'] - 1
-    question = data_manager2.get_question_by_id(question_id)
-    view_number = question[0]['view_number'] - 1
-    data_manager2.update_question_viewnumber_by_id(question_id, view_number)
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
     return redirect(url_for("route_question", question_id=question_id))
 
@@ -186,7 +175,9 @@ def addcomment_answer(answer_id):
         submission_time = datetime.now(),
         message = request.form.get("message"),
         answer = data_manager2.get_answer_by_id(answer_id)
-        question_id = answer[0]['question_id']
+        print(answer)
+        question_id = answer['question_id']
+        print(question_id)
         edited_count = 0,
         data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
         return redirect(url_for("route_question", question_id=question_id))
