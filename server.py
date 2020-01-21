@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session, e
 import data_manager2
 from datetime import datetime
 import util
-import os, string
+import os
 
 
 super_secret_key = os.urandom(8)
@@ -21,30 +21,19 @@ def route_index():
             logged_in = 'Logged in as %s' % escape(session['username'])
         logged_in = 'You are not logged in'
         questions = data_manager2.get_5_latest()
-        print(session)
         return render_template('layout.html', questions=questions, logged_in=logged_in)
     elif request.method == "POST":
         return redirect('/list')
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def route_login():
-    print(session)
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        valid = util.verify_password(session['password'], '$2b$12$Gj9WEZBHrDIHqjvHTh0R3.r.E3ZOqtZ5Llelfp4zRi0754hBEhpyq')
-        print(session)
-        print(valid)
+        valid = util.verify_password(session['password'], '$2b$12$VjUZoupBPc9tARVTx/mT/.C7hoEaBW4Nr.NZ7eDF4xniSfpsGY1ta')
         return redirect('/')
-    return '''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=text name=password>
-            <p><input type=submit value=Login>
-        </form>
-    '''
+    return render_template('login.html')
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -56,13 +45,7 @@ def route_registration():
         print(session['username'], session['password'])
         print(session['_id'])
         return redirect('/')
-    return'''
-        <form method="post">
-            <p><input type=text name=username>
-            <p><input type=text name=password>
-            <p><input type=submit value=Register>
-        </form>
-    '''
+    return render_template('register.html')
 
 
 @app.route('/list')
@@ -284,13 +267,6 @@ def add_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
-@app.route('/register')
-def register():
-    return render_template('register.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(
