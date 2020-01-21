@@ -242,6 +242,10 @@ def register():
 def login():
     return render_template('login.html')
 
+@app.route('/user/<user_id>')
+def user_page():
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',

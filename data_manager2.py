@@ -358,3 +358,31 @@ def delete_comment_by_answer_id(cursor, answer_id):
                     DELETE FROM comment
                     WHERE answer_id = %(answer_id)s
                     """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def check_if_username_exists(cursor, username):
+    cursor.execute("""
+                    SELECT user_name from users
+                    WHERE user_name = %(username)s;""",
+                   {'username': username})
+    user = cursor.fetchall()
+    return user
+
+@database_common.connection_handler
+def get_user_data(cursor, username):
+    cursor.execute("""
+                    SELECT * FROM users
+                    WHERE user_name = %(username)s;
+                    """, {'username':username })
+    user_data = cursor.fetchall()
+    return user_data
+
+@database_common.connection_handler
+def get_users_questions_by_userid(cursor, userid):
+    cursor.execute("""
+                    SELECT * FROM ask_mate2.public.question
+                    WHERE user_id=%(userid)s;""",
+                   {'userid' : userid})
+    users_questions = cursor.fetchall()
+    return users_questions
