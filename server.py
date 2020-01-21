@@ -234,6 +234,10 @@ def add_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
 
 if __name__ == '__main__':
     app.run(
