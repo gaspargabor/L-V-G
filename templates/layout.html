@@ -39,6 +39,12 @@
                     <input class="srch searchbtn" type="submit" value="Search">
                     </form>
                   </div>
+              <div>
+                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("register") }}">Register</a>
+              </div>
+              <div>
+                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("login") }}">Login</a>
+              </div>
             </div>
          <div class="question-bubbles">
           {% for question in questions %}

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+<div class="add_qora">
+    <div class="titlerow"><h1>Login</h1></div>
+    <div class="register_block">
+        <form action="/login" method="post">
+            <div>
+                <label id="username">Enter username:</label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div>
+                <label id="password">Enter password:</label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div>
+                <button class="addbutton" type="submit">Login</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
