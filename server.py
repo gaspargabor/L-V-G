@@ -1,9 +1,12 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, make_response, escape
 import data_manager2
 from datetime import datetime
 import util
 
 app = Flask(__name__)
+
+
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -89,23 +92,31 @@ def route_edit_comment(comment_id):
         return redirect(url_for("route_question", question_id=question_id))
 
 
+@app.route('/set-cookie')
+def cookie_insertion():
+    session['username'] = 'halacska'
+    return redirect('/')
+
+
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        hapci = 123
-        if hapci is None:
+        if 'username' in session:
+            user_name = escape(session['username'])
+            print(user_name)
+            user_id_dict = data_manager2.get_user_id_by_user_name(user_name)
+            print(user_id_dict)
+            user_id = user_id_dict['user_id'],
+            title = request.form.get('title'),
+            message = request.form.get('message'),
+            image = request.form.get('image'),
+            data_manager2.add_new_question(title, message, image, user_id)
+            return redirect('/')
+        else:
             title = request.form.get('title'),
             message = request.form.get('message'),
             image = request.form.get('image'),
             user_id = None,
-            data_manager2.add_new_question(title, message, image, user_id)
-            return redirect('/')
-        else:
-            user_id_dict = data_manager2.get_user_id_by_session_id(str(hapci)),
-            user_id = user_id_dict[0]['user_id'],
-            title = request.form.get('title'),
-            message = request.form.get('message'),
-            image = request.form.get('image'),
             data_manager2.add_new_question(title, message, image, user_id)
             return redirect('/')
     return render_template('addquestion.html')

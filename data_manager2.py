@@ -361,10 +361,10 @@ def delete_comment_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
-def get_user_id_by_session_id(cursor, sesssion_id):
+def get_user_id_by_user_name(cursor, user_name):
     cursor.execute("""
                     SELECT user_id FROM sessions
-                    WHERE session_id = %(session_id)s
-                    """, {'session_id': sesssion_id})
+                    WHERE user_name = %(user_name)s
+                    """, {'user_name': user_name})
     user_id = cursor.fetchone()
     return user_id
