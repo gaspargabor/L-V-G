@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+<div>
+    <h1><strong>Ask Mate</strong></h1>
+</div>
+<div id="display_navbar2">
+    <a href="{{ url_for("route_index") }}">Back to home page</a>
+</div>
+    <h1>Search results for: {{ q }}</h1>
+    <script type = "text/javascript">
+        const term = "<div class='display_question_bubble'>";
+        const regexp = /\b{{ q }}\b/
+        var matches = term.match(regexp);
+
+        for (i = 0; i < matches.length; i++) {
+          var replace_all = RegExp(matches[i] + "(?![^<]*>|[^<>]*<\/)", "ig");
+          term = term.replace(eval(replace_all), "<span style='background-  color:yellow'>" + matches[i] + "</span>");
+        }
+        console.log(term);
+
+    </script>
+
+    {% for question in search_result %}
+        {% if q in question %}
+            <mark>{{ q }}</mark>
+        {% endif %}
+        <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question.title }}</a></td>
+                </tr>
+                <tr>
+                    <td>{{ question.message }}</td>
+                </tr>
+                <tr>
+                    <td class="display_answers_bubble">{{ question.ans }}</td>
+                </tr>
+            </table>
+        </div>
+
+    {% endfor %}
+
+
+
+
+</body>
+</html>
