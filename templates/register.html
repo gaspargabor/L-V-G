@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+</head>
+<body>
+<div class="add_qora">
+    <div class="titlerow"><h1>Register An Account</h1></div>
+    <div class="register_block">
+        <form action="/register" method="post">
+            <div>
+                <label id="username">Choose a username:</label>
+                <input type="text" name="username" id="username" placeholder="Username" required>
+            </div>
+            <div>
+                <label id="password">Choose a password:</label>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            <div>
+                <label id="repeat_password">Repeat password:</label>
+                <input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password" required>
+            </div>
+            <div>
+                <button class="addbutton" type="submit">Create Account</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
