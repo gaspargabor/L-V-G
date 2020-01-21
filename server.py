@@ -185,20 +185,11 @@ def addcomment_answer(answer_id):
 @app.route('/search')
 def search():
     q = request.args.get('q')
-    search_result = data_manager2.search_question(q)
-    search_result_answer = data_manager2.search_answer(q)
-    search_result_message = data_manager2.search_question_message(q)
-    search_result_title_message = data_manager2.search_question_message(q)
-    empty_list = []
-    question = data_manager2.get_all_data()
+    search_result = data_manager2.search_question2(q)
     question_id = request.args.get('question_id')
-    some_search = util.make_searching_great_again(q)
-    only_title = data_manager2.search_question_title_and_not_message(q)
-    only_message = data_manager2.search_question_message_and_not_title(q)
-    return render_template('search.html', q=q, search_result=search_result, search_result_answer=search_result_answer,
-                           search_result_message=search_result_message, empty_list=empty_list, question_id=question_id,
-                           question=question, search_result_title_message=search_result_title_message,
-                           some_search=some_search, only_message=only_message, only_title=only_title)
+    return render_template('search2.html', q=q, search_result=search_result,
+                           question_id=question_id,)
+
 
 
 @app.route('/delete-question')

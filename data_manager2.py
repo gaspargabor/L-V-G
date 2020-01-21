@@ -177,68 +177,6 @@ def add_one_to_view_number(cursor, question_id):
 
 
 @database_common.connection_handler
-def search_question_title(cursor, question):
-    search_phrase = "%" + question + "%"
-    cursor.execute("""
-                    SELECT * FROM question
-                    WHERE title ILIKE %(search_phrase)s and message ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': search_phrase}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
-
-
-@database_common.connection_handler
-def search_question(cursor, question):
-    cursor.execute("""
-                    SELECT * FROM question
-                    WHERE title ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': ("%" + question + "%")}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
-
-@database_common.connection_handler
-def search_question_and_title(cursor, question):
-    search_phrase = "%" + question + "%"
-    cursor.execute("""
-                    SELECT * FROM question
-                    WHERE title ILIKE %(search_phrase)s AND message ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': search_phrase}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
-
-@database_common.connection_handler
-def search_question_message(cursor, question):
-    search_phrase = "%" + question + "%"
-    cursor.execute("""
-                    SELECT * FROM question
-                    WHERE message ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': search_phrase}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
-
-
-@database_common.connection_handler
-def search_answer(cursor, question):
-    search_phrase = "%" + question + "%"
-    cursor.execute("""
-                    SELECT * FROM answer
-                    WHERE message ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': search_phrase}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
-
-
-@database_common.connection_handler
 def get_comment_by_id(cursor, comment_id):
     cursor.execute("""
                     SELECT * FROM comment
@@ -366,29 +304,38 @@ def update_question_asd_by_id(cursor, question_id, view_number):
                     """, {'view_number': view_number, 'question_id': question_id})
 
 
-    #TESTING STUFF
+
+    #TESTING STUFFgfxfycgjhbnjlkgvcty
 
 
-@database_common.connection_handler
-def search_question_title_and_not_message(cursor, question):
-    search_phrase = "%" + question + "%"
-    cursor.execute("""
-                    SELECT * FROM question
-                    WHERE title ILIKE %(search_phrase)s AND message NOT ILIKE %(search_phrase)s;
-                    """,
-                   {'search_phrase': search_phrase}
-                   )
-    search_result = cursor.fetchall()
-    return search_result
 
 @database_common.connection_handler
-def search_question_message_and_not_title(cursor, question):
-    search_phrase = "%" + question + "%"
+def get_joined(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM question
-                    WHERE message ILIKE %(search_phrase)s AND title NOT ILIKE %(search_phrase)s;
+                    SELECT title, question.id FROM question inner join answer a on question.id = a.question_id
+                    WHERE question.id=%(question_id)s AND a.message IS NOT NULL;""",
+                   {'question_id': question_id})
+    joined = cursor.fetchall()
+    return joined
+
+@database_common.connection_handler
+def search_question2(cursor, question):
+    cursor.execute("""
+                    SELECT question.id, title, question.message, COALESCE(a.message, 'No answers yet') as ans FROM question left join answer a on question.id = a.question_id 
+                    WHERE (title ILIKE %(search_phrase)s  AND question.message ILIKE %(search_phrase)s AND a.message ILIKE %(search_phrase)s)
+                    OR (title ILIKE %(search_phrase)s  AND question.message ILIKE %(search_phrase)s AND a.message NOT ILIKE %(search_phrase)s)
+                    OR (title ILIKE %(search_phrase)s  AND question.message NOT ILIKE %(search_phrase)s AND a.message ILIKE %(search_phrase)s)
+                    OR (title ILIKE %(search_phrase)s  AND question.message NOT ILIKE %(search_phrase)s AND a.message NOT ILIKE %(search_phrase)s)
+                    OR (title NOT ILIKE %(search_phrase)s  AND question.message ILIKE %(search_phrase)s AND a.message ILIKE %(search_phrase)s)
+                    OR (title NOT ILIKE %(search_phrase)s  AND question.message NOT ILIKE %(search_phrase)s AND a.message ILIKE %(search_phrase)s)
+                    OR (title NOT ILIKE %(search_phrase)s  AND question.message ILIKE %(search_phrase)s AND a.message NOT ILIKE %(search_phrase)s)
+                    OR (title ILIKE %(search_phrase)s  AND question.message ILIKE %(search_phrase)s)
+                    OR (title ILIKE %(search_phrase)s AND question.message NOT ILIKE %(search_phrase)s)
+                    OR (title NOT ILIKE %(search_phrase)s AND question.message ILIKE %(search_phrase)s)
+                    GROUP BY question.id, a.message, title, question.message
+                    ;
                     """,
-                   {'search_phrase': search_phrase}
+                   {'search_phrase': ("%" + question + "%")}
                    )
     search_result = cursor.fetchall()
     return search_result
