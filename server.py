@@ -119,7 +119,11 @@ def route_add_question():
             user_id = None,
             data_manager2.add_new_question(title, message, image, user_id)
             return redirect('/')
-    return render_template('addquestion.html')
+    else:
+        if 'username' in session:
+            return render_template('addquestion.html')
+        else:
+            permission_denied = 1
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
