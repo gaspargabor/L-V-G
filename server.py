@@ -162,8 +162,6 @@ def addcomment_question(question_id):
         edited_count = 0,
         answer_id = None
         data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id)
-        question = data_manager2.get_question_by_id(question_id)
-        answers = data_manager2.get_answers_for_question(question_id)
         return redirect(url_for("route_question", question_id=question_id))
 
 
@@ -203,7 +201,6 @@ def search():
                            some_search=some_search, only_message=only_message, only_title=only_title)
 
 
-
 @app.route('/delete-question')
 def delete_question(question_id=None):
     question_id = request.args.get('question_id')
@@ -215,6 +212,7 @@ def delete_question(question_id=None):
     data_manager2.delete_answer_by_question_id(question_id)
     data_manager2.delete_question(question_id)
     return redirect('/list')
+
 
 @app.route('/delete_answer/<answer_id>')
 def delete_answer(answer_id):
@@ -228,7 +226,7 @@ def delete_answer(answer_id):
 
 @app.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
-    comment_id=comment_id
+    comment_id = comment_id
     comment = data_manager2.get_comment_by_id(comment_id)
     if comment[0]['question_id'] is not None:
         question_id = comment[0]['question_id']
