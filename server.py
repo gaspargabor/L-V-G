@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager2
 from datetime import datetime
 import util
@@ -92,11 +92,22 @@ def route_edit_comment(comment_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        title = request.form.get('title'),
-        message = request.form.get('message'),
-        image = request.form.get('image'),
-        data_manager2.add_new_question(title, message, image)
-        return redirect('/')
+        hapci = 123
+        if hapci is None:
+            title = request.form.get('title'),
+            message = request.form.get('message'),
+            image = request.form.get('image'),
+            user_id = None,
+            data_manager2.add_new_question(title, message, image, user_id)
+            return redirect('/')
+        else:
+            user_id_dict = data_manager2.get_user_id_by_session_id(str(hapci)),
+            user_id = user_id_dict[0]['user_id'],
+            title = request.form.get('title'),
+            message = request.form.get('message'),
+            image = request.form.get('image'),
+            data_manager2.add_new_question(title, message, image, user_id)
+            return redirect('/')
     return render_template('addquestion.html')
 
 

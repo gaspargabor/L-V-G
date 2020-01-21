@@ -145,15 +145,15 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_question(cursor, title, message, image):
+def add_new_question(cursor, title, message, image, user_id):
     submission_time = datetime.now()
     view_number = 0
     vote_number = 0
     cursor.execute("""
                     INSERT INTO question
-                    (submission_time, view_number, vote_number, title, message, image)
-                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
-                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+                    (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image, 'user_id':user_id})
     return None
 
 @database_common.connection_handler
@@ -358,3 +358,13 @@ def delete_comment_by_answer_id(cursor, answer_id):
                     DELETE FROM comment
                     WHERE answer_id = %(answer_id)s
                     """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def get_user_id_by_session_id(cursor, sesssion_id):
+    cursor.execute("""
+                    SELECT user_id FROM sessions
+                    WHERE session_id = %(session_id)s
+                    """, {'session_id': sesssion_id})
+    user_id = cursor.fetchone()
+    return user_id
