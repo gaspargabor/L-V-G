@@ -1,4 +1,7 @@
+import bcrypt
+
 import data_manager2
+
 
 
 def trystuff(question_id, answer_id):
@@ -54,3 +57,13 @@ def make_searching_great_again(q):
                     title_and_message.append(title)
         print(title_and_message)
     return title_and_message
+
+
+def hash_password(plain_text_password):
+    hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())
+    return hashed_bytes.decode('utf-8')
+
+
+def verify_password(plain_text_password, hashed_password):
+    hashed_bytes_password = hashed_password.encode('utf-8')
+    return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)

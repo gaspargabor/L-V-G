@@ -1,18 +1,68 @@
-from flask import Flask, render_template, request, redirect, url_for
+import uuid
+
+from flask import Flask, render_template, request, redirect, url_for, session, escape, make_response
 import data_manager2
 from datetime import datetime
 import util
+import os, string
+
+
+super_secret_key = os.urandom(8)
 
 app = Flask(__name__)
+
+app.secret_key = b'\xe9\xac)\x88\xc9r\x84c\xd9n\xf3n(H\xdb\x13'
 
 
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
     if request.method == "GET":
+        if 'username' in session:
+            logged_in = 'Logged in as %s' % escape(session['username'])
+        logged_in = 'You are not logged in'
         questions = data_manager2.get_5_latest()
-        return render_template('layout.html', questions=questions)
+        print(session)
+        return render_template('layout.html', questions=questions, logged_in=logged_in)
     elif request.method == "POST":
         return redirect('/list')
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def route_login():
+    print(session)
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        session['password'] = request.form['password']
+        valid = util.verify_password(session['password'], '$2b$12$Gj9WEZBHrDIHqjvHTh0R3.r.E3ZOqtZ5Llelfp4zRi0754hBEhpyq')
+        print(session)
+        print(valid)
+        return redirect('/')
+    return '''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=text name=password>
+            <p><input type=submit value=Login>
+        </form>
+    '''
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def route_registration():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        session['password'] = util.hash_password(request.form['password'])
+        session['_id'] = uuid.uuid4()
+        print(session['username'], session['password'])
+        print(session['_id'])
+        return redirect('/')
+    return'''
+        <form method="post">
+            <p><input type=text name=username>
+            <p><input type=text name=password>
+            <p><input type=submit value=Register>
+        </form>
+    '''
 
 
 @app.route('/list')

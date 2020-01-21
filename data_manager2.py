@@ -358,3 +358,8 @@ def delete_comment_by_answer_id(cursor, answer_id):
                     DELETE FROM comment
                     WHERE answer_id = %(answer_id)s
                     """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def save_credentials(user, password):
+    return None
