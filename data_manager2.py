@@ -423,3 +423,10 @@ def get_password_for_username(cursor, username):
                    {'username': username})
     password = cursor.fetchone()
     return password
+
+@database_common.connection_handler
+def delete_session_when_logout(cursor, username):
+    cursor.execute("""
+                    DELETE FROM sessions
+                    WHERE user_name= %(username)s""",
+                   {'username': username})
