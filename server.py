@@ -31,10 +31,10 @@ def route_index():
 def route_login():
     if request.method == 'POST':
         session['username'] = request.form['username']
-        session['password'] = request.form['password']
+        pw_to_check = request.form['password']
         session['_id'] = uuid.uuid4()
         password = data_manager2.get_password_for_username(session['username'])
-        valid = util.verify_password(session['password'], password['password'])
+        valid = util.verify_password(pw_to_check, password['password'])
         user_id = data_manager2.get_user_id(session['username'])
         data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
         return redirect('/')
@@ -44,12 +44,21 @@ def route_login():
 @app.route('/registration', methods=['GET', 'POST'])
 def route_registration():
     if request.method == 'POST':
-        session['username'] = request.form['username']
-        session['password'] = util.hash_password(request.form['password'])
-        data_manager2.save_registered_data(session['username'], session['password'])
+        username = request.form['username']
+        password = util.hash_password(request.form['password'])
+        data_manager2.save_registered_data(username, password)
 
         return redirect('/')
     return render_template('register.html')
+
+
+@app.route('/logout')
+def route_logout():
+    # call datamanager to delete session id
+    session.pop('_id', None)
+    session.pop('username', None)
+    session.pop('password', None)
+    return redirect('/')
 
 
 @app.route('/list')
