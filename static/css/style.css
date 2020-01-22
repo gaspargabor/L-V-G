@@ -110,12 +110,16 @@ padding-top: 2%;
 }
 
 .mainpg {
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
 }
 
 #mainbtn{
     padding: 15px;
     font-weight: bold;
+}
+
+#notlogged{
+    padding: 15px;
 }
 
 .navbar.sorting{
