@@ -45,12 +45,23 @@
                     <input class="srch searchbtn" type="submit" value="Search">
                     </form>
                   </div>
-              <div>
-                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_registration") }}">Register</a>
-              </div>
-              <div>
-                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_login") }}">Login</a>
-              </div>
+              {% if logged_in == True %}
+                  <div id="notlogged">Welcome back {{ username }}</div>
+                  <div>
+                      <a class="hoverbtn" id="mainbtn" href="#">My page</a>
+                  </div>
+                  <div>
+                      <a class="hoverbtn" id="mainbtn" href="#">Logout</a>
+                  </div>
+              {% else %}
+                  <div id="notlogged">You are not logged in</div>
+                  <div>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_registration") }}">Register</a>
+                  </div>
+                  <div>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_login") }}">Login</a>
+                  </div>
+              {% endif %}
             </div>
          <div class="question-bubbles">
           {% for question in questions %}

@@ -18,11 +18,13 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
     if request.method == "GET":
-        if 'username' in session:
-            logged_in = 'Logged in as %s' % escape(session['username'])
-        logged_in = 'You are not logged in'
         questions = data_manager2.get_5_latest()
-        return render_template('layout.html', questions=questions, logged_in=logged_in)
+        logged_in = False
+        username = None
+        if 'username' in session:
+            logged_in = True
+            username = session['username']
+        return render_template('layout.html', questions=questions, logged_in=logged_in, username=username)
     elif request.method == "POST":
         return redirect('/list')
 
