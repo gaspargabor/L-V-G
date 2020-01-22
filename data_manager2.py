@@ -411,7 +411,7 @@ def save_registered_data_to_session(cursor, session_id, username, userid):
     cursor.execute("""
                     INSERT INTO sessions
                     (session_id, user_name, user_id, session_start_time)
-                    VALUES(%(session_id)s, %(username)s, %(userid)s %(session_start_time)s""",
+                    VALUES(%(session_id)s, %(username)s, %(userid)s, %(session_start_time)s)""",
                    {'session_id': session_id, 'username': username, 'userid': userid, 'session_start_time': session_start_time})
 
 
