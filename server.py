@@ -31,7 +31,10 @@ def route_login():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        valid = util.verify_password(session['password'], '$2b$12$VjUZoupBPc9tARVTx/mT/.C7hoEaBW4Nr.NZ7eDF4xniSfpsGY1ta')
+        password = data_manager2.get_password_for_username(session['username'])
+        print(password['password'])
+        valid = util.verify_password(session['password'], password['password'])
+        print(valid)
         return redirect('/')
     return render_template('login.html')
 
@@ -42,7 +45,12 @@ def route_registration():
         session['username'] = request.form['username']
         session['password'] = util.hash_password(request.form['password'])
         session['_id'] = uuid.uuid4()
+        data_manager2.save_registered_data(session['username'], session['password'])
+        user_id = data_manager2.get_user_id(session['username'])
         print(session['username'], session['password'])
+        print(user_id)
+        data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id)
+
         print(session['_id'])
         return redirect('/')
     return render_template('register.html')

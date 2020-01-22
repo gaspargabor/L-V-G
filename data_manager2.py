@@ -386,3 +386,40 @@ def get_users_questions_by_userid(cursor, userid):
                    {'userid' : userid})
     users_questions = cursor.fetchall()
     return users_questions
+
+@database_common.connection_handler
+def save_registered_data(cursor, username, password):
+    registration_time = datetime.now()
+    cursor.execute("""
+                    INSERT INTO users
+                    (user_name, password, registration_time)
+                     VALUES(%(username)s, %(password)s, %(registration_time)s) """,
+                   {'username':username, 'password': password, 'registration_time': registration_time})
+
+@database_common.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute("""
+                    SELECT id from users
+                    WHERE user_name=%(username)s""",
+                   {'username': username})
+    userid=cursor.fetchone()
+    return userid
+
+@database_common.connection_handler
+def save_registered_data_to_session(cursor, session_id, username, userid):
+    session_start_time = datetime.now()
+    cursor.execute("""
+                    INSERT INTO sessions
+                    (session_id, user_name, user_id, session_start_time)
+                    VALUES(%(session_id)s, %(username)s, %(userid)s %(session_start_time)s""",
+                   {'session_id': session_id, 'username': username, 'userid': userid, 'session_start_time': session_start_time})
+
+
+@database_common.connection_handler
+def get_password_for_username(cursor, username):
+    cursor.execute("""
+                    SELECT password FROM users
+                    where user_name=%(username)s""",
+                   {'username': username})
+    password = cursor.fetchone()
+    return password
