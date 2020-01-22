@@ -16,7 +16,6 @@ app.secret_key = b'\xe9\xac)\x88\xc9r\x84c\xd9n\xf3n(H\xdb\x13'
 
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
-    print(session)
     if request.method == "GET":
         if 'username' in session:
             logged_in = 'Logged in as %s' % escape(session['username'])
@@ -29,8 +28,6 @@ def route_index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def route_login():
-    print('login incoming')
-    print(session)
     if request.method == 'POST':
         session['username'] = request.form['username']
         pw_to_check = request.form['password']
@@ -39,8 +36,6 @@ def route_login():
         valid = util.verify_password(pw_to_check, password['password'])
         user_id = data_manager2.get_user_id(session['username'])
         data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
-        print('logged in')
-        print(session)
         return redirect('/')
     return render_template('login.html')
 
@@ -59,13 +54,9 @@ def route_registration():
 @app.route('/logout')
 def route_logout():
     # call datamanager to delete session id
-    print('logout incoming')
-    print(session)
     session.pop('_id', None)
     session.pop('username', None)
     session.pop('password', None)
-    print('logged out')
-    print(session)
     return redirect('/')
 
 
@@ -228,9 +219,7 @@ def addcomment_answer(answer_id):
         submission_time = datetime.now(),
         message = request.form.get("message"),
         answer = data_manager2.get_answer_by_id(answer_id)
-        print(answer)
         question_id = answer['question_id']
-        print(question_id)
         edited_count = 0,
         data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
         return redirect(url_for("route_question", question_id=question_id))
