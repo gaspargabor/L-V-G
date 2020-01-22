@@ -16,6 +16,7 @@ app.secret_key = b'\xe9\xac)\x88\xc9r\x84c\xd9n\xf3n(H\xdb\x13'
 
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
+    print(session)
     if request.method == "GET":
         if 'username' in session:
             logged_in = 'Logged in as %s' % escape(session['username'])
@@ -28,14 +29,18 @@ def route_index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def route_login():
+    print('login incoming')
+    print(session)
     if request.method == 'POST':
         session['username'] = request.form['username']
-        session['password'] = request.form['password']
+        pw_to_check = request.form['password']
         session['_id'] = uuid.uuid4()
         password = data_manager2.get_password_for_username(session['username'])
-        valid = util.verify_password(session['password'], password['password'])
+        valid = util.verify_password(pw_to_check, password['password'])
         user_id = data_manager2.get_user_id(session['username'])
         data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
+        print('logged in')
+        print(session)
         return redirect('/')
     return render_template('login.html')
 
@@ -43,12 +48,25 @@ def route_login():
 @app.route('/registration', methods=['GET', 'POST'])
 def route_registration():
     if request.method == 'POST':
-        session['username'] = request.form['username']
-        session['password'] = util.hash_password(request.form['password'])
-        data_manager2.save_registered_data(session['username'], session['password'])
+        username = request.form['username']
+        password = util.hash_password(request.form['password'])
+        data_manager2.save_registered_data(username, password)
 
         return redirect('/')
     return render_template('register.html')
+
+
+@app.route('/logout')
+def route_logout():
+    # call datamanager to delete session id
+    print('logout incoming')
+    print(session)
+    session.pop('_id', None)
+    session.pop('username', None)
+    session.pop('password', None)
+    print('logged out')
+    print(session)
+    return redirect('/')
 
 
 @app.route('/list')
