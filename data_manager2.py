@@ -469,7 +469,7 @@ def get_user_by_id(cursor, userid):
 @database_common.connection_handler
 def get_user_id_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT user_id FROM question
+                    SELECT user_id FROM ask_mate2.public.question
                     where id =%(question_id)s""",
                    {'question_id': question_id})
     user_id = cursor.fetchone()
@@ -498,7 +498,7 @@ def update_reputation(cursor, user_id, reputation):
 @database_common.connection_handler
 def get_user_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT user_id FROM answer
+                    SELECT user_id FROM ask_mate2.public.answer
                     where id =%(answer_id)s""",
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
@@ -519,8 +519,16 @@ def get_question_id_by_answer_id(cursor, answer_id):
 @database_common.connection_handler
 def get_user_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT user_id FROM answer
+                    SELECT user_id FROM ask_mate2.public.answer
                     where id =%(answer_id)s""",
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
     return user_id
+
+
+@database_common.connection_handler
+def delete_session_when_logout(cursor, username):
+    cursor.execute("""
+                    DELETE FROM sessions
+                    WHERE user_name= %(username)s""",
+                   {'username': username})
