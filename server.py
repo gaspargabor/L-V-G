@@ -25,6 +25,7 @@ def route_index():
         if 'username' in session:
             logged_in = True
             user_id = data_manager2.get_user_id(session['username'])
+            print(user_id)
             username = session['username']
         return render_template('layout.html', questions=questions, logged_in=logged_in, username=username, user_id=user_id)
     elif request.method == "POST":
