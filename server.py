@@ -151,7 +151,7 @@ def route_new_answer(question_id):
         if '_id' in session:
             return render_template('addanswer.html', question_id=question_id)
         else:
-            return redirect('/')
+            return redirect(url_for("route_question", question_id=question_id))
     if request.method == 'POST':
         session_id = escape(session['_id'])
         user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
@@ -210,29 +210,38 @@ def addcomment_question(question_id):
         else:
             return redirect(url_for("route_question", question_id=question_id))
     if request.method == "POST":
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id'],
         question_id = question_id
         submission_time = datetime.now(),
         message = request.form.get("message"),
         edited_count = 0,
         answer_id = None
-        data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id)
+        data_manager2.add_comment_for_question(submission_time, message, edited_count, question_id, answer_id, user_id)
         return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def addcomment_answer(answer_id):
     if request.method == "GET":
-        return render_template('addcomment2.html', answer_id=answer_id)
+        answer = data_manager2.get_answer_by_id(answer_id)
+        question_id = answer['question_id']
+        if '_id' in session:
+            return render_template('addcomment2.html', answer_id=answer_id)
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
     if request.method == "POST":
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id'],
         answer_id = answer_id
         submission_time = datetime.now(),
         message = request.form.get("message"),
         answer = data_manager2.get_answer_by_id(answer_id)
-        print(answer)
         question_id = answer['question_id']
-        print(question_id)
         edited_count = 0,
-        data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id)
+        data_manager2.add_comment_for_answer(submission_time, message, edited_count, answer_id, user_id)
         return redirect(url_for("route_question", question_id=question_id))
 
 
