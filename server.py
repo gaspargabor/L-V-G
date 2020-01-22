@@ -1,7 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, session, make_response, escape
+import uuid
+
+from flask import Flask, render_template, request, redirect, url_for, session, escape, make_response
 import data_manager2
 from datetime import datetime
 import util
+import os
+
+
+super_secret_key = os.urandom(8)
 
 app = Flask(__name__)
 
@@ -12,10 +18,34 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
     if request.method == "GET":
+        if 'username' in session:
+            logged_in = 'Logged in as %s' % escape(session['username'])
+        logged_in = 'You are not logged in'
         questions = data_manager2.get_5_latest()
-        return render_template('layout.html', questions=questions)
+        return render_template('layout.html', questions=questions, logged_in=logged_in)
     elif request.method == "POST":
         return redirect('/list')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def route_login():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        session['password'] = request.form['password']
+        valid = util.verify_password(session['password'], '$2b$12$VjUZoupBPc9tARVTx/mT/.C7hoEaBW4Nr.NZ7eDF4xniSfpsGY1ta')
+        session['_id'] = uuid.uuid4()
+        return redirect('/')
+    return render_template('login.html')
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def route_registration():
+    if request.method == 'POST':
+        session['username'] = request.form['username']
+        session['password'] = util.hash_password(request.form['password'])
+        print(session['username'], session['password'])
+        return redirect('/')
+    return render_template('register.html')
 
 
 @app.route('/list')
@@ -92,18 +122,13 @@ def route_edit_comment(comment_id):
         return redirect(url_for("route_question", question_id=question_id))
 
 
-@app.route('/set-cookie')
-def cookie_insertion():
-    session['username'] = 'halacska'
-    return redirect('/')
-
-
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        if 'username' in session:
-            user_name = escape(session['username'])
-            print(user_name)
+        print(session)
+        if '_id' in session:
+            session_id = escape(session['session_id'])
+            print(session_id)
             user_id_dict = data_manager2.get_user_id_by_user_name(user_name)
             print(user_id_dict)
             user_id = user_id_dict['user_id'],
@@ -120,10 +145,11 @@ def route_add_question():
             data_manager2.add_new_question(title, message, image, user_id)
             return redirect('/')
     else:
-        if 'username' in session:
+        if '_id' in session:
+            print(session)
             return render_template('addquestion.html')
         else:
-            permission_denied = 1
+            return redirect('/')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

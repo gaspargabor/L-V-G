@@ -110,7 +110,7 @@ padding-top: 2%;
 }
 
 .mainpg {
-    grid-template-columns: 20% auto;
+    grid-template-columns: auto auto auto auto;
 }
 
 #mainbtn{
@@ -549,4 +549,31 @@ a {
 
 .paragraph_height p{
     height: 3em;
+}
+
+.register_block {
+    width: 400px;
+    margin: 0px;
+    color: white;
+    padding: 15px;
+    background: #485F6E;
+    border-radius: 8px;
+    position: absolute;
+
+    left: 35%;
+    top: 10em;
+    box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
+}
+
+.register_block input {
+    color: #E0E0E0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    border-color: #8E8D8A;
+    border-style: hidden;
+    width: 250px;
+    text-align: center;
+    padding: 5px;
+    margin: 10px;
+    box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
 }

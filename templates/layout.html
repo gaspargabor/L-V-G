@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Ask Mate</title>
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
+    <script>
+    function myFunction() {
+        var popup = document.getElementById("myPopup");
+        popup.classList.toggle("show");
+    }
+    </script>
 </head>
 <body>
      <div class="header">
@@ -31,7 +37,7 @@
          </div>
           <div class="navbar mainpg">
               <div class="to-all-q">
-                <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
+                <a class="popup" onclick="myFunction()" class="hoverbtn" id="mainbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
                   </div>
               <div>
                     <form action="/search" method="get">
@@ -39,6 +45,12 @@
                     <input class="srch searchbtn" type="submit" value="Search">
                     </form>
                   </div>
+              <div>
+                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_registration") }}">Register</a>
+              </div>
+              <div>
+                  <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_login") }}">Login</a>
+              </div>
             </div>
          <div class="question-bubbles">
           {% for question in questions %}
