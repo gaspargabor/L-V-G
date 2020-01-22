@@ -319,6 +319,12 @@ def user_page(user_id):
     return render_template('user_page.html', user_id=user_id)
 
 
+@app.route('/all-user')
+def route_list_all_user():
+    user_list = data_manager2.get_all_listuser_data()
+    return render_template('list_users.html', user_list=user_list)
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
