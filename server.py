@@ -270,6 +270,12 @@ def add_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    user_id = data_manager2.get_user_id(session['username'])
+    #user = data_manager2.get_user_by_id(user_id)
+    return render_template('user_page.html', user_id=user_id)
+
 
 if __name__ == '__main__':
     app.run(

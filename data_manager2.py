@@ -423,3 +423,12 @@ def get_password_for_username(cursor, username):
                    {'username': username})
     password = cursor.fetchone()
     return password
+
+@database_common.connection_handler
+def get_user_by_id(cursor, userid):
+    cursor.execute("""
+                    SELECT * FROM users
+                    WHERE id=%s""" % ''.join(userid),
+                   {'userid': userid})
+    username = cursor.fetchall()
+    return username
