@@ -310,13 +310,15 @@ def add_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
+
 @app.route('/user/<user_id>')
 def user_page(user_id):
     user_id = data_manager2.get_user_id(session['username'])
-    print(session)
-    print(user_id)
     user = data_manager2.get_user_by_id(user_id)
-    return render_template('user_page.html', user_id=user_id)
+    questions = data_manager2.get_users_questions_by_userid(user_id['id'])
+    answers = data_manager2.get_users_answers_by_userid(user_id['id'])
+    comments = data_manager2.get_users_comments_by_userid(user_id['id'])
+    return render_template('user_page.html', user_id=user_id, questions=questions, answers=answers, comments=comments)
 
 
 if __name__ == '__main__':

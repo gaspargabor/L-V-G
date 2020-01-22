@@ -581,3 +581,13 @@ a {
     margin: 10px;
     box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
 }
+
+.user_question h2 {
+    color: orangered;
+    letter-spacing: 3px;
+
+}
+
+.up_title {
+    letter-spacing: 5px;
+}
