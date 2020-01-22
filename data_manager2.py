@@ -463,7 +463,9 @@ def get_user_by_id(cursor, userid):
     username = cursor.fetchall()
     return username
 
-
+@database_common.connection_handler
+def get_all_listuser_data(cursor):
+    return None
 
 
 @database_common.connection_handler
