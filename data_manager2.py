@@ -462,3 +462,65 @@ def get_user_by_id(cursor, userid):
                    {'userid': userid})
     username = cursor.fetchall()
     return username
+
+
+
+
+@database_common.connection_handler
+def get_user_id_by_question_id(cursor, question_id):
+    cursor.execute("""
+                    SELECT user_id FROM question
+                    where id =%(question_id)s""",
+                   {'question_id': question_id})
+    user_id = cursor.fetchone()
+    return user_id
+
+
+@database_common.connection_handler
+def get_user_rep_by_id(cursor, user_id):
+    cursor.execute("""
+                    SELECT reputation FROM users
+                    WHERE id = %(user_id)s;
+                    """, {'user_id': user_id})
+    reputation = cursor.fetchall()
+    return reputation
+
+
+@database_common.connection_handler
+def update_reputation(cursor, user_id, reputation):
+    cursor.execute("""
+                    UPDATE users
+                    SET reputation = %(reputation)s
+                    WHERE id = %(user_id)s;
+                    """, {'user_id': user_id, 'reputation': reputation})
+
+
+@database_common.connection_handler
+def get_user_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT user_id FROM answer
+                    where id =%(answer_id)s""",
+                   {'answer_id': answer_id})
+    user_id = cursor.fetchone()
+    return user_id
+
+
+@database_common.connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE id=%(answer_id)s;
+                    """,
+                   {'answer_id': answer_id})
+    question_id = cursor.fetchall()
+    return question_id
+
+
+@database_common.connection_handler
+def get_user_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT user_id FROM answer
+                    where id =%(answer_id)s""",
+                   {'answer_id': answer_id})
+    user_id = cursor.fetchone()
+    return user_id

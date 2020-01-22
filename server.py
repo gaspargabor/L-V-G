@@ -181,6 +181,15 @@ def route_new_answer(question_id):
 @app.route('/addvote-question')
 def addvote_question(question_id=None):
     question_id = request.args.get('question_id')
+    user_id_dict = data_manager2.get_user_id_by_question_id(question_id)
+    user_id = user_id_dict['user_id']
+    reputation_dict = data_manager2.get_user_rep_by_id(user_id)
+    reputation = reputation_dict[0]['reputation']
+    if reputation == None:
+        reputation = 5
+    else:
+        reputation = reputation + 5
+    data_manager2.update_reputation(user_id, reputation)
     question = data_manager2.get_question_by_id(question_id)
     vote_number = question[0]['vote_number'] + 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
@@ -191,6 +200,15 @@ def addvote_question(question_id=None):
 def downvote_question(question_id=None):
     question_id = request.args.get('question_id')
     question = data_manager2.get_question_by_id(question_id)
+    user_id_dict = data_manager2.get_user_id_by_question_id(question_id)
+    user_id = user_id_dict['user_id']
+    reputation_dict = data_manager2.get_user_rep_by_id(user_id)
+    reputation = reputation_dict[0]['reputation']
+    if reputation == None:
+        reputation = -5
+    else:
+        reputation = reputation - 5
+    data_manager2.update_reputation(user_id, reputation)
     vote_number = question[0]['vote_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
     return redirect(url_for("route_question", question_id=question_id))
@@ -199,7 +217,15 @@ def downvote_question(question_id=None):
 @app.route('/addvote_answer/<answer_id>')
 def addvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
-    print(answerss)
+    user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
+    user_id = user_id_dict['user_id']
+    reputation_dict = data_manager2.get_user_rep_by_id(user_id)
+    reputation = reputation_dict[0]['reputation']
+    if reputation == None:
+        reputation = 10
+    else:
+        reputation = reputation + 10
+    data_manager2.update_reputation(user_id, reputation)
     question_id = answerss['question_id']
     vote_number = answerss['vote_number'] + 1
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
@@ -209,6 +235,15 @@ def addvote_answer(answer_id):
 @app.route('/downvote_answer/<answer_id>')
 def downvote_answer(answer_id):
     answerss = data_manager2.get_answer_by_id(answer_id)
+    user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
+    user_id = user_id_dict['user_id']
+    reputation_dict = data_manager2.get_user_rep_by_id(user_id)
+    reputation = reputation_dict[0]['reputation']
+    if reputation == None:
+        reputation = -10
+    else:
+        reputation = reputation - 10
+    data_manager2.update_reputation(user_id, reputation)
     question_id = answerss['question_id']
     vote_number = answerss['vote_number'] - 1
     data_manager2.update_answer_votenum_by_id(answer_id, vote_number)
@@ -271,14 +306,25 @@ def search():
 @app.route('/delete-question')
 def delete_question(question_id=None):
     question_id = request.args.get('question_id')
-    answer_ids = data_manager2.get_ansver_id_by_question_id(question_id)
-    for element in answer_ids:
-        data_manager2.delete_comment_by_answer_id(element['id'])
-    data_manager2.delete_question_tag_by_question_id(question_id)
-    data_manager2.delete_comment_by_question_id(question_id)
-    data_manager2.delete_answer_by_question_id(question_id)
-    data_manager2.delete_question(question_id)
-    return redirect('/list')
+    if '_id' in session:
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id']
+        full_question = data_manager2.get_question_by_id(question_id)
+        question_user_id = full_question[0]['user_id']
+        if user_id == question_user_id:
+            answer_ids = data_manager2.get_ansver_id_by_question_id(question_id)
+            for element in answer_ids:
+                data_manager2.delete_comment_by_answer_id(element['id'])
+            data_manager2.delete_question_tag_by_question_id(question_id)
+            data_manager2.delete_comment_by_question_id(question_id)
+            data_manager2.delete_answer_by_question_id(question_id)
+            data_manager2.delete_question(question_id)
+            return redirect('/list')
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
+    else:
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/delete_answer/<answer_id>')
@@ -286,22 +332,44 @@ def delete_answer(answer_id):
     answer_id = answer_id
     answers = data_manager2.get_answer_by_id(answer_id)
     question_id = answers['question_id']
-    data_manager2.delete_comment_by_answer_id(answer_id)
-    data_manager2.delete_answer_by_answer_id(answer_id)
-    return redirect(url_for("route_question", question_id=question_id))
+    if '_id' in session:
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id']
+        answer_user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
+        answer_user_id = answer_user_id_dict['user_id']
+        print(answer_user_id)
+        print(user_id)
+        if user_id == answer_user_id:
+            data_manager2.delete_comment_by_answer_id(answer_id)
+            data_manager2.delete_answer_by_answer_id(answer_id)
+            return redirect(url_for("route_question", question_id=question_id))
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
+    else:
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/delete-comment/<comment_id>')
 def delete_comment(comment_id):
     comment_id = comment_id
-    comment = data_manager2.get_comment_by_id(comment_id)
-    if comment[0]['question_id'] is not None:
-        question_id = comment[0]['question_id']
+    if '_id' in session:
+        comment = data_manager2.get_comment_by_id(comment_id)
+        if comment[0]['question_id'] is not None:
+            question_id = comment[0]['question_id']
+        else:
+            answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
+            question_id = answer['question_id']
+        data_manager2.delete_comment_by_comment_id(comment_id)
+        return redirect(url_for("route_question", question_id=question_id))
     else:
-        answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
-        question_id = answer['question_id']
-    data_manager2.delete_comment_by_comment_id(comment_id)
-    return redirect(url_for("route_question", question_id=question_id))
+        comment = data_manager2.get_comment_by_id(comment_id)
+        if comment[0]['question_id'] is not None:
+            question_id = comment[0]['question_id']
+        else:
+            answer = data_manager2.get_answer_by_id(comment[0]['answer_id'])
+            question_id = answer['question_id']
+        return redirect(url_for("route_question", question_id=question_id))
 
 
 @app.route('/add-view-counter/<question_id>')
