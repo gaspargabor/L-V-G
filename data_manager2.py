@@ -472,3 +472,24 @@ def get_user_id_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
     return user_id
+
+
+@database_common.connection_handler
+def get_question_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT question_id FROM answer
+                    WHERE id=%(answer_id)s;
+                    """,
+                   {'answer_id': answer_id})
+    question_id = cursor.fetchall()
+    return question_id
+
+
+@database_common.connection_handler
+def get_user_id_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT user_id FROM answer
+                    where id =%(answer_id)s""",
+                   {'answer_id': answer_id})
+    user_id = cursor.fetchone()
+    return user_id

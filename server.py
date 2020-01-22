@@ -305,14 +305,22 @@ def search():
 def delete_question(question_id=None):
     question_id = request.args.get('question_id')
     if '_id' in session:
-        answer_ids = data_manager2.get_ansver_id_by_question_id(question_id)
-        for element in answer_ids:
-            data_manager2.delete_comment_by_answer_id(element['id'])
-        data_manager2.delete_question_tag_by_question_id(question_id)
-        data_manager2.delete_comment_by_question_id(question_id)
-        data_manager2.delete_answer_by_question_id(question_id)
-        data_manager2.delete_question(question_id)
-        return redirect('/list')
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id']
+        full_question = data_manager2.get_question_by_id(question_id)
+        question_user_id = full_question[0]['user_id']
+        if user_id == question_user_id:
+            answer_ids = data_manager2.get_ansver_id_by_question_id(question_id)
+            for element in answer_ids:
+                data_manager2.delete_comment_by_answer_id(element['id'])
+            data_manager2.delete_question_tag_by_question_id(question_id)
+            data_manager2.delete_comment_by_question_id(question_id)
+            data_manager2.delete_answer_by_question_id(question_id)
+            data_manager2.delete_question(question_id)
+            return redirect('/list')
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
     else:
         return redirect(url_for("route_question", question_id=question_id))
 
@@ -323,9 +331,19 @@ def delete_answer(answer_id):
     answers = data_manager2.get_answer_by_id(answer_id)
     question_id = answers['question_id']
     if '_id' in session:
-        data_manager2.delete_comment_by_answer_id(answer_id)
-        data_manager2.delete_answer_by_answer_id(answer_id)
-        return redirect(url_for("route_question", question_id=question_id))
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id']
+        answer_user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
+        answer_user_id = answer_user_id_dict['user_id']
+        print(answer_user_id)
+        print(user_id)
+        if user_id == answer_user_id:
+            data_manager2.delete_comment_by_answer_id(answer_id)
+            data_manager2.delete_answer_by_answer_id(answer_id)
+            return redirect(url_for("route_question", question_id=question_id))
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
     else:
         return redirect(url_for("route_question", question_id=question_id))
 
