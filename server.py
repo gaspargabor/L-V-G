@@ -21,10 +21,12 @@ def route_index():
         questions = data_manager2.get_5_latest()
         logged_in = False
         username = None
+        user_id = None
         if 'username' in session:
             logged_in = True
+            user_id = data_manager2.get_user_id(session['username'])
             username = session['username']
-        return render_template('layout.html', questions=questions, logged_in=logged_in, username=username)
+        return render_template('layout.html', questions=questions, logged_in=logged_in, username=username, user_id=user_id)
     elif request.method == "POST":
         return redirect('/list')
 
@@ -311,7 +313,9 @@ def add_view_counter(question_id):
 @app.route('/user/<user_id>')
 def user_page(user_id):
     user_id = data_manager2.get_user_id(session['username'])
-    #user = data_manager2.get_user_by_id(user_id)
+    print(session)
+    print(user_id)
+    user = data_manager2.get_user_by_id(user_id)
     return render_template('user_page.html', user_id=user_id)
 
 

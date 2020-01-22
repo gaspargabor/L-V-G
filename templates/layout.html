@@ -45,7 +45,7 @@
                       <a class="hoverbtn" id="mainbtn" href="{{ url_for("user_page", user_id=user_id) }}">My page</a>
                   </div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="#">Logout</a>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_logout") }}">Logout</a>
                   </div>
               {% else %}
                   <div id="notlogged">You are not logged in</div>
