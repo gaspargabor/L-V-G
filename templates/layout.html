@@ -4,12 +4,6 @@
     <meta charset="UTF-8">
     <title>Ask Mate</title>
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
-    <script>
-    function myFunction() {
-        var popup = document.getElementById("myPopup");
-        popup.classList.toggle("show");
-    }
-    </script>
 </head>
 <body>
      <div class="header">
@@ -37,7 +31,7 @@
          </div>
           <div class="navbar mainpg">
               <div class="to-all-q">
-                <a class="popup" onclick="myFunction()" class="hoverbtn" id="mainbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
+                <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_all_question") }}">Display all questions</a>
                   </div>
               <div>
                     <form action="/search" method="get">
@@ -48,10 +42,10 @@
               {% if logged_in == True %}
                   <div id="notlogged">Welcome back {{ username }}</div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="#">My page</a>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("user_page", user_id=user_id) }}">My page</a>
                   </div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="#">Logout</a>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_logout") }}">Logout</a>
                   </div>
               {% else %}
                   <div id="notlogged">You are not logged in</div>
