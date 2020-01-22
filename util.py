@@ -35,22 +35,6 @@ def get_all_question_data_for_display(question_id):
 
 
 
-def make_searching_great_again(q):
-    only_title = data_manager2.search_question(q)
-    only_message = data_manager2.search_question_message(q)
-    title_and_message = []
-    if len(only_message) > len(only_title):
-        for message in only_message:
-            for title in only_title:
-                if message['id'] == title['id']:
-                    title_and_message.append(title)
-    else:
-        for title in only_title:
-            for message in only_message:
-                if message['id'] == title['id']:
-                    title_and_message.append(title)
-    return title_and_message
-
 
 def hash_password(plain_text_password):
     hashed_bytes = bcrypt.hashpw(plain_text_password.encode('utf-8'), bcrypt.gensalt())

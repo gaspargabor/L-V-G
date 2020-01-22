@@ -32,8 +32,11 @@ def route_login():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = request.form['password']
-        valid = util.verify_password(session['password'], '$2b$12$VjUZoupBPc9tARVTx/mT/.C7hoEaBW4Nr.NZ7eDF4xniSfpsGY1ta')
         session['_id'] = uuid.uuid4()
+        password = data_manager2.get_password_for_username(session['username'])
+        valid = util.verify_password(session['password'], password['password'])
+        user_id = data_manager2.get_user_id(session['username'])
+        data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
         return redirect('/')
     return render_template('login.html')
 
@@ -43,7 +46,8 @@ def route_registration():
     if request.method == 'POST':
         session['username'] = request.form['username']
         session['password'] = util.hash_password(request.form['password'])
-        print(session['username'], session['password'])
+        data_manager2.save_registered_data(session['username'], session['password'])
+
         return redirect('/')
     return render_template('register.html')
 
@@ -127,9 +131,7 @@ def route_add_question():
     if request.method == 'POST':
         if '_id' in session:
             session_id = escape(session['_id'])
-            print(session_id)
             user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
-            print(user_id_dict)
             user_id = user_id_dict[0]['user_id'],
             title = request.form.get('title'),
             message = request.form.get('message'),
@@ -146,14 +148,20 @@ def route_add_question():
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def route_new_answer(question_id):
     if request.method == "GET":
-        return render_template('addanswer.html', question_id=question_id)
+        if '_id' in session:
+            return render_template('addanswer.html', question_id=question_id)
+        else:
+            return redirect('/')
     if request.method == 'POST':
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id'],
         submission_time = datetime.now(),
         question_id = int(question_id)
         message = request.form.get('message'),
         image = request.form.get('image'),
         vote_number = 0
-        data_manager2.add_new_answer(submission_time, vote_number, question_id, message, image)
+        data_manager2.add_new_answer(submission_time, vote_number, question_id, message, image, user_id)
         return redirect(url_for("route_question", question_id=question_id))
 
 
@@ -197,7 +205,10 @@ def downvote_answer(answer_id):
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def addcomment_question(question_id):
     if request.method == "GET":
-        return render_template('addcomment.html', question_id=question_id)
+        if '_id' in session:
+            return render_template('addcomment.html', question_id=question_id)
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
     if request.method == "POST":
         question_id = question_id
         submission_time = datetime.now(),

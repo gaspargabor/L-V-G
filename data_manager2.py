@@ -145,24 +145,24 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_question(cursor, title, message, image):
+def add_new_question(cursor, title, message, image, user_id):
     submission_time = datetime.now()
     view_number = 0
     vote_number = 0
     cursor.execute("""
                     INSERT INTO question
-                    (submission_time, view_number, vote_number, title, message, image)
-                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
-                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+                    (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image, 'user_id': user_id})
     return None
 
 @database_common.connection_handler
-def add_new_answer(cursor, submission_time, vote_number, question_id, message, image):
+def add_new_answer(cursor, submission_time, vote_number, question_id, message, image, user_id):
     cursor.execute("""
                     INSERT INTO answer
-                    (submission_time, vote_number, question_id, message, image)
-                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s)
-                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image})
+                    (submission_time, vote_number, question_id, message, image, user_id)
+                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image, 'user_id': user_id})
     return None
 
 @database_common.connection_handler
@@ -361,6 +361,34 @@ def delete_comment_by_answer_id(cursor, answer_id):
 
 
 @database_common.connection_handler
+def check_if_username_exists(cursor, username):
+    cursor.execute("""
+                    SELECT user_name from users
+                    WHERE user_name = %(username)s;""",
+                   {'username': username})
+    user = cursor.fetchall()
+    return user
+
+@database_common.connection_handler
+def get_user_data(cursor, username):
+    cursor.execute("""
+                    SELECT * FROM users
+                    WHERE user_name = %(username)s;
+                    """, {'username':username })
+    user_data = cursor.fetchall()
+    return user_data
+
+@database_common.connection_handler
+def get_users_questions_by_userid(cursor, userid):
+    cursor.execute("""
+                    SELECT * FROM ask_mate2.public.question
+                    WHERE user_id=%(userid)s;""",
+                   {'userid' : userid})
+    users_questions = cursor.fetchall()
+    return users_questions
+
+
+@database_common.connection_handler
 def get_user_id_by_session_id(cursor, session_id):
     cursor.execute("""
                     SELECT user_id FROM sessions
@@ -369,3 +397,39 @@ def get_user_id_by_session_id(cursor, session_id):
                    {'session_id': session_id})
     user_id = cursor.fetchall()
     return user_id
+@database_common.connection_handler
+def save_registered_data(cursor, username, password):
+    registration_time = datetime.now()
+    cursor.execute("""
+                    INSERT INTO users
+                    (user_name, password, registration_time)
+                     VALUES(%(username)s, %(password)s, %(registration_time)s) """,
+                   {'username':username, 'password': password, 'registration_time': registration_time})
+
+@database_common.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute("""
+                    SELECT id from users
+                    WHERE user_name=%(username)s""",
+                   {'username': username})
+    userid=cursor.fetchone()
+    return userid
+
+@database_common.connection_handler
+def save_registered_data_to_session(cursor, session_id, username, userid):
+    session_start_time = datetime.now()
+    cursor.execute("""
+                    INSERT INTO sessions
+                    (session_id, user_name, user_id, session_start_time)
+                    VALUES(%(session_id)s, %(username)s, %(userid)s, %(session_start_time)s)""",
+                   {'session_id': session_id, 'username': username, 'userid': userid, 'session_start_time': session_start_time})
+
+
+@database_common.connection_handler
+def get_password_for_username(cursor, username):
+    cursor.execute("""
+                    SELECT password FROM users
+                    where user_name=%(username)s""",
+                   {'username': username})
+    password = cursor.fetchone()
+    return password
