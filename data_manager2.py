@@ -145,24 +145,24 @@ def get_new_id(table):
         return all_q_or_a.id + 1
 
 @database_common.connection_handler
-def add_new_question(cursor, title, message, image):
+def add_new_question(cursor, title, message, image, user_id):
     submission_time = datetime.now()
     view_number = 0
     vote_number = 0
     cursor.execute("""
                     INSERT INTO question
-                    (submission_time, view_number, vote_number, title, message, image)
-                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s)
-                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image})
+                    (submission_time, view_number, vote_number, title, message, image, user_id)
+                    VALUES(%(submission_time)s, %(view_number)s, %(vote_number)s, %(title)s, %(message)s, %(image)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'view_number': view_number, 'vote_number': vote_number, 'title': title, 'message': message, 'image': image, 'user_id': user_id})
     return None
 
 @database_common.connection_handler
-def add_new_answer(cursor, submission_time, vote_number, question_id, message, image):
+def add_new_answer(cursor, submission_time, vote_number, question_id, message, image, user_id):
     cursor.execute("""
                     INSERT INTO answer
-                    (submission_time, vote_number, question_id, message, image)
-                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s)
-                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image})
+                    (submission_time, vote_number, question_id, message, image, user_id)
+                    VALUES(%(submission_time)s, %(vote_number)s, %(question_id)s, %(message)s, %(image)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'vote_number': vote_number, 'question_id': question_id, 'message': message, 'image': image, 'user_id': user_id})
     return None
 
 @database_common.connection_handler
@@ -196,12 +196,12 @@ def update_comment_by_id(cursor, comment_id, submission_time, message, edited_co
 
 
 @database_common.connection_handler
-def add_comment_for_question(cursor, submission_time, message, edited_count, question_id, answer_id):
+def add_comment_for_question(cursor, submission_time, message, edited_count, question_id, answer_id, user_id):
     cursor.execute("""
                     INSERT INTO comment
-                    (submission_time, edited_count, question_id, answer_id, message)
-                    VALUES(%(submission_time)s, %(edited_count)s, %(question_id)s, %(answer_id)s, %(message)s)
-                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message})
+                    (submission_time, edited_count, question_id, answer_id, message, user_id)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(question_id)s, %(answer_id)s, %(message)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'question_id': question_id, 'answer_id': answer_id, 'message': message, 'user_id': user_id})
 
 
 @database_common.connection_handler
@@ -278,12 +278,12 @@ def delete_comment_by_comment_id(cursor, comment_id):
 
 
 @database_common.connection_handler
-def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id):
+def add_comment_for_answer(cursor, submission_time, message, edited_count, answer_id, user_id):
     cursor.execute("""
                     INSERT INTO comment
-                    (submission_time, edited_count, answer_id, message)
-                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s)
-                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message})
+                    (submission_time, edited_count, answer_id, message, user_id)
+                    VALUES(%(submission_time)s, %(edited_count)s, %(answer_id)s, %(message)s, %(user_id)s)
+                    """, {'submission_time': submission_time, 'edited_count': edited_count, 'answer_id': answer_id, 'message': message, 'user_id': user_id})
 
 
 @database_common.connection_handler
@@ -387,6 +387,16 @@ def get_users_questions_by_userid(cursor, userid):
     users_questions = cursor.fetchall()
     return users_questions
 
+
+@database_common.connection_handler
+def get_user_id_by_session_id(cursor, session_id):
+    cursor.execute("""
+                    SELECT user_id FROM sessions
+                    WHERE session_id = %(session_id)s
+                    """,
+                   {'session_id': session_id})
+    user_id = cursor.fetchall()
+    return user_id
 @database_common.connection_handler
 def save_registered_data(cursor, username, password):
     registration_time = datetime.now()
