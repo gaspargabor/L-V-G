@@ -358,3 +358,14 @@ def delete_comment_by_answer_id(cursor, answer_id):
                     DELETE FROM comment
                     WHERE answer_id = %(answer_id)s
                     """, {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def get_user_id_by_session_id(cursor, session_id):
+    cursor.execute("""
+                    SELECT user_id FROM sessions
+                    WHERE session_id = %(session_id)s
+                    """,
+                   {'session_id': session_id})
+    user_id = cursor.fetchall()
+    return user_id

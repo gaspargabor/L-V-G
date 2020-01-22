@@ -125,28 +125,19 @@ def route_edit_comment(comment_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        print(session)
         if '_id' in session:
-            session_id = escape(session['session_id'])
+            session_id = escape(session['_id'])
             print(session_id)
-            user_id_dict = data_manager2.get_user_id_by_user_name(user_name)
+            user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
             print(user_id_dict)
-            user_id = user_id_dict['user_id'],
+            user_id = user_id_dict[0]['user_id'],
             title = request.form.get('title'),
             message = request.form.get('message'),
             image = request.form.get('image'),
-            data_manager2.add_new_question(title, message, image, user_id)
-            return redirect('/')
-        else:
-            title = request.form.get('title'),
-            message = request.form.get('message'),
-            image = request.form.get('image'),
-            user_id = None,
             data_manager2.add_new_question(title, message, image, user_id)
             return redirect('/')
     else:
         if '_id' in session:
-            print(session)
             return render_template('addquestion.html')
         else:
             return redirect('/')
