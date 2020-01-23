@@ -10,12 +10,9 @@ def trystuff(question_id, answer_id):
     for kerdes in valaszlista:
         kerdeslista = []
         kommentek = data_manager2.get_comments_for_answer(kerdes['id'])
-        print(kommentek)
         kerdeslista.append(kerdes)
         kerdeslista.append(kommentek)
         ultimatelista.append(kerdeslista)
-    print('ultimateszar')
-    print(ultimatelista)
     return ultimatelista
 
 

@@ -41,7 +41,6 @@
 
     {% for comment_for_q in comments_for_q%}
         <div class="display_comment_bubble">
-            {% print(comment_for_q) %}
             <table>
                 <tr>
                     <td class="message-box">{{ comment_for_q['message'] }}</td>
@@ -92,7 +91,6 @@
 
             {% for komment in kerdes[1] %}
                 <div class="display_answer_comment_bubble">
-                {% print(komment) %}
                 <table>
                 <tr>
                     <td class="message-box" >{{ komment['message'] }}</td>
