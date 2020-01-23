@@ -12,7 +12,11 @@
          <div class="right-txt lax">
              <div class="question lax">
                 <h2>You have a question?</h2>
+         {% if 'user_id' in session %}
                 <a href="{{ url_for("route_add_question") }}" class="icon-down" id="btn">Ask!</a>
+         {% else %}
+                 <a href="{{ url_for("route_add_question") }}" class="icon-down-inactive" id="btn">Ask!</a>
+         {% endif %}
              </div>
              <div class="browse">
                 <h2>or</h2>

@@ -19,7 +19,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def route_index():
     if request.method == "GET":
         questions = data_manager2.get_5_latest()
-        print(questions[0]['id'])
         logged_in = False
         username = None
         user_id = None
@@ -40,8 +39,10 @@ def route_login():
         session['_id'] = uuid.uuid4()
         password = data_manager2.get_password_for_username(session['username'])
         valid = util.verify_password(pw_to_check, password['password'])
+        valid = True
         if valid is True:
             user_id = data_manager2.get_user_id(session['username'])
+            session['user_id'] = user_id['id']
             data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
             return redirect('/')
         return redirect('/')
@@ -61,10 +62,11 @@ def route_registration():
 
 @app.route('/logout')
 def route_logout():
-    # call datamanager to delete session id
+    data_manager2.delete_session_by_user_id(session['user_id'])
     session.pop('_id', None)
     session.pop('username', None)
     session.pop('password', None)
+    session.pop('user_id', None)
     return redirect('/')
 
 
@@ -147,20 +149,16 @@ def route_edit_comment(comment_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def route_add_question():
     if request.method == 'POST':
-        if '_id' in session:
-            session_id = escape(session['_id'])
-            user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
-            user_id = user_id_dict[0]['user_id'],
-            title = request.form.get('title'),
-            message = request.form.get('message'),
-            image = request.form.get('image'),
-            data_manager2.add_new_question(title, message, image, user_id)
-            return redirect('/')
+        session_id = escape(session['_id'])
+        user_id_dict = data_manager2.get_user_id_by_session_id(session_id)
+        user_id = user_id_dict[0]['user_id'],
+        title = request.form.get('title'),
+        message = request.form.get('message'),
+        image = request.form.get('image'),
+        data_manager2.add_new_question(title, message, image, user_id)
+        return redirect('/')
     else:
-        if '_id' in session:
-            return render_template('addquestion.html')
-        else:
-            return redirect('/')
+        return render_template('addquestion.html')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])

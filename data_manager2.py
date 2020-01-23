@@ -579,3 +579,11 @@ def get_answer_status_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     status = cursor.fetchone()
     return status
+
+
+@database_common.connection_handler
+def delete_session_by_user_id(cursor, user_id):
+    cursor.execute("""
+                    DELETE FROM sessions
+                    WHERE user_id = %(user_id)s
+                    """, {'user_id': user_id})

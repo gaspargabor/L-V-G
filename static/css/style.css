@@ -741,3 +741,17 @@ td.vote_button{
     pointer-events: none;
     cursor: default;
 }
+
+.icon-inactive {
+    display: inline-block;
+    background-size: cover;
+    height: 20px;
+    margin-left: 10px;
+    pointer-events: none;
+    cursor: default;
+}
+
+.icon-down-inactive{
+    pointer-events: none;
+    cursor: default;
+}
