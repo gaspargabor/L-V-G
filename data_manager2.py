@@ -39,7 +39,9 @@ def get_some_data(cursor, select_, mytable, condition, orderby):
 @database_common.connection_handler
 def sort_qs_or_as(cursor, criteria):
     cursor.execute("""
-                    SELECT * FROM question
+                    SELECT question.id, question.submission_time, question.view_number, question.vote_number, 
+                    question.title, question.message, question.image, u.user_name, u.id as user_id FROM question
+                    inner join users u on question.user_id=u.id
                     ORDER BY %s;""" % (criteria))
     sorted_data = cursor.fetchall()
     return sorted_data
@@ -59,9 +61,9 @@ def sort_as_by_q_id(cursor, question_id,criteria):
 @database_common.connection_handler
 def get_answers_for_question(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM answer
+                    SELECT answer.id, answer.user_id, submission_time, vote_number, question_id, accepted, message, image, users.user_name FROM answer INNER JOIN users ON answer.user_id = users.id
                     WHERE answer.question_id=%(question_id)s
-                    ORDER BY vote_number DESC;
+ORDER BY vote_number DESC;
                     """,
                    {'question_id': question_id})
     answers=cursor.fetchall()
@@ -71,8 +73,9 @@ def get_answers_for_question(cursor, question_id):
 @database_common.connection_handler
 def get_comments_for_question(cursor, question_id):
     cursor.execute("""
-                    SELECT * FROM comment
-                    WHERE comment.question_id=%(question_id)s;
+                    SELECT c.id, c.question_id, c.answer_id, c.message, c.submission_time, c.edited_count, u.user_name, u.id as user_id FROM comment c
+                    inner join users u on c.user_id=u.id
+                    WHERE c.question_id=%(question_id)s;
                     """,
                    {'question_id': question_id})
     comments_for_q = cursor.fetchall()
@@ -82,8 +85,9 @@ def get_comments_for_question(cursor, question_id):
 @database_common.connection_handler
 def get_comments_for_answer(cursor, answer_id):
     cursor.execute("""
-                    SELECT * FROM comment
-                    WHERE comment.answer_id=%(answer_id)s;
+                    SELECT c.id, c.question_id, c.answer_id, c.message, c.submission_time, c.edited_count, u.user_name, u.id as user_id FROM comment c 
+                    inner join users u on c.user_id=u.id
+                    WHERE c.answer_id=%(answer_id)s;
                     """,
                    {'answer_id': answer_id})
     comments_for_a = cursor.fetchall()
@@ -98,7 +102,6 @@ def get_question_by_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     question = cursor.fetchall()
-    print(question)
     return question
 
 
@@ -182,6 +185,7 @@ def add_one_to_view_number(cursor, question_id):
 
 @database_common.connection_handler
 def get_comment_by_id(cursor, comment_id):
+    print(comment_id)
     cursor.execute("""
                     SELECT * FROM comment
                     WHERE id=%(comment_id)s;
@@ -469,6 +473,7 @@ def get_user_by_id(cursor, userid):
 
 @database_common.connection_handler
 def get_all_listuser_data(cursor):
+
     return None
 
 
@@ -540,14 +545,12 @@ def delete_session_when_logout(cursor, username):
                    {'username': username})
 
 @database_common.connection_handler
-def check_if_answer_is_accepted(cursor, userid):
+def check_if_answer_is_accepted(cursor):
     cursor.execute("""
                     SELECT users.user_name, users.reputation, COUNT(question.user_id), SUM(CASE WHEN a.accepted IS NOT NULL THEN 1 ELSE 0 END)
                     FROM users inner join question on users.id = question.user_id inner join answer a on question.id = a.question_id
-                    WHERE users.id = %(userid)s
                     GROUP BY users.user_name, users.reputation;
-                    """,
-                   {'userid': userid})
+                    """)
     accepted = cursor.fetchall()
     return accepted
 
@@ -587,3 +590,12 @@ def delete_session_by_user_id(cursor, user_id):
                     DELETE FROM sessions
                     WHERE user_id = %(user_id)s
                     """, {'user_id': user_id})
+
+@database_common.connection_handler
+def check_user_in_use(cursor, username):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE user_name =%(username)s""",
+                   {'username': username})
+    inuse = cursor.fetchone()
+    return inuse
