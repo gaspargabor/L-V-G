@@ -504,3 +504,13 @@ def get_user_id_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
     return user_id
+
+
+@database_common.connection_handler
+def get_user_id_by_comment_id(cursor, comment_id):
+    cursor.execute("""
+                    SELECT user_id FROM comment
+                    where id =%(comment_id)s""",
+                   {'comment_id': comment_id})
+    user_id = cursor.fetchone()
+    return user_id

@@ -384,7 +384,16 @@ def user_page(user_id):
     print(session)
     print(user_id)
     user = data_manager2.get_user_by_id(user_id)
-    return render_template('user_page.html', user_id=user_id)
+    questions = data_manager2.get_users_questions_by_userid(user_id['id'])
+    answers = data_manager2.get_users_answers_by_userid(user_id['id'])
+    comments = data_manager2.get_users_comments_by_userid(user_id['id'])
+    return render_template('user_page.html', user_id=user_id, questions=questions, answers=answers, comments=comments)
+
+
+@app.route('/all-user')
+def route_list_all_user():
+    user_list = data_manager2.get_all_listuser_data()
+    return render_template('list_users.html', user_list=user_list)
 
 
 if __name__ == '__main__':
