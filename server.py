@@ -36,16 +36,17 @@ def route_login():
     if request.method == 'POST':
         pw_to_check = request.form['password']
         password = data_manager2.get_password_for_username(request.form['username'])
-        valid = util.verify_password(pw_to_check, password['password'])
-        session.pop('validation', None)
-        if valid is True:
+        if password:
+            valid = util.verify_password(pw_to_check, password['password'])
             session.pop('validation', None)
-            session['_id'] = uuid.uuid4()
-            session['username'] = request.form['username']
-            user_id = data_manager2.get_user_id(session['username'])
-            session['user_id'] = user_id['id']
-            data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
-            return redirect('/')
+            if valid is True:
+                session.pop('validation', None)
+                session['_id'] = uuid.uuid4()
+                session['username'] = request.form['username']
+                user_id = data_manager2.get_user_id(session['username'])
+                session['user_id'] = user_id['id']
+                data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
+                return redirect('/')
         session['validation'] = False
         return redirect('/')
     return render_template('login.html')
