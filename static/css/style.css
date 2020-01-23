@@ -730,8 +730,3 @@ a {
 td.vote_button{
     width: 100px;
 }
-
-td.q_username{
-    text-align: right;
-    margin: 1em;
-}
