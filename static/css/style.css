@@ -583,7 +583,7 @@ a {
 }
 
 .user_question h2 {
-    color: orangered;
+    color: #93a9b8;
     letter-spacing: 3px;
 
 }
@@ -749,4 +749,13 @@ td.vote_button{
     margin: 2px;
     pointer-events: none;
     cursor: default;
+}
+
+#mypage_ans {
+    text-align: right;
+    alignment: right;
+}
+
+.tabless {
+    width: 100%;
 }
