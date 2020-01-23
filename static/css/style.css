@@ -731,6 +731,15 @@ td.vote_button{
     width: 100px;
 }
 
+.modal_title {
+    font-size: 30px;
+
+    padding-top: 10px;
+    padding-bottom: 15px;
+
+
+}
+
 .disp_accepted {
     background-color: transparent;
     padding: 5px;
