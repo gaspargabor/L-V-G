@@ -41,11 +41,12 @@
 
     {% for comment_for_q in comments_for_q%}
         <div class="display_comment_bubble">
-
+            {% print(comment_for_q) %}
             <table>
                 <tr>
                     <td class="message-box">{{ comment_for_q['message'] }}</td>
-                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id']) }}">Edit</a></td>
+                    <td>{{ comment_for_q['user_name'] }}</td>
+                    <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=comment_for_q['id'], question_id=comment_for_q['question_id']) }}">Edit</a></td>
                     <td class="table-btn" ><a class="disp_btn" href="{{ url_for('delete_comment', comment_id=comment_for_q['id']) }}">Delete</a></td>
                 </tr>
                 <tr>
@@ -65,6 +66,7 @@
                         <td class="vote_button"><a href="{{ url_for('addvote_answer', answer_id=kerdes[0]['id']) }}" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
                         <td class="message-box" rowspan="2">{{ kerdes[0]['message'] }}</td>
             {% if 'user_id' in session %}
+                <td class="ansuser" rowspan="2">{{ kerdes[0]['user_name'] }}</td>
                 {% if kerdes[0]['accepted'] == 1 %}
                         <td class="table-btn" rowspan="2"><a href="{{ url_for('accept_answer', answer_id=kerdes[0]['id']) }}" class="disp_accepted">Accepted</a></td>
                 {% else %}
@@ -90,9 +92,11 @@
 
             {% for komment in kerdes[1] %}
                 <div class="display_answer_comment_bubble">
+                {% print(komment) %}
                 <table>
                 <tr>
                     <td class="message-box" >{{ komment['message'] }}</td>
+                    <td>{{ komment['user_name'] }}</td>
                     <td class="table-btn" ><a class="disp_btn" href="{{ url_for('route_edit_comment', comment_id=komment['id']) }}">Edit</a></td>
                     <td class="table-btn" ><a class="disp_btn" href="{{ url_for('delete_comment', comment_id=komment['id']) }}">Delete</a></td>
                 </tr>

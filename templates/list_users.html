@@ -11,36 +11,20 @@
     <div id="list_users_title">user list</div>
 </div>
 <div id="list_users_navbar">
-    <a id="mainbtn">back to home page</a>
+    <a id="mainbtn" href="{{ url_for("route_index") }}">back to home page</a>
     <div id="mainbtn">some button</div>
     <div id="mainbtn">some button</div>
     <div id="mainbtn">some button</div>
 </div>
 <div id="list_users_list">
+    {% for user in user_list %}
     <div class="list_users_bubble">
-        <div>username</div>
-        <div>reputation</div>
-        <div>questions</div>
-        <div>anwers</div>
+        <div>{{ user['user_name'] }}</div>
+        <div>{{ user['reputation'] }}</div>
+        <div>{{ user['count'] }}</div>
+        <div>{{ user['sum'] }}</div>
     </div>
-    <div class="list_users_bubble">
-        <div>username</div>
-        <div>reputation</div>
-        <div>questions</div>
-        <div>anwers</div>
-    </div>
-    <div class="list_users_bubble">
-        <div>username</div>
-        <div>reputation</div>
-        <div>questions</div>
-        <div>anwers</div>
-    </div>
-    <div class="list_users_bubble">
-        <div>username</div>
-        <div>reputation</div>
-        <div>questions</div>
-        <div>anwers</div>
-    </div>
+    {% endfor %}
 </div>
 </body>
 </html>

@@ -790,3 +790,9 @@ div#errorMessageReg {
 .tabless {
     width: 100%;
 }
+
+td.ansuser{
+    width: 100px;
+    text-align: right;
+
+}

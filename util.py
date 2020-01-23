@@ -10,10 +10,12 @@ def trystuff(question_id, answer_id):
     for kerdes in valaszlista:
         kerdeslista = []
         kommentek = data_manager2.get_comments_for_answer(kerdes['id'])
+        print(kommentek)
         kerdeslista.append(kerdes)
         kerdeslista.append(kommentek)
         ultimatelista.append(kerdeslista)
-
+    print('ultimateszar')
+    print(ultimatelista)
     return ultimatelista
 
 
@@ -23,11 +25,14 @@ def get_all_question_data_for_display(question_id):
     q_n_comm = []
     q_n_comm.append(data_manager2.get_question_by_id(question_id))
     q_n_comm.append(data_manager2.get_comments_for_question(question_id))
+    print('comment for question')
+    print(q_n_comm)
     all_ans = data_manager2.get_answers_for_question(question_id)
     all_data.append(q_n_comm)
     for kerdes in all_ans:
         a_n_comm = []
         comm_for_a = data_manager2.get_comments_for_answer(kerdes['id'])
+        print(comm_for_a)
         a_n_comm.append(kerdes)
         a_n_comm.append(comm_for_a)
         all_data.append(a_n_comm)

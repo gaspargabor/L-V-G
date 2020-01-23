@@ -19,6 +19,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def route_index():
     if request.method == "GET":
         questions = data_manager2.get_5_latest()
+        print(questions)
         logged_in = False
         username = None
         user_id = None
@@ -96,6 +97,8 @@ def route_question(question_id):
         answer_id = answers[0]['id']
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
+    print('q comments in server')
+    print(comments_for_q)
     return render_template('display_question.html',
                            question=question,
                            question_id=question_id,
@@ -134,6 +137,8 @@ def route_edit_answer(answer_id):
 def route_edit_comment(comment_id):
     if request.method == 'GET':
         original_comment = data_manager2.get_comment_by_id(comment_id)
+        print('original comment')
+        print(original_comment)
         return render_template('edit_comment.html', comment_id=comment_id, original_comment=original_comment)
     if request.method == 'POST':
         original_comment = data_manager2.get_comment_by_id(comment_id)
@@ -394,7 +399,8 @@ def user_page(user_id):
 
 @app.route('/all-user')
 def route_list_all_user():
-    user_list = data_manager2.get_all_listuser_data()
+    user_list = data_manager2.check_if_answer_is_accepted()
+    print(user_list)
     return render_template('list_users.html', user_list=user_list)
 
 
