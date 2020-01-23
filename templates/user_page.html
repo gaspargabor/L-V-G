@@ -42,7 +42,11 @@
                 <tr>
                     <td class="disp_vote_cell" rowspan="3">{{ answer.vote_number }}</td>
                     <td rowspan="2">{{ answer.ans }}</td>
-                    <td align="right">accepted</td>
+
+                     {% if answer['accepted'] == 1 %}
+                        <td class="disp_accepted" align="right">accepted</td>
+
+                {% endif %}
                 </tr>
                 <tr>
 

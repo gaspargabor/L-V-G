@@ -776,3 +776,7 @@ td.vote_button{
     pointer-events: none;
     cursor: default;
 }
+
+.tabless {
+    width: 100%;
+}

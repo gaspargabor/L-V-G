@@ -395,7 +395,7 @@ def get_users_questions_by_userid(cursor, userid):
 @database_common.connection_handler
 def get_users_answers_by_userid(cursor, userid):
     cursor.execute("""
-                    SELECT question.id, question.user_id, title, a.vote_number, question.message, COALESCE(a.message, 'No answers yet') as ans
+                    SELECT question.id, question.user_id, title, a.vote_number, question.message, COALESCE(a.message, 'No answers yet') as ans, a.accepted
                     FROM question left join answer a on question.id = a.question_id
                     WHERE a.user_id=%(userid)s;""",
                    {'userid' : userid})
