@@ -39,9 +39,7 @@ def route_login():
         session['_id'] = uuid.uuid4()
         password = data_manager2.get_password_for_username(session['username'])
         valid = util.verify_password(pw_to_check, password['password'])
-        print(valid)
         if valid is True:
-            print('im truu')
             user_id = data_manager2.get_user_id(session['username'])
             data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
             return redirect('/')
