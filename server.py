@@ -25,6 +25,7 @@ def route_index():
         if 'username' in session:
             logged_in = True
             user_id = data_manager2.get_user_id(session['username'])
+            print(user_id)
             username = session['username']
         return render_template('layout.html', questions=questions, logged_in=logged_in, username=username, user_id=user_id)
     elif request.method == "POST":
@@ -378,11 +379,10 @@ def add_view_counter(question_id):
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))
 
+
 @app.route('/user/<user_id>')
 def user_page(user_id):
     user_id = data_manager2.get_user_id(session['username'])
-    print(session)
-    print(user_id)
     user = data_manager2.get_user_by_id(user_id)
     questions = data_manager2.get_users_questions_by_userid(user_id['id'])
     answers = data_manager2.get_users_answers_by_userid(user_id['id'])
@@ -402,3 +402,5 @@ if __name__ == '__main__':
         port=8000,
         debug=True,
     )
+
+

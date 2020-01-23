@@ -581,3 +581,64 @@ a {
     margin: 10px;
     box-shadow: 5px 4px 9px rgba(0, 0, 0, 0.3);
 }
+
+.user_question h2 {
+    color: orangered;
+    letter-spacing: 3px;
+
+}
+
+.up_title {
+    letter-spacing: 5px;
+}
+
+
+#list_users_pg{
+    display: grid;
+    grid-template-rows: min-content min-content auto;
+}
+
+#list_users_header{
+    display: grid;
+    grid-template-rows: max-content max-content;
+}
+
+#list_users_logo{
+    padding: 1em;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#list_users_title{
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 1em 0 2em 0;
+}
+
+#list_users_navbar{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    text-align: center;
+}
+
+#list_users_navbar a:hover{
+    background-color: #B00000;
+}
+
+#list_users_list{
+    background-color: rgba(0,0,0,.2);
+    padding: 0 3em 0 3em;
+}
+
+.list_users_bubble{
+    background-color: rgba(0,0,0,.2);
+    padding: 1em;
+    margin: .5em;
+    border-radius: 4px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}

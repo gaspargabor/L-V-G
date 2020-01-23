@@ -7,10 +7,65 @@
 </head>
 <body>
     <div class="display_all_body">
-        <div class=""
+
+        <div class="display_header">
+            <div class="logomate up_title"><h1>My Page</h1></div>
         <div id="display_navbar">
-            <ahref="{{ url_for("route_index") }}">Back to home page</a>
+            <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_index") }}">Back to home page</a>
         </div>
+        </div>
+    <div class="user_question">
+        <h2>Questions asked by me:</h2>
+        {% for question in questions %}
+            <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=question['id']) }}"> {{ question.title }}</a></td>
+                </tr>
+                <tr>
+                    <td>{{ question.message }}</td>
+                </tr>
+                <tr>
+                    <td class="display_answers_bubble">{{ question.ans }}</td>
+                </tr>
+            </table>
+            </div>
+
+        {% endfor %}
+        <h2>Questions answered by me:</h2>
+        {% for answer in answers %}
+            <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=answer['id']) }}"> {{ answer.title }}</a></td>
+                </tr>
+                <tr>
+                    <td>{{ answer.message }}</td>
+                </tr>
+                <tr>
+                    <td class="display_answers_bubble">{{ answer.ans }}</td>
+                </tr>
+            </table>
+            </div>
+        {% endfor %}
+        <h2>Questions commented by me:</h2>
+        {% for comment in comments %}
+            <div class="display_question_bubble">
+            <table>
+                <tr>
+                    <td><a class="searchtitle icon-down" href="{{ url_for("route_question", question_id=comment['id']) }}"> {{ comment.title }}</a></td>
+                </tr>
+                <tr>
+                    <td>{{ comment.message }}</td>
+                </tr>
+                <tr>
+                    <td class="display_answers_bubble">{{ comment.com }}</td>
+                </tr>
+            </table>
+            </div>
+        {% endfor %}
+    </div>
+
     </div>
 
 

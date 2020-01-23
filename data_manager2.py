@@ -381,12 +381,32 @@ def get_user_data(cursor, username):
 @database_common.connection_handler
 def get_users_questions_by_userid(cursor, userid):
     cursor.execute("""
-                    SELECT * FROM ask_mate2.public.question
-                    WHERE user_id=%(userid)s;""",
+                    SELECT question.id, question.view_number, question.vote_number, question.user_id, title, question.message, COALESCE(a.message, 'No answers yet') as ans
+                    FROM question left join answer a on question.id = a.question_id
+                    WHERE question.user_id=%(userid)s;""",
                    {'userid' : userid})
     users_questions = cursor.fetchall()
     return users_questions
 
+@database_common.connection_handler
+def get_users_answers_by_userid(cursor, userid):
+    cursor.execute("""
+                    SELECT question.id, question.user_id, title, a.vote_number, question.message, COALESCE(a.message, 'No answers yet') as ans
+                    FROM question left join answer a on question.id = a.question_id
+                    WHERE a.user_id=%(userid)s;""",
+                   {'userid' : userid})
+    users_answers = cursor.fetchall()
+    return users_answers
+
+@database_common.connection_handler
+def get_users_comments_by_userid(cursor, userid):
+    cursor.execute("""
+                    SELECT question.id, question.user_id, title, question.message, COALESCE(c.message, 'No answers yet') as com
+                    FROM question left join comment c on question.id = c.question_id
+                    WHERE c.user_id=%(userid)s;""",
+                   {'userid' : userid})
+    users_comments = cursor.fetchall()
+    return users_comments
 
 @database_common.connection_handler
 def get_user_id_by_session_id(cursor, session_id):
@@ -443,7 +463,9 @@ def get_user_by_id(cursor, userid):
     username = cursor.fetchall()
     return username
 
-
+@database_common.connection_handler
+def get_all_listuser_data(cursor):
+    return None
 
 
 @database_common.connection_handler
@@ -504,6 +526,14 @@ def get_user_id_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
     return user_id
+
+
+@database_common.connection_handler
+def delete_session_when_logout(cursor, username):
+    cursor.execute("""
+                    DELETE FROM sessions
+                    WHERE user_name= %(username)s""",
+                   {'username': username})
 
 
 @database_common.connection_handler
