@@ -135,6 +135,7 @@ def route_edit_answer(answer_id):
 def route_edit_comment(comment_id):
     if request.method == 'GET':
         original_comment = data_manager2.get_comment_by_id(comment_id)
+
         if original_comment[0]['question_id'] is not None:
             return render_template('edit_comment.html', question_id=original_comment[0]['question_id'], comment_id=comment_id, original_comment=original_comment)
         else:
@@ -287,7 +288,6 @@ def addcomment_answer(answer_id):
     if request.method == "GET":
         answer = data_manager2.get_answer_by_id(answer_id)
         question_id = answer['question_id']
-
         if '_id' in session:
             answer = data_manager2.get_answer_by_id(answer_id)
             question_id = answer['question_id']
@@ -405,6 +405,7 @@ def user_page(user_id):
 @app.route('/all-user')
 def route_list_all_user():
     user_list = data_manager2.check_if_answer_is_accepted()
+
     return render_template('list_users.html', user_list=user_list)
 
 

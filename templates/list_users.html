@@ -11,12 +11,17 @@
     <div id="list_users_title">user list</div>
 </div>
 <div id="list_users_navbar">
-    <a id="mainbtn" href="{{ url_for("route_index") }}">back to home page</a>
-    <div id="mainbtn">some button</div>
-    <div id="mainbtn">some button</div>
-    <div id="mainbtn">some button</div>
+    <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_index") }}">Back to home page</a>
+
+
 </div>
 <div id="list_users_list">
+    <div class="list_users_bubble">
+        <div><strong>User name</strong></div>
+        <div><strong>User reputation</strong></div>
+        <div><strong>User questions</strong></div>
+        <div><strong>Accepted answers</strong></div>
+    </div>
     {% for user in user_list %}
     <div class="list_users_bubble">
         <div>{{ user['user_name'] }}</div>
