@@ -86,13 +86,21 @@ def route_question(question_id):
     answer_id = None
     if len(answers) != 0:
         answer_id = answers[0]['id']
+    print(answer_id)
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
+    status_dict = data_manager2.get_answer_status_by_answer_id(answer_id)
+    status = status_dict['accepted']
+    check = False
+    if status == "1":
+        check = False
+    print(check)
     return render_template('display_question.html',
                            question=question,
                            question_id=question_id,
                            comments_for_q=comments_for_q,
-                           ultimate=ultimate
+                           ultimate=ultimate,
+                           check=check
                            )
 
 
@@ -339,8 +347,6 @@ def delete_answer(answer_id):
         user_id = user_id_dict[0]['user_id']
         answer_user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
         answer_user_id = answer_user_id_dict['user_id']
-        print(answer_user_id)
-        print(user_id)
         if user_id == answer_user_id:
             data_manager2.delete_comment_by_answer_id(answer_id)
             data_manager2.delete_answer_by_answer_id(answer_id)
@@ -394,6 +400,15 @@ def user_page(user_id):
 def route_list_all_user():
     user_list = data_manager2.get_all_listuser_data()
     return render_template('list_users.html', user_list=user_list)
+
+
+@app.route('/accept-answer/<answer_id>')
+def accept_answer(answer_id):
+    answer_id = answer_id
+    question = data_manager2.get_question_id_by_answer_id(answer_id)
+    question_id = question[0]['question_id']
+    data_manager2.accept_answer(answer_id)
+    return redirect(url_for("route_question", question_id=question_id))
 
 
 if __name__ == '__main__':

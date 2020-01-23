@@ -544,3 +544,23 @@ def get_user_id_by_comment_id(cursor, comment_id):
                    {'comment_id': comment_id})
     user_id = cursor.fetchone()
     return user_id
+
+
+@database_common.connection_handler
+def accept_answer(cursor, answer_id):
+    cursor.execute("""
+                    UPDATE answer
+                    SET accepted = 1
+                    WHERE id = %(answer_id)s
+                    """,
+                   {'answer_id': answer_id})
+
+
+@database_common.connection_handler
+def get_answer_status_by_answer_id(cursor, answer_id):
+    cursor.execute("""
+                    SELECT accepted FROM answer
+                    where id =%(answer_id)s""",
+                   {'answer_id': answer_id})
+    status = cursor.fetchone()
+    return status
