@@ -22,9 +22,9 @@
                          <label id="add_image">Image:</label><br>
                          <input type="text" name="image" placeholder="Image link">
                      </div>
-                     <div>
-                         <button class="addbutton" type="submit">Submit Question</button>
-                         <div class="rightbtn"><a class="addbutton cancelbtn" href="{{ url_for('route_question', question_id=question_id) }}">Cancel</a></div>
+                     <div class="buttons">
+                         <div class="leftbtn"><button class="addbutton" type="submit">Submit Question</button></div>
+                        <div class="rightbtn"><a class="addbutton cancelbtn" href="{{ url_for('route_index') }}">Cancel</a></div>
                      </div>
                  </form>
             </div>
