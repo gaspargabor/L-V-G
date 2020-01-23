@@ -730,3 +730,14 @@ a {
 td.vote_button{
     width: 100px;
 }
+
+.disp_accepted {
+    background-color: transparent;
+    padding: 5px;
+    font-size: 14px;
+    color: greenyellow;
+    border-radius: 4px;
+    margin: 2px;
+    pointer-events: none;
+    cursor: default;
+}
