@@ -40,9 +40,9 @@
                     </form>
                   </div>
               {% if logged_in == True %}
-                  <div id="notlogged">Welcome back {{ username }}</div>
+                  <div id="notlogged">Welcome back {{ session['username'] }}</div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("user_page", user_id=user_id) }}">My page</a>
+                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("user_page", user_id=user_id['id']) }}">My page</a>
                   </div>
                   <div>
                       <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_logout") }}">Logout</a>
@@ -50,11 +50,80 @@
               {% else %}
                   <div id="notlogged">You are not logged in</div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_registration") }}">Register</a>
+                      <button class="modalbtn" id="myBtn1">Register An Account</button>
                   </div>
                   <div>
-                      <a class="hoverbtn" id="mainbtn" href="{{ url_for("route_login") }}">Login</a>
+                      <button class="modalbtn" id="myBtn">Login</button>
                   </div>
+
+                                      <!-- The Modal -->
+                    <div id="myModal" class="modal">
+
+                      <!-- Modal content -->
+                      <div class="modal-content">
+
+                    <div class="add_qora">
+
+                        <div class="register_block">
+                            <span class="close">x</span>
+                             <div class="titlerow"><p>Login</p></div>
+
+                            <form action="/login" method="post">
+                                <div>
+                                    <label id="username">Enter username:</label>
+                                    <input type="text" name="username" id="username" placeholder="Username" required>
+                                </div>
+                                <div>
+                                    <label id="password">Enter password:</label>
+                                    <input type="password" name="password" id="password" placeholder="Password" required>
+                                </div>
+                                <div>
+                                    <button class="addbutton" type="submit">Login</button>
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                      </div>
+
+                    </div>
+
+
+
+                  <div id="myModal1" class="modal1">
+
+                  <!-- Modal content -->
+                  <div class="modal-content">
+
+                <div class="add_qora">
+
+                    <div class="register_block">
+                        <span class="close1">x</span>
+                         <div class="titlerow"><p>Register An Account</p></div>
+
+                        <form action="/registration" method="post" onSubmit = "return checkPassword(this)">
+                            <div>
+                                <label id="username">Choose a username:</label>
+                                <input type="text" name="username" id="username" placeholder="Username" required>
+                            </div>
+                            <div>
+                                <label id="password">Choose a password:</label>
+                                <input type="password" name="password" id="password" placeholder="Password" required>
+                            </div>
+                            <div>
+                                <label id="repeat_password">Repeat password:</label>
+                                <input type="password" name="repeat_password" id="repeat_password" placeholder="Repeat password" required>
+                            </div>
+                            <div>
+                                <button class="addbutton" type="submit">Create Account</button>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                  </div>
+
+                </div>
               {% endif %}
             </div>
          <div class="question-bubbles">
@@ -64,6 +133,7 @@
                              <tr class="first-row">
                                  <td class="first-col">{{ question['view_number'] }}</td>
                                  <td class="question-title icon-down"><a href="{{ url_for("add_view_counter", question_id=question['id'])}}"> {{ question['title'] }}</a></td>
+                                 <td class="first-col">username</td>
                                  <td rowspan="2"><img class="bubble-image" src="static/assets/brandi-redd-aJTiW00qqtI-unsplash.jpg" style="display: block"></td>
                              </tr>
                              <tr>
@@ -78,5 +148,83 @@
 </div>
 </div>
      </div>
+<script>// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+
+
+var modal1 = document.getElementById("myModal1");
+
+// Get the button that opens the modal
+var btn1 = document.getElementById("myBtn1");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementsByClassName("close1")[0];
+
+// When the user clicks the button, open the modal
+btn1.onclick = function() {
+  modal1.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal1) {
+    modal1.style.display = "none";
+  }
+}
+
+
+function checkPassword(form) {
+    password1 = form.password.value;
+    password2 = form.repeat_password.value;
+
+    // If password not entered
+    if (password1 == '')
+        alert ("Please enter Password");
+
+    // If confirm password not entered
+    else if (password2 == '')
+        alert ("Please enter confirm password");
+
+    // If Not same return False.
+    else if (password1 != password2) {
+        alert ("\nPassword did not match: Please try again...")
+        return false;
+    }
+
+    // If same return True.
+    else{
+        return true; }}
+
+</script>
 </body>
 </html>
