@@ -98,7 +98,6 @@ def get_question_by_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     question = cursor.fetchall()
-    print(question)
     return question
 
 
@@ -587,3 +586,12 @@ def delete_session_by_user_id(cursor, user_id):
                     DELETE FROM sessions
                     WHERE user_id = %(user_id)s
                     """, {'user_id': user_id})
+
+@database_common.connection_handler
+def check_user_in_use(cursor, username):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE user_name =%(username)s""",
+                   {'username': username})
+    inuse = cursor.fetchone()
+    return inuse

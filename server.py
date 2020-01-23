@@ -34,17 +34,19 @@ def route_index():
 @app.route('/login', methods=['GET', 'POST'])
 def route_login():
     if request.method == 'POST':
-        session['username'] = request.form['username']
         pw_to_check = request.form['password']
-        session['_id'] = uuid.uuid4()
-        password = data_manager2.get_password_for_username(session['username'])
+        password = data_manager2.get_password_for_username(request.form['username'])
         valid = util.verify_password(pw_to_check, password['password'])
-        valid = True
+        session.pop('validation', None)
         if valid is True:
+            session.pop('validation', None)
+            session['_id'] = uuid.uuid4()
+            session['username'] = request.form['username']
             user_id = data_manager2.get_user_id(session['username'])
             session['user_id'] = user_id['id']
             data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
             return redirect('/')
+        session['validation'] = False
         return redirect('/')
     return render_template('login.html')
 
@@ -53,6 +55,11 @@ def route_login():
 def route_registration():
     if request.method == 'POST':
         username = request.form['username']
+        inuse = util.check_user_in_use(username)
+        if inuse:
+            session['used_username'] = True
+            return redirect('/')
+        session.pop('used_username', None)
         password = util.hash_password(request.form['password'])
         data_manager2.save_registered_data(username, password)
 
@@ -63,10 +70,7 @@ def route_registration():
 @app.route('/logout')
 def route_logout():
     data_manager2.delete_session_by_user_id(session['user_id'])
-    session.pop('_id', None)
-    session.pop('username', None)
-    session.pop('password', None)
-    session.pop('user_id', None)
+    session.clear()
     return redirect('/')
 
 
@@ -86,8 +90,6 @@ def route_all_question(sort_criteria=None, ascordesc=None):
 @app.route('/question/<question_id>')
 def route_question(question_id):
     question = data_manager2.get_question_by_id(question_id)
-    print(question_id)
-    print(question)
     answers = data_manager2.get_answers_for_question(question_id)
     answer_id = None
     if len(answers) != 0:
@@ -98,7 +100,7 @@ def route_question(question_id):
                            question=question,
                            question_id=question_id,
                            comments_for_q=comments_for_q,
-                           ultimate=ultimate,
+                           ultimate=ultimate
                            )
 
 
@@ -375,7 +377,6 @@ def delete_comment(comment_id):
 
 @app.route('/add-view-counter/<question_id>')
 def add_view_counter(question_id):
-    print(question_id)
     data_manager2.get_question_by_id(question_id)
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))

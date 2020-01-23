@@ -731,6 +731,16 @@ td.vote_button{
     width: 100px;
 }
 
+div#errorMessage {
+    color: #B00000;
+    padding: 10px;
+}
+
+div#errorMessageReg {
+    color: #B00000;
+    padding: 10px;
+}
+
 .modal_title {
     font-size: 30px;
 
