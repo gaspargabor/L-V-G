@@ -19,6 +19,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def route_index():
     if request.method == "GET":
         questions = data_manager2.get_5_latest()
+        print(questions[0]['id'])
         logged_in = False
         username = None
         user_id = None
@@ -85,6 +86,8 @@ def route_all_question(sort_criteria=None, ascordesc=None):
 @app.route('/question/<question_id>')
 def route_question(question_id):
     question = data_manager2.get_question_by_id(question_id)
+    print(question_id)
+    print(question)
     answers = data_manager2.get_answers_for_question(question_id)
     answer_id = None
     if len(answers) != 0:
@@ -376,6 +379,7 @@ def delete_comment(comment_id):
 
 @app.route('/add-view-counter/<question_id>')
 def add_view_counter(question_id):
+    print(question_id)
     data_manager2.get_question_by_id(question_id)
     data_manager2.add_one_to_view_number(question_id)
     return redirect(url_for("route_question", question_id=question_id))

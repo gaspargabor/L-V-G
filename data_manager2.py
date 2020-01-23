@@ -6,8 +6,8 @@ import database_common
 @database_common.connection_handler
 def get_all_data(cursor):
     cursor.execute("""
-                    SELECT question.id, question.user_id, question.submission_time, question.view_number, question.vote_number, question.title, question.message,
-                    question.image, u.user_name, u.id FROM question inner join users u on question.user_id = u.id;
+                    SELECT question.id as id, question.user_id, question.submission_time, question.view_number, question.vote_number, question.title, question.message,
+                    question.image, u.user_name, u.id as user_id FROM question inner join users u on question.user_id = u.id;
                     """)
     all_data = cursor.fetchall()
     return all_data
@@ -16,12 +16,13 @@ def get_all_data(cursor):
 @database_common.connection_handler
 def get_5_latest(cursor):
     cursor.execute("""
-                    SELECT question.id, question.user_id, question.submission_time, question.view_number, question.vote_number, question.title, question.message,
-                    question.image, u.user_name, u.id
+                    SELECT question.id as id, question.user_id, question.submission_time, question.view_number, question.vote_number, question.title, question.message,
+                    question.image, u.user_name, u.id as user_id
                     FROM question inner join users u on question.user_id = u.id
                     ORDER BY "submission_time" DESC
                     LIMIT 5;""")
     latest_5 = cursor.fetchall()
+
     return latest_5
 
 
@@ -97,6 +98,7 @@ def get_question_by_id(cursor, question_id):
                     """,
                    {'question_id': question_id})
     question = cursor.fetchall()
+    print(question)
     return question
 
 
