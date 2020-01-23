@@ -382,7 +382,7 @@ def get_user_data(cursor, username):
 def get_users_questions_by_userid(cursor, userid):
     cursor.execute("""
                     SELECT question.id, question.view_number, question.vote_number, question.user_id, title, question.message, COALESCE(a.message, 'No answers yet') as ans
-                    FROM ask_mate2.public.question left join answer a on question.id = a.question_id
+                    FROM question left join answer a on question.id = a.question_id
                     WHERE question.user_id=%(userid)s;""",
                    {'userid' : userid})
     users_questions = cursor.fetchall()
@@ -392,7 +392,7 @@ def get_users_questions_by_userid(cursor, userid):
 def get_users_answers_by_userid(cursor, userid):
     cursor.execute("""
                     SELECT question.id, question.user_id, title, a.vote_number, question.message, COALESCE(a.message, 'No answers yet') as ans
-                    FROM ask_mate2.public.question left join answer a on question.id = a.question_id
+                    FROM question left join answer a on question.id = a.question_id
                     WHERE a.user_id=%(userid)s;""",
                    {'userid' : userid})
     users_answers = cursor.fetchall()
@@ -402,7 +402,7 @@ def get_users_answers_by_userid(cursor, userid):
 def get_users_comments_by_userid(cursor, userid):
     cursor.execute("""
                     SELECT question.id, question.user_id, title, question.message, COALESCE(c.message, 'No answers yet') as com
-                    FROM ask_mate2.public.question left join comment c on question.id = c.question_id
+                    FROM question left join comment c on question.id = c.question_id
                     WHERE c.user_id=%(userid)s;""",
                    {'userid' : userid})
     users_comments = cursor.fetchall()
@@ -471,7 +471,7 @@ def get_all_listuser_data(cursor):
 @database_common.connection_handler
 def get_user_id_by_question_id(cursor, question_id):
     cursor.execute("""
-                    SELECT user_id FROM ask_mate2.public.question
+                    SELECT user_id FROM question
                     where id =%(question_id)s""",
                    {'question_id': question_id})
     user_id = cursor.fetchone()
@@ -500,7 +500,7 @@ def update_reputation(cursor, user_id, reputation):
 @database_common.connection_handler
 def get_user_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT user_id FROM ask_mate2.public.answer
+                    SELECT user_id FROM answer
                     where id =%(answer_id)s""",
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
@@ -521,7 +521,7 @@ def get_question_id_by_answer_id(cursor, answer_id):
 @database_common.connection_handler
 def get_user_id_by_answer_id(cursor, answer_id):
     cursor.execute("""
-                    SELECT user_id FROM ask_mate2.public.answer
+                    SELECT user_id FROM answer
                     where id =%(answer_id)s""",
                    {'answer_id': answer_id})
     user_id = cursor.fetchone()
