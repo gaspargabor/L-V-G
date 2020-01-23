@@ -14,9 +14,9 @@
                          <label id="add_comment">Here you go: </label><br>
                          <textarea name="message" id="message" cols="40" rows="4" placeholder="Enter your comment here"></textarea>
                      </div>
-                     <div>
-                         <button class="addbutton" type="submit">submit comment</button>
-                         <div class="rightbtn"><a class="addbutton cancelbtn" href="{{ url_for('route_question', question_id=question_id) }}">Cancel</a></div>
+                     <div class="buttons">
+                         <div class="leftbtn"><button class="addbutton" type="submit">submit comment</button></div>
+                        <div class="rightbtn"><a class="addbutton cancelbtn" href="{{ url_for('route_question', question_id=question_id) }}">Cancel</a></div>
                      </div>
                  </form>
             </div>

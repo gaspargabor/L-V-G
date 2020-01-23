@@ -96,7 +96,6 @@ def route_question(question_id):
         answer_id = answers[0]['id']
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
-
     return render_template('display_question.html',
                            question=question,
                            question_id=question_id,
@@ -135,7 +134,14 @@ def route_edit_answer(answer_id):
 def route_edit_comment(comment_id):
     if request.method == 'GET':
         original_comment = data_manager2.get_comment_by_id(comment_id)
-        return render_template('edit_comment.html', comment_id=comment_id, original_comment=original_comment)
+
+        if original_comment[0]['question_id'] is not None:
+            return render_template('edit_comment.html', question_id=original_comment[0]['question_id'], comment_id=comment_id, original_comment=original_comment)
+        else:
+            answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
+            question_id = answer['question_id']
+            return render_template('edit_comment.html', question_id=question_id,
+                                   comment_id=comment_id, original_comment=original_comment)
     if request.method == 'POST':
         original_comment = data_manager2.get_comment_by_id(comment_id)
         question_id = original_comment[0]['question_id']
@@ -282,7 +288,9 @@ def addcomment_answer(answer_id):
         answer = data_manager2.get_answer_by_id(answer_id)
         question_id = answer['question_id']
         if '_id' in session:
-            return render_template('addcomment2.html', answer_id=answer_id)
+            answer = data_manager2.get_answer_by_id(answer_id)
+            question_id = answer['question_id']
+            return render_template('addcomment2.html', answer_id=answer_id, question_id=question_id)
         else:
             return redirect(url_for("route_question", question_id=question_id))
     if request.method == "POST":

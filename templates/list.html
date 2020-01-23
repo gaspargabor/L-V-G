@@ -6,7 +6,7 @@
     <link href="{{url_for('static', filename = 'css/style.css')}}" rel="stylesheet">
 </head>
 <body>
-    <div class="question-page">
+    <div class="question-page lessmargin">
         <div class="content">
             <div class="question-page_4_all">
                 <div class="top-bar lax">
@@ -75,7 +75,6 @@
              <div class="question-bubbles">
               {% for question in questions %}
                          <div class="single-bubble">
-                         {% print(question) %}
                              <table>
                                  <tr class="first-row">
                                      <td class="first-col">{{ question['view_number'] }}</td>

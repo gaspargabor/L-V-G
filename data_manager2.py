@@ -185,7 +185,6 @@ def add_one_to_view_number(cursor, question_id):
 
 @database_common.connection_handler
 def get_comment_by_id(cursor, comment_id):
-    print(comment_id)
     cursor.execute("""
                     SELECT * FROM comment
                     WHERE id=%(comment_id)s;
