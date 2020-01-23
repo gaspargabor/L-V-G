@@ -713,9 +713,10 @@ a {
 }
 
 .modalbtn {
+    font-family: Montserrat;
     background-color: transparent;
     border-style: none;
-    padding: 16px 50px 16px 50px;
+    padding: 15px 50px 15px 50px;
     margin: 0;
     font-weight: bold;
     color: #E0E0E0;
@@ -724,4 +725,8 @@ a {
 
 .modalbtn:hover {
     background-color: #B00000;
+}
+
+td.vote_button{
+    width: 100px;
 }
