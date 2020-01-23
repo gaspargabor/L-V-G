@@ -65,7 +65,7 @@
                         <td class="vote_button"><a href="{{ url_for('addvote_answer', answer_id=kerdes[0]['id']) }}" class="icon icon-down"><img src="/static/assets/Polygon_1.png"></a></td>
                         <td class="message-box" rowspan="2">{{ kerdes[0]['message'] }}</td>
             {% if kerdes[0]['accepted'] == 1 %}
-                        <td class="table-btn" rowspan="2"><a href="{{ url_for('accept_answer', answer_id=kerdes[0]['id']) }}" class="disp_btn">Accepted</a></td>
+                        <td class="table-btn" rowspan="2"><a href="{{ url_for('accept_answer', answer_id=kerdes[0]['id']) }}" class="disp_accepted">Accepted</a></td>
             {% else %}
                        <td class="table-btn" rowspan="2"><a href="{{ url_for('accept_answer', answer_id=kerdes[0]['id']) }}" class="disp_btn">Accept</a></td>
             {% endif %}

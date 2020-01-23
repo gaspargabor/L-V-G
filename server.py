@@ -95,7 +95,7 @@ def route_question(question_id):
                            question=question,
                            question_id=question_id,
                            comments_for_q=comments_for_q,
-                           ultimate=ultimate
+                           ultimate=ultimate,
                            )
 
 
@@ -209,9 +209,9 @@ def downvote_question(question_id=None):
     reputation_dict = data_manager2.get_user_rep_by_id(user_id)
     reputation = reputation_dict[0]['reputation']
     if reputation == None:
-        reputation = -5
+        reputation = -2
     else:
-        reputation = reputation - 5
+        reputation = reputation - 2
     data_manager2.update_reputation(user_id, reputation)
     vote_number = question[0]['vote_number'] - 1
     data_manager2.update_question_votenum_by_id(question_id, vote_number)
@@ -244,9 +244,9 @@ def downvote_answer(answer_id):
     reputation_dict = data_manager2.get_user_rep_by_id(user_id)
     reputation = reputation_dict[0]['reputation']
     if reputation == None:
-        reputation = -10
+        reputation = -2
     else:
-        reputation = reputation - 10
+        reputation = reputation - 2
     data_manager2.update_reputation(user_id, reputation)
     question_id = answerss['question_id']
     vote_number = answerss['vote_number'] - 1
@@ -403,6 +403,15 @@ def accept_answer(answer_id):
     question = data_manager2.get_question_id_by_answer_id(answer_id)
     question_id = question[0]['question_id']
     data_manager2.accept_answer(answer_id)
+    user_id_dict = data_manager2.get_user_id_by_answer_id(answer_id)
+    user_id = user_id_dict['user_id']
+    reputation_dict = data_manager2.get_user_rep_by_id(user_id)
+    reputation = reputation_dict[0]['reputation']
+    if reputation == None:
+        reputation = 15
+    else:
+        reputation = reputation + 15
+    data_manager2.update_reputation(user_id, reputation)
     return redirect(url_for("route_question", question_id=question_id))
 
 
