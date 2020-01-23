@@ -85,13 +85,10 @@ def route_all_question(sort_criteria=None, ascordesc=None):
 @app.route('/question/<question_id>')
 def route_question(question_id):
     question = data_manager2.get_question_by_id(question_id)
-    print(question_id)
-    print(question)
     answers = data_manager2.get_answers_for_question(question_id)
     answer_id = None
     if len(answers) != 0:
         answer_id = answers[0]['id']
-    print(answer_id)
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
     return render_template('display_question.html',
