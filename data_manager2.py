@@ -389,9 +389,11 @@ def get_user_data(cursor, username):
 @database_common.connection_handler
 def get_users_questions_by_userid(cursor, userid):
     cursor.execute("""
-                    SELECT question.id, question.view_number, question.vote_number, question.user_id, title, question.message, COALESCE(a.message, 'No answers yet') as ans
+                    SELECT question.id, question.view_number, question.vote_number, question.user_id, title, question.message, 
+                    COALESCE(a.message, 'No answers yet') as ans, SUM(CASE WHEN a.accepted IS NOT NULL THEN 1 ELSE 0 END) as ans_count
                     FROM question left join answer a on question.id = a.question_id
-                    WHERE question.user_id=%(userid)s;""",
+                    WHERE question.user_id=%(userid)s
+                    GROUP BY question.id,  a.message;""",
                    {'userid' : userid})
     users_questions = cursor.fetchall()
     return users_questions
@@ -547,9 +549,9 @@ def delete_session_when_logout(cursor, username):
 @database_common.connection_handler
 def check_if_answer_is_accepted(cursor):
     cursor.execute("""
-                    SELECT users.user_name, users.reputation, COUNT(question.user_id), SUM(CASE WHEN a.accepted IS NOT NULL THEN 1 ELSE 0 END)
+                    SELECT users.user_name, users.reputation, count(question.user_id), SUM(CASE WHEN a.accepted IS NOT NULL THEN 1 ELSE 0 END)
                     FROM users inner join question on users.id = question.user_id inner join answer a on question.id = a.question_id
-                    GROUP BY users.user_name, users.reputation;
+                    GROUP BY users.user_name, users.reputation, question.user_id;
                     """)
     accepted = cursor.fetchall()
     return accepted
