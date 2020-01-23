@@ -764,3 +764,15 @@ td.vote_button{
     pointer-events: none;
     cursor: default;
 }
+
+.disp_hide {
+    display: none;
+    background-color: transparent;
+    padding: 5px;
+    font-size: 14px;
+    color: greenyellow;
+    border-radius: 4px;
+    margin: 2px;
+    pointer-events: none;
+    cursor: default;
+}
