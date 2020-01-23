@@ -6,8 +6,8 @@ import database_common
 @database_common.connection_handler
 def get_all_data(cursor):
     cursor.execute("""
-                    SELECT * FROM question
-                    ; 
+                    SELECT q.id, q.user_id, q.submission_time, q.view_number, q.vote_number, q.title, q.message,
+                    q.image, u.user_name, u.id FROM question q inner join users u on q.user_id = u.id;
                     """)
     all_data = cursor.fetchall()
     return all_data
