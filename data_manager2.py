@@ -575,3 +575,13 @@ def get_answer_status_by_answer_id(cursor, answer_id):
                    {'answer_id': answer_id})
     status = cursor.fetchone()
     return status
+
+
+@database_common.connection_handler
+def check_user_in_use(cursor, username):
+    cursor.execute("""
+                    SELECT user_name FROM users
+                    WHERE user_name =%(username)s""",
+                   {'username': username})
+    inuse = cursor.fetchone()
+    return inuse

@@ -735,3 +735,8 @@ div#errorMessage {
     color: #B00000;
     padding: 10px;
 }
+
+div#errorMessageReg {
+    color: #B00000;
+    padding: 10px;
+}

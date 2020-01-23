@@ -47,6 +47,7 @@ def route_login():
         pw_to_check = request.form['password']
         password = data_manager2.get_password_for_username(request.form['username'])
         valid = util.verify_password(pw_to_check, password['password'])
+        session.pop('validation', None)
         print('in login POST')
         print(session)
         if valid is True:
@@ -69,9 +70,13 @@ def route_login():
 def route_registration():
     if request.method == 'POST':
         username = request.form['username']
+        inuse = util.check_user_in_use(username)
+        if inuse:
+            session['used_username'] = True
+            return redirect('/')
+        session.pop('used_username', None)
         password = util.hash_password(request.form['password'])
         data_manager2.save_registered_data(username, password)
-
         return redirect('/')
     return render_template('register.html')
 
@@ -79,10 +84,7 @@ def route_registration():
 @app.route('/logout')
 def route_logout():
     # call datamanager to delete session id
-    session.pop('_id', None)
-    session.pop('username', None)
-    session.pop('password', None)
-    session.pop('validation', None)
+    session.clear()
     print(session)
     return redirect('/')
 
@@ -423,15 +425,6 @@ def accept_answer(answer_id):
     question_id = question[0]['question_id']
     data_manager2.accept_answer(answer_id)
     return redirect(url_for("route_question", question_id=question_id))
-
-
-def clear_session():
-    print('clearing')
-    session.pop('_id', None)
-    session.pop('username', None)
-    session.pop('password', None)
-    session.pop('validation', None)
-    return None
 
 
 if __name__ == '__main__':
