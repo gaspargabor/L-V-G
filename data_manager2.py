@@ -535,6 +535,17 @@ def delete_session_when_logout(cursor, username):
                     WHERE user_name= %(username)s""",
                    {'username': username})
 
+@database_common.connection_handler
+def check_if_answer_is_accepted(cursor, userid):
+    cursor.execute("""
+                    SELECT users.user_name, users.reputation, COUNT(question.user_id), SUM(CASE WHEN a.accepted IS NOT NULL THEN 1 ELSE 0 END)
+                    FROM users inner join question on users.id = question.user_id inner join answer a on question.id = a.question_id
+                    WHERE users.id = %(userid)s
+                    GROUP BY users.user_name, users.reputation;
+                    """,
+                   {'userid': userid})
+    accepted = cursor.fetchall()
+    return accepted
 
 @database_common.connection_handler
 def get_user_id_by_comment_id(cursor, comment_id):
