@@ -108,8 +108,11 @@ def route_question(question_id):
 @app.route('/question/<question_id>/edit', methods=['GET', 'POST'])
 def route_edit_question(question_id):
     if request.method == 'GET':
-        original_question = data_manager2.get_question_by_id(question_id)
-        return render_template('edit-question.html', question_id=question_id, original_question=original_question)
+        if 'id_' in session:
+            original_question = data_manager2.get_question_by_id(question_id)
+            return render_template('edit-question.html', question_id=question_id, original_question=original_question)
+        else:
+            return redirect(url_for("route_question", question_id=question_id))
     else:
         submission_time = datetime.now(),
         message = request.form.get('message'),
@@ -120,8 +123,13 @@ def route_edit_question(question_id):
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def route_edit_answer(answer_id):
     if request.method == 'GET':
-        original_answer = data_manager2.get_answer_by_id(answer_id)
-        return render_template('edit_answer.html', answer_id=answer_id, original_answer=original_answer)
+        if '_id' in session:
+            original_answer = data_manager2.get_answer_by_id(answer_id)
+            return render_template('edit_answer.html', answer_id=answer_id, original_answer=original_answer)
+        else:
+            original_answer = data_manager2.get_answer_by_id(answer_id)
+            question_id = original_answer[0]['question_id']
+            return redirect(url_for("route_question", question_id=question_id))
     if request.method == 'POST':
         original_answer = data_manager2.get_answer_by_id(answer_id)
         question_id = original_answer[0]['question_id']
@@ -134,15 +142,22 @@ def route_edit_answer(answer_id):
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
 def route_edit_comment(comment_id):
     if request.method == 'GET':
-        original_comment = data_manager2.get_comment_by_id(comment_id)
-
-        if original_comment[0]['question_id'] is not None:
-            return render_template('edit_comment.html', question_id=original_comment[0]['question_id'], comment_id=comment_id, original_comment=original_comment)
+        if '_id' in session:
+            original_comment = data_manager2.get_comment_by_id(comment_id)
+            if original_comment[0]['question_id'] is not None:
+                return render_template('edit_comment.html', question_id=original_comment[0]['question_id'], comment_id=comment_id, original_comment=original_comment)
+            else:
+                answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
+                question_id = answer['question_id']
+                return render_template('edit_comment.html', question_id=question_id,
+                                       comment_id=comment_id, original_comment=original_comment)
         else:
-            answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
-            question_id = answer['question_id']
-            return render_template('edit_comment.html', question_id=question_id,
-                                   comment_id=comment_id, original_comment=original_comment)
+            original_comment = data_manager2.get_comment_by_id(comment_id)
+            question_id = original_comment[0]['question_id']
+            if question_id is None:
+                answer = data_manager2.get_answer_by_id(original_comment[0]['answer_id'])
+                question_id = answer['question_id']
+                return redirect(url_for("route_question", question_id=question_id))
     if request.method == 'POST':
         original_comment = data_manager2.get_comment_by_id(comment_id)
         question_id = original_comment[0]['question_id']
