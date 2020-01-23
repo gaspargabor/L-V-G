@@ -92,18 +92,11 @@ def route_question(question_id):
     print(answer_id)
     ultimate = util.trystuff(question_id, answer_id)
     comments_for_q = data_manager2.get_comments_for_question(question_id)
-    status_dict = data_manager2.get_answer_status_by_answer_id(answer_id)
-    status = status_dict['accepted']
-    check = False
-    if status == "1":
-        check = False
-    print(check)
     return render_template('display_question.html',
                            question=question,
                            question_id=question_id,
                            comments_for_q=comments_for_q,
-                           ultimate=ultimate,
-                           check=check
+                           ultimate=ultimate
                            )
 
 
