@@ -404,6 +404,7 @@ def user_page(user_id):
 @app.route('/all-user')
 def route_list_all_user():
     user_list = data_manager2.check_if_answer_is_accepted()
+    print(user_list)
 
     return render_template('list_users.html', user_list=user_list)
 
