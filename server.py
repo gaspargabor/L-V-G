@@ -17,34 +17,50 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 @app.route('/', methods=['POST', 'GET'])
 def route_index():
+    print('just in index')
+    print(session)
     if request.method == "GET":
+        print('in index GET')
+        print(session)
         questions = data_manager2.get_5_latest()
         logged_in = False
         username = None
         user_id = None
         if 'username' in session:
+            print('in index username in session')
+            print(session)
             logged_in = True
             user_id = data_manager2.get_user_id(session['username'])
             username = session['username']
         return render_template('layout.html', questions=questions, logged_in=logged_in, user_id=user_id)
     elif request.method == "POST":
+        print('in index POST')
+        print(session)
         return redirect('/list')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def route_login():
     if request.method == 'POST':
-        session['username'] = request.form['username']
+        print('in login POST')
+        print(session)
         pw_to_check = request.form['password']
-        session['_id'] = uuid.uuid4()
-        password = data_manager2.get_password_for_username(session['username'])
+        password = data_manager2.get_password_for_username(request.form['username'])
         valid = util.verify_password(pw_to_check, password['password'])
-        print(valid)
+        print('in login POST')
+        print(session)
         if valid is True:
-            print('im truu')
+            session.pop('validation', None)
+            session['_id'] = uuid.uuid4()
+            session['username'] = request.form['username']
             user_id = data_manager2.get_user_id(session['username'])
             data_manager2.save_registered_data_to_session(str(session['_id']), session['username'], user_id['id'])
+            print('in login if valid true')
+            print(session)
             return redirect('/')
+        session['validation'] = False
+        print('in login if valid else')
+        print(session)
         return redirect('/')
     return render_template('login.html')
 
@@ -66,6 +82,8 @@ def route_logout():
     session.pop('_id', None)
     session.pop('username', None)
     session.pop('password', None)
+    session.pop('validation', None)
+    print(session)
     return redirect('/')
 
 
@@ -407,11 +425,19 @@ def accept_answer(answer_id):
     return redirect(url_for("route_question", question_id=question_id))
 
 
+def clear_session():
+    print('clearing')
+    session.pop('_id', None)
+    session.pop('username', None)
+    session.pop('password', None)
+    session.pop('validation', None)
+    return None
+
+
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port=8000,
         debug=True,
     )
-
 

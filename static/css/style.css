@@ -730,3 +730,8 @@ a {
 td.vote_button{
     width: 100px;
 }
+
+div#errorMessage {
+    color: #B00000;
+    padding: 10px;
+}
